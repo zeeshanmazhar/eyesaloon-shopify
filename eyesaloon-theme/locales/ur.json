@@ -57,7 +57,7 @@
       "yes": "ہاں",
       "lens_package": "لینس پیکج",
       "package_none": "آرڈر کے بعد فیصلہ",
-      "package_note": "جب تک hidden package product کنیکٹ نہیں ہوتا، لینس پیکج قیمت آرڈر کے ساتھ کنفرم ہوگی۔",
+      "package_note": "لینس پیکج cart میں linked line کے طور پر شامل ہوتا ہے تاکہ total درست رہے۔",
       "not_compatible": "یہ فریم نسخہ کے لیے compatible مارک نہیں ہے۔"
     },
     "spin": {

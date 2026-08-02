@@ -57,7 +57,7 @@
       "yes": "Yes",
       "lens_package": "Lens package",
       "package_none": "Decide after order",
-      "package_note": "Lens package pricing will be confirmed with your order until the hidden package product is connected.",
+      "package_note": "Lens packages are added as a linked cart line so totals stay correct.",
       "not_compatible": "This frame is not marked prescription compatible."
     },
     "spin": {

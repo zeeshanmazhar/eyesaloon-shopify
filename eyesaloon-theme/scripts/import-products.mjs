@@ -25,9 +25,10 @@ await loadEnv();
 
 const store = process.env.SHOPIFY_STORE;
 const token = process.env.SHOPIFY_ADMIN_TOKEN;
+const graphqlProxyUrl = process.env.SHOPIFY_GRAPHQL_PROXY_URL;
 
-if ((!store || !token) && !dryRun) {
-  console.error('Missing SHOPIFY_STORE or SHOPIFY_ADMIN_TOKEN. Copy .env.example to .env and set both values first.');
+if ((!store || !token) && !graphqlProxyUrl && !dryRun) {
+  console.error('Missing SHOPIFY_STORE/SHOPIFY_ADMIN_TOKEN or SHOPIFY_GRAPHQL_PROXY_URL. Copy .env.example to .env and set the values first.');
   process.exit(1);
 }
 
@@ -84,11 +85,11 @@ async function graphql(query, variables = {}) {
     return {};
   }
 
-  const response = await fetch(`https://${store}/admin/api/${API_VERSION}/graphql.json`, {
+  const response = await fetch(graphqlProxyUrl || `https://${store}/admin/api/${API_VERSION}/graphql.json`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Shopify-Access-Token': token,
+      ...(graphqlProxyUrl ? {} : { 'X-Shopify-Access-Token': token }),
     },
     body: JSON.stringify({ query, variables }),
   });

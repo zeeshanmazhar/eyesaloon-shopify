@@ -1,0 +1,5 @@
+handle,title_en,title_ur,description,price_addon,rx_min,rx_max,sort,active,hidden_variant_id
+single-vision-standard,Single Vision Standard,,Clear daily-use prescription lenses,1500,-6.00,6.00,10,true,
+blue-cut-standard,Blue Cut Standard,,Prescription lenses with blue-light filter,2500,-6.00,6.00,20,true,
+photochromic-standard,Photochromic Standard,,Prescription lenses that darken outdoors,3500,-6.00,6.00,30,true,
+sunglass-tint-standard,Sunglass Tint Standard,,Tinted sunglass lenses without prescription complexity,1200,0.00,0.00,40,true,

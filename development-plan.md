@@ -290,7 +290,7 @@ See B3 for implementation. Values: primary `#3550E9`, ink `#111111`, body `#4A4A
 **GATE M0:** push to `develop` visibly updates preview theme; `{ shop { name } }` GraphQL query succeeds; app block appears in theme editor.
 
 - Preview theme push succeeds on the development store: `https://eyesaloon-wtps59lz.myshopify.com?preview_theme_id=189729079578`.
-- GraphQL gate is still blocked until Zee creates the `eyesaloon-scripts` Admin API custom app token.
+- GraphQL gate succeeds on the development store through the Shopify CLI GraphiQL proxy: `{ shop { name myshopifyDomain } }` returns `eyesaloon` / `eyesaloon-wtps59lz.myshopify.com`. A long-lived `eyesaloon-scripts` Admin API token is still needed for non-dev-server automation.
 - Theme app extension is built and served through `shopify app dev`; final visual confirmation happens in the theme editor.
 
 ## D1. M1 — Theme foundation (Weeks 1–2)
@@ -329,7 +329,7 @@ Sections, each with schema presets and editor-configurable content: `hero` (head
   - Step 3: lens package cards from `lens_package` metaobjects (filtered by Rx range), PKR add-on shown; selecting updates a running total display.
   - Implementation: all choices go into `properties[...]` inputs inside `{% form 'product' %}` (e.g. `properties[Rx SPH R]`, `properties[Lens Package]`, `properties[Rx Photo URL]`). **Price add-ons**: lens packages are a hidden variant/product added alongside — simplest robust pattern: each lens package = a variant of a hidden "Lens Package" product; configurator adds frame + package to cart together via AJAX Cart API (`/cart/add.js` with `items:[...]`), linked by a shared `properties[_config_id]`. Cart section groups items with same `_config_id` visually. Log alternatives considered in DECISIONS.md.
   - *Acceptance: admin order shows frame + lens package lines with all Rx properties; totals correct; works without JS for frame-only purchase.*
-  - Current status: line-item property configurator is implemented inside the product form and frame-only works without JS. Hidden lens package product + AJAX grouped add remains blocked on product data/Admin API setup.
+  - Current status: line-item property configurator is implemented inside the product form and frame-only works without JS. Hidden lens package product + AJAX grouped add foundation is implemented on the development store; full validation waits on real frame products.
   - Rx upload app route scaffold exists at `/apps/eyesaloon/rx-upload`; persistent storage/file upload wiring remains.
 - [x] Trust strip, related frames (same `frame_shape`, exclude self, via Liquid or Search & Discovery related products). *(Dawn related-products + Eyesaloon trust surfaces are present; metafield-specific related logic remains for after D6 data.)*
 
@@ -357,8 +357,9 @@ Metafield definitions (namespace `eyesaloon`, ownerType PRODUCT unless noted):
 | `rx_compatible` | boolean | configurator gate |
 | `fit_note` | single_line_text | "runs narrow" override |
 
-- [ ] `setup-metafields.mjs` creates all of the above + `lens_package` metaobject definition (B4) — idempotent, safe to rerun.
-- [ ] `import-products.mjs` from `data/products.csv` (template columns: handle, title_en, title_ur, price, compare_at, sku, color option values, all metafields, image filenames). Batch via `productSet`; resumable via a local state file.
+- [x] `setup-metafields.mjs` creates all of the above + `lens_package` metaobject definition (B4) — idempotent, safe to rerun. *(Run successfully on the development store through Shopify CLI GraphiQL proxy.)*
+- [ ] `import-products.mjs` from `data/products.csv` (template columns: handle, title_en, title_ur, price, compare_at, sku, color option values, all metafields, image filenames). Batch via `productSet`; resumable via a local state file. *(Importer is implemented and dry-run validated; real upload waits on Zee's CSV/images.)*
+- [x] `setup-lens-packages.mjs` creates/updates hidden lens package product variants and `lens_package` metaobjects linked by `hidden_variant_id`. *(Run successfully on development store; hidden product `Eyesaloon Lens Packages` created.)*
 - [ ] Configure Search & Discovery filters on these metafields after first import.
 - [ ] Zee fills CSVs for 60–100 frames + lens packages + contact lenses.
 

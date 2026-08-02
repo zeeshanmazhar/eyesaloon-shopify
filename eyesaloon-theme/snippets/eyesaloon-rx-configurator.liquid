@@ -10,6 +10,7 @@
 -%}
 
 <div class="eyesaloon-rx" data-eyesaloon-rx>
+  <script src="{{ 'eyesaloon-rx.js' | asset_url }}" defer="defer"></script>
   <fieldset class="eyesaloon-rx__fieldset">
     <legend class="eyesaloon-rx__legend">{{ 'eyesaloon.rx.choose_lenses' | t }}</legend>
     <label class="eyesaloon-rx__card">
@@ -92,11 +93,15 @@
 
       <label class="eyesaloon-rx__package">
         <span>{{ 'eyesaloon.rx.lens_package' | t }}</span>
-        <select class="select__select" name="properties[Lens Package]">
+        <select class="select__select" name="properties[Lens Package]" data-eyesaloon-lens-package>
           <option value="{{ 'eyesaloon.rx.package_none' | t }}">{{ 'eyesaloon.rx.package_none' | t }}</option>
           {%- for lens_package in shop.metaobjects.lens_package.values -%}
             {%- if lens_package.active.value != false -%}
-              <option value="{{ lens_package.title_en.value | escape }}">
+              <option
+                value="{{ lens_package.title_en.value | escape }}"
+                data-hidden-variant-id="{{ lens_package.hidden_variant_id.value }}"
+                data-price-addon="{{ lens_package.price_addon.value }}"
+              >
                 {{ lens_package.title_en.value }}
                 {%- if lens_package.price_addon.value != blank -%}
                   · +{{ lens_package.price_addon.value | times: 100 | money_without_trailing_zeros }}

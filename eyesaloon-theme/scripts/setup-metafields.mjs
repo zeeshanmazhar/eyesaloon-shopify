@@ -19,10 +19,11 @@ await loadEnv();
 
 const store = process.env.SHOPIFY_STORE;
 const token = process.env.SHOPIFY_ADMIN_TOKEN;
+const graphqlProxyUrl = process.env.SHOPIFY_GRAPHQL_PROXY_URL;
 const dryRun = process.argv.includes('--dry-run');
 
-if ((!store || !token) && !dryRun) {
-  console.error('Missing SHOPIFY_STORE or SHOPIFY_ADMIN_TOKEN. Copy .env.example to .env and export the values before running.');
+if ((!store || !token) && !graphqlProxyUrl && !dryRun) {
+  console.error('Missing SHOPIFY_STORE/SHOPIFY_ADMIN_TOKEN or SHOPIFY_GRAPHQL_PROXY_URL. Copy .env.example to .env and export the values before running.');
   process.exit(1);
 }
 
@@ -50,6 +51,7 @@ const lensPackageFields = [
   { key: 'rx_max', name: 'Rx max', type: 'number_decimal', required: false },
   { key: 'sort', name: 'Sort', type: 'number_integer', required: false },
   { key: 'active', name: 'Active', type: 'boolean', required: true },
+  { key: 'hidden_variant_id', name: 'Hidden variant ID', type: 'single_line_text_field', required: false },
 ];
 
 async function graphql(query, variables = {}) {
@@ -58,11 +60,11 @@ async function graphql(query, variables = {}) {
     return {};
   }
 
-  const response = await fetch(`https://${store}/admin/api/${API_VERSION}/graphql.json`, {
+  const response = await fetch(graphqlProxyUrl || `https://${store}/admin/api/${API_VERSION}/graphql.json`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Shopify-Access-Token': token,
+      ...(graphqlProxyUrl ? {} : { 'X-Shopify-Access-Token': token }),
     },
     body: JSON.stringify({ query, variables }),
   });
@@ -105,6 +107,65 @@ async function ensureProductMetafield([name, key, type, validations]) {
 }
 
 async function ensureLensPackageMetaobject() {
+  const existing = await graphql(
+    `#graphql
+      query LensPackageDefinition {
+        metaobjectDefinitionByType(type: "lens_package") {
+          id
+          fieldDefinitions { key }
+        }
+      }
+    `,
+  );
+  const existingDefinition = existing.metaobjectDefinitionByType;
+
+  if (existingDefinition) {
+    const existingKeys = new Set(existingDefinition.fieldDefinitions.map((field) => field.key));
+    const missingFields = lensPackageFields.filter((field) => !existingKeys.has(field.key));
+
+    const updateData = await graphql(
+      `#graphql
+        mutation UpdateMetaobjectDefinition($id: ID!, $definition: MetaobjectDefinitionUpdateInput!) {
+          metaobjectDefinitionUpdate(id: $id, definition: $definition) {
+            metaobjectDefinition { id type }
+            userErrors { field message code }
+          }
+        }
+      `,
+      {
+        id: existingDefinition.id,
+        definition: {
+          access: {
+            storefront: 'PUBLIC_READ',
+          },
+          ...(missingFields.length
+            ? {
+                fieldDefinitions: missingFields.map((field) => ({
+                  create: {
+                    key: field.key,
+                    name: field.name,
+                    type: field.type,
+                    required: field.required,
+                  },
+                })),
+              }
+            : {}),
+        },
+      },
+    );
+    const updateErrors = updateData.metaobjectDefinitionUpdate.userErrors;
+    if (updateErrors.length) {
+      throw new Error(`lens_package update: ${updateErrors.map((error) => error.message).join(', ')}`);
+    }
+
+    console.log(
+      missingFields.length
+        ? `updated metaobject lens_package (${missingFields.map((field) => field.key).join(', ')})`
+        : 'exists metaobject lens_package',
+    );
+    return;
+  }
+
   const mutation = `#graphql
     mutation CreateMetaobjectDefinition($definition: MetaobjectDefinitionCreateInput!) {
       metaobjectDefinitionCreate(definition: $definition) {
@@ -117,6 +178,9 @@ async function ensureLensPackageMetaobject() {
   const definition = {
     type: 'lens_package',
     name: 'Lens package',
+    access: {
+      storefront: 'PUBLIC_READ',
+    },
     fieldDefinitions: lensPackageFields.map((field) => ({
       key: field.key,
       name: field.name,

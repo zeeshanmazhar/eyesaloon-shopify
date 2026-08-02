@@ -47,3 +47,9 @@
 - Options considered: build the full AJAX frame-plus-hidden-lens-package cart flow immediately, or first ship a no-JS-safe product form that captures Rx choices as line item properties.
 - Choice: start with line item properties inside Dawn's product form, including order type, Rx method, prescription values, photo URL placeholder, WhatsApp confirmation, and lens package selection.
 - Why: frame-only add-to-cart remains robust without JavaScript, and the admin order will expose Rx details as soon as products exist. The hidden lens package product and grouped AJAX add still require product data, package variants, and Admin API setup.
+
+## 2026-08-02 - Lens packages use a hidden product plus public metaobjects
+
+- Options considered: keep lens pricing as line item text only, use cart transforms, or create a hidden add-on product with one variant per lens package.
+- Choice: create `Eyesaloon Lens Packages` as a hidden add-on product and expose package metadata through `lens_package` metaobjects with a `hidden_variant_id` field.
+- Why: Shopify checkout totals stay native and auditable. The product form can add frame + lens package together through AJAX with a shared `_config_id`, while the no-JS fallback still adds frame-only safely.
