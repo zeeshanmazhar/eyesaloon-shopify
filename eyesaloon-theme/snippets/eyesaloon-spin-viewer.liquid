@@ -9,15 +9,26 @@
   <eyesaloon-spin-viewer class="eyesaloon-spin" aria-label="{{ 'eyesaloon.spin.label' | t }}">
     <div class="eyesaloon-spin__track" data-spin-track>
       {%- for frame in spin_frames -%}
-        {{
-          frame
-          | image_url: width: 900
-          | image_tag:
-            loading: 'lazy',
-            widths: '360, 540, 720, 900',
-            hidden: forloop.first == false,
-            alt: product.title
-        }}
+        {%- if forloop.first -%}
+          {{
+            frame
+            | image_url: width: 900
+            | image_tag:
+              loading: 'lazy',
+              widths: '360, 540, 720, 900',
+              alt: product.title
+          }}
+        {%- else -%}
+          {{
+            frame
+            | image_url: width: 900
+            | image_tag:
+              loading: 'lazy',
+              widths: '360, 540, 720, 900',
+              hidden: true,
+              alt: product.title
+          }}
+        {%- endif -%}
       {%- endfor -%}
     </div>
     <label class="eyesaloon-spin__control">
