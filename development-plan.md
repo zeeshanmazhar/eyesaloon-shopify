@@ -276,13 +276,13 @@ See B3 for implementation. Values: primary `#3550E9`, ink `#111111`, body `#4A4A
 
 **Zee (blocking, do first):**
 - [ ] Shopify Basic (annual), store name Eyesaloon; buy + connect domain; store currency PKR, address = real shop address. *(Development store is created and connected for app/theme preview.)*
-- [ ] Create private GitHub repos `eyesaloon-theme`, `eyesaloon-tryon`; invite agent.
+- [x] Create private GitHub repos `eyesaloon-theme`, `eyesaloon-tryon`; invite agent. *(Using monorepo `zeeshanmazhar/eyesaloon-shopify` with `eyesaloon-theme/` and `eyesaloon-tryon/`; branches `main` and `develop` pushed.)*
 - [x] Run `shopify auth login` for the agent's environment (interactive device auth). *(Done for `sudozee@gmail.com`; store target `eyesaloon.myshopify.com`.)*
 - [ ] Admin → Develop apps → create `eyesaloon-scripts` custom app, scopes: `read_products, write_products, read_orders, write_files, read_files, write_metaobjects, read_metaobjects` → install → put token in `.env`.
 - [ ] START PAPERWORK: NTN/sales-tax, business bank account, courier COD contracts, bSecure/CartDNA merchant application (weeks of lead time).
 
 **Agent:**
-- [x] Theme scaffold + Git integration (B2): `main` = production theme, `develop` = preview theme. *(Local Dawn scaffold created; `develop-preview` is uploaded to dev store theme `#189729079578`; remote GitHub integration waits on Zee's repo access.)*
+- [x] Theme scaffold + Git integration (B2): `main` = production theme, `develop` = preview theme. *(Local Dawn scaffold created; `develop-preview` is uploaded to dev store theme `#189729079578`; GitHub monorepo remote is connected and pushed.)*
 - [x] CI (GitHub Actions): `shopify theme check` + `audit-colors.mjs` on PR.
 - [x] App scaffold + extension scaffold (B5); verify `shopify app dev` serves the block into the dev store. *(Scaffold and `tryon-block` extension are built; app is linked as `Eyesaloon Tryon`; `shopify app dev` is running on `eyesaloon-wtps59lz.myshopify.com` with host theme `develop-preview`.)*
 - [x] Create `docs/DECISIONS.md`, `data/` CSV templates, `.env.example`.
