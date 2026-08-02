@@ -19,6 +19,10 @@
       "jazzcash": "JazzCash",
       "easypaisa": "Easypaisa"
     },
+    "featured": {
+      "filter_label": "Filter featured products",
+      "all": "All"
+    },
     "measurement": {
       "title": "Eyeglass frame measurement diagram",
       "product_title": "Frame measurements",
@@ -55,6 +59,10 @@
       "package_none": "Decide after order",
       "package_note": "Lens package pricing will be confirmed with your order until the hidden package product is connected.",
       "not_compatible": "This frame is not marked prescription compatible."
+    },
+    "spin": {
+      "label": "360 degree frame viewer",
+      "drag_label": "Drag or scrub to rotate"
     },
     "steps": {
       "choose_frame": "Choose your frame",

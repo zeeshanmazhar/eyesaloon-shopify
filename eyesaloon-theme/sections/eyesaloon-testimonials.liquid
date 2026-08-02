@@ -1,0 +1,67 @@
+<section class="page-width eyesaloon-testimonials">
+  <div class="eyesaloon-section-heading">
+    <h2>{{ section.settings.heading }}</h2>
+  </div>
+  <div class="eyesaloon-testimonials__grid">
+    {%- for block in section.blocks -%}
+      <figure class="eyesaloon-testimonial" {{ block.shopify_attributes }}>
+        {% render 'eyesaloon-rating-stars', rating: block.settings.rating, count: 0 %}
+        <blockquote>{{ block.settings.quote }}</blockquote>
+        <figcaption>{{ block.settings.name }}</figcaption>
+      </figure>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eyesaloon testimonials",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Customers trust Eyesaloon"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Prescription support was clear and the frame fit well."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Eyesaloon customer"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 0.5,
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Eyesaloon testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

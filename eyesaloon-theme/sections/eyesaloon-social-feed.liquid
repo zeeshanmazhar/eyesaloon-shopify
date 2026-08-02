@@ -1,0 +1,81 @@
+<section class="eyesaloon-social-feed">
+  <div class="page-width eyesaloon-social-feed__inner">
+    <div class="eyesaloon-section-heading">
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.text }}</p>
+    </div>
+    <div class="eyesaloon-social-feed__grid">
+      {%- for block in section.blocks -%}
+        <a class="eyesaloon-social-post" href="{{ block.settings.link | default: routes.root_url }}" {{ block.shopify_attributes }}>
+          <span class="eyesaloon-social-post__media">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 700
+                | image_tag: loading: 'lazy', widths: '240, 360, 520, 700'
+              }}
+            {%- else -%}
+              {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </span>
+          <span class="eyesaloon-social-post__caption">{{ block.settings.caption }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eyesaloon social feed",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From the shop"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Add real shop photos, new arrivals, and customer frame moments."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Post",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "New frame arrival"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Eyesaloon social feed",
+      "blocks": [
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" }
+      ]
+    }
+  ]
+}
+{% endschema %}

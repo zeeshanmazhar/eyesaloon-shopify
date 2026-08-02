@@ -39,6 +39,12 @@
             "custom_liquid": "{% render 'eyesaloon-product-measurements', product: product %}"
           }
         },
+        "spin_viewer": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'eyesaloon-spin-viewer', product: product %}"
+          }
+        },
         "description": {
           "type": "description"
         },
@@ -57,6 +63,7 @@
         "quantity_selector",
         "buy_buttons",
         "measurements",
+        "spin_viewer",
         "description",
         "share"
       ],

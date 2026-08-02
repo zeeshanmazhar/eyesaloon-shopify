@@ -395,6 +395,44 @@ button.shopify-payment-button__button--unbranded {
   padding: 1rem;
 }
 
+.eyesaloon-spin {
+  background: var(--color-surface-warm);
+  border-radius: var(--radius-card);
+  display: grid;
+  gap: 1.2rem;
+  overflow: hidden;
+  padding: 1.6rem;
+}
+
+.eyesaloon-spin__track {
+  aspect-ratio: 4 / 3;
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  cursor: ew-resize;
+  display: grid;
+  overflow: hidden;
+  place-items: center;
+  touch-action: pan-y;
+}
+
+.eyesaloon-spin__track img {
+  grid-area: 1 / 1;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.eyesaloon-spin__control {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.eyesaloon-spin__control span {
+  color: var(--color-ink);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
 .eyesaloon-product-measurements,
 .eyesaloon-rx {
   background: var(--color-surface-warm);
@@ -612,8 +650,17 @@ button.shopify-payment-button__button--unbranded {
   color: var(--color-body);
 }
 
+.eyesaloon-featured-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-block-start: 1.6rem;
+}
+
 .eyesaloon-category-tiles,
-.eyesaloon-how {
+.eyesaloon-how,
+.eyesaloon-testimonials,
+.eyesaloon-social-feed {
   padding-block: 4rem;
 }
 
@@ -660,6 +707,73 @@ button.shopify-payment-button__button--unbranded {
 .eyesaloon-how__panel {
   display: grid;
   gap: 1.4rem;
+}
+
+.eyesaloon-testimonials__grid,
+.eyesaloon-social-feed__grid {
+  display: grid;
+  gap: 1.6rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.eyesaloon-testimonial {
+  background: var(--color-surface-warm);
+  border-radius: var(--radius-card);
+  display: grid;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 1.8rem;
+}
+
+.eyesaloon-testimonial blockquote,
+.eyesaloon-testimonial figcaption {
+  margin: 0;
+}
+
+.eyesaloon-testimonial blockquote {
+  color: var(--color-ink);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.eyesaloon-testimonial figcaption {
+  color: var(--color-body);
+  font-size: 1.3rem;
+}
+
+.eyesaloon-social-feed {
+  background: var(--color-surface-warm);
+}
+
+.eyesaloon-social-feed__inner {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.eyesaloon-social-post {
+  color: var(--color-ink);
+  display: grid;
+  gap: 0.8rem;
+  text-decoration: none;
+}
+
+.eyesaloon-social-post__media {
+  aspect-ratio: 1;
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  display: grid;
+  overflow: hidden;
+  place-items: center;
+}
+
+.eyesaloon-social-post__media img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.eyesaloon-social-post__caption {
+  font-weight: 700;
 }
 
 .footer {
@@ -861,6 +975,11 @@ html[dir='rtl'] h3 {
 
   .eyesaloon-category-tiles__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .eyesaloon-testimonials__grid,
+  .eyesaloon-social-feed__grid {
+    grid-template-columns: 1fr;
   }
 
   .eyesaloon-rx__grid {

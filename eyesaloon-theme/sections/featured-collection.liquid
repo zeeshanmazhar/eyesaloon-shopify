@@ -71,6 +71,7 @@
     class="collection{% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %} section-{{ section.id }}-padding{% if section.settings.full_width %} collection--full-width{% endif %}"
     id="collection-{{ section.id }}"
     data-id="{{ section.id }}"
+    data-eyesaloon-featured
   >
     <div class="collection__title title-wrapper title-wrapper--no-top-margin page-width{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% endif %}{% if show_desktop_slider %} collection__title--desktop-slider{% endif %}">
       {%- if section.settings.title != blank -%}
@@ -88,6 +89,33 @@
           {%- else -%}
             {{ section.settings.description -}}
           {%- endif %}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.enable_tag_chips and section.settings.collection.products.size > 0 -%}
+        <script src="{{ 'eyesaloon-featured-filters.js' | asset_url }}" defer="defer"></script>
+        {%- liquid
+          assign chip_tags = ''
+          for product in section.settings.collection.products limit: section.settings.products_to_show
+            for tag in product.tags
+              assign normalized_tag = tag | handle
+              unless chip_tags contains normalized_tag
+                assign chip_tags = chip_tags | append: normalized_tag | append: ','
+              endunless
+            endfor
+          endfor
+          assign chip_tag_list = chip_tags | split: ','
+        -%}
+        <div class="eyesaloon-featured-chips" aria-label="{{ 'eyesaloon.featured.filter_label' | t }}">
+          <button class="eyesaloon-chip is-selected" type="button" data-eyesaloon-featured-filter="all" aria-pressed="true">
+            {{ 'eyesaloon.featured.all' | t }}
+          </button>
+          {%- for tag in chip_tag_list limit: 8 -%}
+            {%- if tag != blank -%}
+              <button class="eyesaloon-chip" type="button" data-eyesaloon-featured-filter="{{ tag }}" aria-pressed="false">
+                {{ tag | replace: '-', ' ' | capitalize }}
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
       {%- endif -%}
     </div>
@@ -112,6 +140,7 @@
               <li
                 id="Slide-{{ section.id }}-{{ forloop.index }}"
                 class="grid__item{% if show_mobile_slider or show_desktop_slider %} slider__slide{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                data-eyesaloon-product-tags="{% for tag in product.tags %}{{ tag | handle }}{% unless forloop.last %},{% endunless %}{% endfor %}"
                 {% if settings.animations_reveal_on_scroll %}
                   data-cascade
                   style="--animation-order: {{ forloop.index }};"
@@ -286,6 +315,12 @@
       "id": "show_description",
       "label": "t:sections.featured-collection.settings.show_description.label",
       "default": false   
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_tag_chips",
+      "label": "Show Eyesaloon tag chips",
+      "default": true
     },
     {
       "type": "select",

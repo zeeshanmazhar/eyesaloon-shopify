@@ -19,6 +19,10 @@
       "jazzcash": "JazzCash",
       "easypaisa": "Easypaisa"
     },
+    "featured": {
+      "filter_label": "فیچرڈ پراڈکٹس فلٹر کریں",
+      "all": "سب"
+    },
     "measurement": {
       "title": "چشمے کے فریم کی پیمائش کا خاکہ",
       "product_title": "فریم پیمائش",
@@ -55,6 +59,10 @@
       "package_none": "آرڈر کے بعد فیصلہ",
       "package_note": "جب تک hidden package product کنیکٹ نہیں ہوتا، لینس پیکج قیمت آرڈر کے ساتھ کنفرم ہوگی۔",
       "not_compatible": "یہ فریم نسخہ کے لیے compatible مارک نہیں ہے۔"
+    },
+    "spin": {
+      "label": "360 ڈگری فریم ویور",
+      "drag_label": "روٹیٹ کرنے کے لیے ڈریگ یا سکرب کریں"
     },
     "steps": {
       "choose_frame": "اپنا فریم منتخب کریں",

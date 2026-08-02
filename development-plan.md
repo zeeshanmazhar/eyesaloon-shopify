@@ -314,14 +314,14 @@ See B3 for implementation. Values: primary `#3550E9`, ink `#111111`, body `#4A4A
 Sections, each with schema presets and editor-configurable content: `hero` (heading, subtext, CTA, image, warm-surface toggle, ghost-text toggle) · `category-tiles` (blocks: image + collection link ×4–6) · `featured-collection` (chip filters client-side on tags) · `trust-grid` (4 cards) · `how-it-works` (3 steps + optional video) · `testimonials` (blocks) · `social-feed` (lazy embed).
 
 - [x] Hero, category tiles, featured collection, and how-it-works/trust foundation are implemented.
-- [ ] Client-side featured-collection tag chips, testimonials, and social-feed embed remain.
+- [x] Client-side featured-collection tag chips, testimonials, and social-feed placeholders are implemented. Real social embed/photos remain.
 
 ### Collection (`templates/collection.json` + `sections/main-collection.liquid`)
 - [ ] Shopify **Search & Discovery** app (free, first-party) → configure filters on metafields (D6): shape, material, gender, face_shapes, price. Storefront filtering then works via `collection.filters` in Liquid — render as pill chips (mobile: filter drawer). *(Theme styling is ready; Admin app/filter configuration still required.)*
 - [x] Grid 2-col mobile / 4-col desktop; pagination (numbered, not infinite); sort dropdown; result count; empty state.
 
 ### Product (`templates/product.json`)
-- [ ] **Gallery**: media carousel — images, native 3D model media if present (B1), 360° spin viewer (custom: preloads `spin_frames` file-list metafield images, drag/swipe scrubbing, ~24 frames, lazy). Try-on app block slot renders when the app provides it (M5) — main-product section schema must include `{"type": "@app"}` in blocks. *(Dawn gallery + native 3D + section schema app block support are present; a concrete try-on app block must be added in the theme editor once available; custom 360 spin viewer remains.)*
+- [ ] **Gallery**: media carousel — images, native 3D model media if present (B1), 360° spin viewer (custom: preloads `spin_frames` file-list metafield images, drag/swipe scrubbing, ~24 frames, lazy). Try-on app block slot renders when the app provides it (M5) — main-product section schema must include `{"type": "@app"}` in blocks. *(Dawn gallery + native 3D + section schema app block support are present; concrete try-on app block must be added in the theme editor once available; custom 360 spin viewer foundation is implemented and waits on `spin_frames` media.)*
 - [x] **Measurements panel**: `measurement-diagram` snippet fed by metafields; fit note logic (lens_width < 50 → "runs narrow" etc.).
 - [ ] **Lens configurator** — THE core custom build. Custom section within product form:
   - Step 1 (radio cards): Frame only / With prescription lenses / With sunglass tint. Gated by `rx_compatible` metafield.
@@ -330,6 +330,7 @@ Sections, each with schema presets and editor-configurable content: `hero` (head
   - Implementation: all choices go into `properties[...]` inputs inside `{% form 'product' %}` (e.g. `properties[Rx SPH R]`, `properties[Lens Package]`, `properties[Rx Photo URL]`). **Price add-ons**: lens packages are a hidden variant/product added alongside — simplest robust pattern: each lens package = a variant of a hidden "Lens Package" product; configurator adds frame + package to cart together via AJAX Cart API (`/cart/add.js` with `items:[...]`), linked by a shared `properties[_config_id]`. Cart section groups items with same `_config_id` visually. Log alternatives considered in DECISIONS.md.
   - *Acceptance: admin order shows frame + lens package lines with all Rx properties; totals correct; works without JS for frame-only purchase.*
   - Current status: line-item property configurator is implemented inside the product form and frame-only works without JS. Hidden lens package product + AJAX grouped add remains blocked on product data/Admin API setup.
+  - Rx upload app route scaffold exists at `/apps/eyesaloon/rx-upload`; persistent storage/file upload wiring remains.
 - [x] Trust strip, related frames (same `frame_shape`, exclude self, via Liquid or Search & Discovery related products). *(Dawn related-products + Eyesaloon trust surfaces are present; metafield-specific related logic remains for after D6 data.)*
 
 ### Cart (`sections/main-cart.liquid` + drawer)

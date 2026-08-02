@@ -87,12 +87,90 @@
         "heading": "How it works",
         "text": "Pick a frame, add your prescription details, and confirm everything with our team before lenses are made."
       }
+    },
+    "testimonials": {
+      "type": "eyesaloon-testimonials",
+      "blocks": {
+        "first": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Prescription support was clear and the frame fit well.",
+            "name": "Eyesaloon customer",
+            "rating": 5
+          }
+        },
+        "second": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The WhatsApp confirmation made ordering lenses easier.",
+            "name": "Eyesaloon customer",
+            "rating": 5
+          }
+        },
+        "third": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Good help with sizing before I placed my order.",
+            "name": "Eyesaloon customer",
+            "rating": 4.5
+          }
+        }
+      },
+      "block_order": [
+        "first",
+        "second",
+        "third"
+      ],
+      "settings": {
+        "heading": "Customers trust Eyesaloon"
+      }
+    },
+    "social_feed": {
+      "type": "eyesaloon-social-feed",
+      "blocks": {
+        "post_1": {
+          "type": "post",
+          "settings": {
+            "caption": "New frame arrival"
+          }
+        },
+        "post_2": {
+          "type": "post",
+          "settings": {
+            "caption": "Prescription support"
+          }
+        },
+        "post_3": {
+          "type": "post",
+          "settings": {
+            "caption": "Shop fitting"
+          }
+        },
+        "post_4": {
+          "type": "post",
+          "settings": {
+            "caption": "Customer pick"
+          }
+        }
+      },
+      "block_order": [
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4"
+      ],
+      "settings": {
+        "heading": "From the shop",
+        "text": "Add real shop photos, new arrivals, and customer frame moments."
+      }
     }
   },
   "order": [
     "eyesaloon_hero",
     "category_tiles",
     "featured_collection",
-    "how_it_works"
+    "how_it_works",
+    "testimonials",
+    "social_feed"
   ]
 }

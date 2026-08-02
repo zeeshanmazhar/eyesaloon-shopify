@@ -1,0 +1,28 @@
+{% comment %}
+  API: render 'eyesaloon-spin-viewer', product: product
+  Reads product.metafields.eyesaloon.spin_frames as a list of image file references.
+{% endcomment %}
+{%- assign spin_frames = product.metafields.eyesaloon.spin_frames.value -%}
+
+{%- if spin_frames != blank -%}
+  <script src="{{ 'eyesaloon-spin-viewer.js' | asset_url }}" defer="defer"></script>
+  <eyesaloon-spin-viewer class="eyesaloon-spin" aria-label="{{ 'eyesaloon.spin.label' | t }}">
+    <div class="eyesaloon-spin__track" data-spin-track>
+      {%- for frame in spin_frames -%}
+        {{
+          frame
+          | image_url: width: 900
+          | image_tag:
+            loading: 'lazy',
+            widths: '360, 540, 720, 900',
+            hidden: forloop.first == false,
+            alt: product.title
+        }}
+      {%- endfor -%}
+    </div>
+    <label class="eyesaloon-spin__control">
+      <span>{{ 'eyesaloon.spin.drag_label' | t }}</span>
+      <input data-spin-range type="range" min="0" max="{{ spin_frames.count | minus: 1 }}" value="0">
+    </label>
+  </eyesaloon-spin-viewer>
+{%- endif -%}
