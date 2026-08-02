@@ -1,0 +1,16 @@
+{% comment %}
+  API: render 'eyesaloon-measurement-diagram'
+{% endcomment %}
+<div class="eyesaloon-measurement">
+  <svg class="eyesaloon-measurement__diagram" viewBox="0 0 520 220" role="img" aria-labelledby="EyesaloonMeasurementTitle">
+    <title id="EyesaloonMeasurementTitle">{{ 'eyesaloon.measurement.title' | t }}</title>
+    <path d="M80 112c8-48 42-76 94-76 45 0 72 24 86 57 14-33 41-57 86-57 52 0 86 28 94 76 8 49-21 80-82 80-52 0-84-28-98-67-14 39-46 67-98 67-61 0-90-31-82-80Z" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M40 108h50M430 108h50M234 106h52" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"/>
+    <path d="M128 198h264M128 198l22-18M128 198l22 18M392 198l-22-18M392 198l-22 18" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <div class="eyesaloon-measurement__labels">
+    <span class="eyesaloon-measurement__label">{{ 'eyesaloon.measurement.lens_width' | t }}</span>
+    <span class="eyesaloon-measurement__label">{{ 'eyesaloon.measurement.bridge' | t }}</span>
+    <span class="eyesaloon-measurement__label">{{ 'eyesaloon.measurement.temple' | t }}</span>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+{% comment %}
+  API: render 'eyesaloon-chip', text: 'Label', selected: true, href: collection.url
+{% endcomment %}
+{%- assign chip_text = text | default: 'eyesaloon.styleguide.rx_ready' | t -%}
+{%- assign chip_selected = selected | default: false -%}
+
+{%- if href != blank -%}
+  <a class="eyesaloon-chip{% if chip_selected %} is-selected{% endif %}" href="{{ href }}">
+    {{ chip_text }}
+  </a>
+{%- else -%}
+  <button class="eyesaloon-chip{% if chip_selected %} is-selected{% endif %}" type="button" aria-pressed="{{ chip_selected }}">
+    {{ chip_text }}
+  </button>
+{%- endif -%}

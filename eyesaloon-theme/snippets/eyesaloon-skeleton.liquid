@@ -1,0 +1,10 @@
+{% comment %}
+  API: render 'eyesaloon-skeleton', lines: 3
+{% endcomment %}
+{%- assign skeleton_lines = lines | default: 3 -%}
+<div class="eyesaloon-skeleton" aria-hidden="true">
+  <span class="eyesaloon-skeleton__media"></span>
+  {%- for index in (1..skeleton_lines) -%}
+    <span class="eyesaloon-skeleton__line"></span>
+  {%- endfor -%}
+</div>

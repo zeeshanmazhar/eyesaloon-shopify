@@ -1,0 +1,14 @@
+{% comment %}
+  API: render 'eyesaloon-price', price: product.price, compare_at_price: product.compare_at_price
+{% endcomment %}
+{%- liquid
+  assign current_price = price | default: 0
+  assign old_price = compare_at_price | default: 0
+-%}
+
+<span class="eyesaloon-price">
+  <span class="eyesaloon-price__current">{{ current_price | money }}</span>
+  {%- if old_price > current_price -%}
+    <span class="eyesaloon-price__compare">{{ old_price | money }}</span>
+  {%- endif -%}
+</span>

@@ -1,0 +1,41 @@
+{% comment %}
+  API: render 'eyesaloon-product-card', product: product, show_swatches: true, badge: 'New'
+{% endcomment %}
+{%- assign card_product = product -%}
+{%- assign card_badge = badge -%}
+
+<article class="eyesaloon-card eyesaloon-product-card">
+  <a class="eyesaloon-card__media" href="{% if card_product != blank %}{{ card_product.url }}{% else %}{{ routes.collections_url }}{% endif %}">
+    {%- if card_product.featured_media -%}
+      {{
+        card_product.featured_media
+        | image_url: width: 720
+        | image_tag: loading: 'lazy', widths: '240, 360, 480, 720', alt: card_product.featured_media.alt | escape
+      }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </a>
+  <div class="eyesaloon-card__content">
+    {%- if card_badge != blank -%}
+      {% render 'eyesaloon-badge', text: card_badge %}
+    {%- endif -%}
+    <h3 class="eyesaloon-card__title">
+      <a href="{% if card_product != blank %}{{ card_product.url }}{% else %}{{ routes.collections_url }}{% endif %}">
+        {%- if card_product != blank -%}
+          {{ card_product.title | escape }}
+        {%- else -%}
+          {{ 'eyesaloon.styleguide.sample_product' | t }}
+        {%- endif -%}
+      </a>
+    </h3>
+    {%- if card_product != blank -%}
+      {% render 'eyesaloon-price', price: card_product.price, compare_at_price: card_product.compare_at_price %}
+    {%- else -%}
+      {% render 'eyesaloon-price', price: 250000, compare_at_price: 320000 %}
+    {%- endif -%}
+    {%- if show_swatches -%}
+      {% render 'eyesaloon-swatch-dots' %}
+    {%- endif -%}
+  </div>
+</article>

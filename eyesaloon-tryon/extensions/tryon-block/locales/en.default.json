@@ -1,0 +1,12 @@
+{
+  "tryon": {
+    "close": "Close",
+    "eyebrow": "Virtual try-on",
+    "fit_chip": "Frame scale preview",
+    "modal_eyebrow": "Private preview",
+    "button_label": "Try on",
+    "missing_model": "Add a 3D model file to the product metafield eyesaloon.model_3d to enable try-on.",
+    "privacy_chip": "Camera stays on device",
+    "ready_status": "Your try-on preview will load here."
+  }
+}

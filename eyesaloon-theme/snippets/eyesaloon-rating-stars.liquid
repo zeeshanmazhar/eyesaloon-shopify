@@ -1,0 +1,16 @@
+{% comment %}
+  API: render 'eyesaloon-rating-stars', rating: 4.8, count: 124
+{% endcomment %}
+{%- assign rating_value = rating | default: 5 -%}
+{%- assign review_count = count | default: 0 -%}
+
+<span class="eyesaloon-rating" aria-label="{{ 'eyesaloon.components.rating_label' | t: rating: rating_value, count: review_count }}">
+  <span class="eyesaloon-rating__stars" aria-hidden="true">
+    {%- for index in (1..5) -%}
+      <span class="eyesaloon-rating__star">★</span>
+    {%- endfor -%}
+  </span>
+  {%- if review_count > 0 -%}
+    <span class="eyesaloon-rating__count">{{ review_count }}</span>
+  {%- endif -%}
+</span>

@@ -1,0 +1,69 @@
+<style>
+  @font-face {
+    font-family: 'Libre Franklin';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url({{ 'libre-franklin-400.woff2' | asset_url }}) format('woff2');
+  }
+
+  @font-face {
+    font-family: 'Libre Franklin';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url({{ 'libre-franklin-500.woff2' | asset_url }}) format('woff2');
+  }
+
+  @font-face {
+    font-family: 'Libre Franklin';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url({{ 'libre-franklin-600.woff2' | asset_url }}) format('woff2');
+  }
+
+  @font-face {
+    font-family: 'Libre Franklin';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url({{ 'libre-franklin-700.woff2' | asset_url }}) format('woff2');
+  }
+
+  @font-face {
+    font-family: 'Noto Nastaliq Urdu';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url({{ 'noto-nastaliq-urdu-400.woff2' | asset_url }}) format('woff2');
+  }
+
+  @font-face {
+    font-family: 'Noto Nastaliq Urdu';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url({{ 'noto-nastaliq-urdu-600.woff2' | asset_url }}) format('woff2');
+  }
+
+  :root {
+    --color-primary: {{ settings.color_primary }};
+    --color-primary-hover: {{ settings.color_primary | color_darken: 12 }};
+    --color-primary-soft: {{ settings.color_primary | color_mix: settings.color_surface, 12 }};
+    --color-ink: {{ settings.color_ink }};
+    --color-body: {{ settings.color_body }};
+    --color-muted: {{ settings.color_muted }};
+    --color-surface: {{ settings.color_surface }};
+    --color-surface-warm: {{ settings.color_surface_warm }};
+    --color-accent-warm: {{ settings.color_accent_warm }};
+    --color-success: {{ settings.color_success }};
+    --color-error: {{ settings.color_error }};
+    --font-brand-body: 'Libre Franklin', system-ui, sans-serif;
+    --font-brand-heading: 'Libre Franklin', system-ui, sans-serif;
+    --font-brand-urdu: 'Noto Nastaliq Urdu', serif;
+    --radius-card: {{ settings.radius_card }}px;
+    --radius-button: {{ settings.radius_button }}px;
+    --radius-chip: 999px;
+  }
+</style>

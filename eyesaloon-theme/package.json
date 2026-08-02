@@ -1,0 +1,14 @@
+{
+  "name": "eyesaloon-theme",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "theme:check": "shopify theme check",
+    "audit:colors": "node scripts/audit-colors.mjs",
+    "setup:metafields": "node scripts/setup-metafields.mjs",
+    "ci": "npm run theme:check && npm run audit:colors"
+  }
+}

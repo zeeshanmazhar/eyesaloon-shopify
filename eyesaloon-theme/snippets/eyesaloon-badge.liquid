@@ -1,0 +1,9 @@
+{% comment %}
+  API: render 'eyesaloon-badge', text: 'products.product.on_sale' | t, tone: 'primary'
+{% endcomment %}
+{%- assign badge_text = text | default: 'eyesaloon.styleguide.badge' | t -%}
+{%- assign badge_tone = tone | default: 'primary' -%}
+
+<span class="eyesaloon-badge eyesaloon-badge--{{ badge_tone | handle }}">
+  {{ badge_text }}
+</span>

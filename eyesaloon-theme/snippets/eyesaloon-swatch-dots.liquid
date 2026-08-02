@@ -1,0 +1,10 @@
+{% comment %}
+  API: render 'eyesaloon-swatch-dots', colors: 'var(--color-ink),var(--color-primary),var(--color-accent-warm)'
+{% endcomment %}
+{%- assign swatch_colors = colors | default: 'var(--color-ink),var(--color-primary),var(--color-accent-warm)' | split: ',' -%}
+
+<span class="eyesaloon-swatches" aria-label="{{ 'eyesaloon.components.available_colors' | t }}">
+  {%- for swatch_color in swatch_colors limit: 5 -%}
+    <span class="eyesaloon-swatch" style="--swatch-color: {{ swatch_color | strip }};"></span>
+  {%- endfor -%}
+</span>

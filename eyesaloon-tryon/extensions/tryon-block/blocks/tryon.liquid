@@ -1,0 +1,124 @@
+{% liquid
+  assign selected_product = block.settings.product
+  if selected_product == blank and product != blank
+    assign selected_product = product
+  endif
+
+  assign model_file = selected_product.metafields.eyesaloon.model_3d.value
+  assign show_block = false
+
+  if selected_product != blank and model_file != blank
+    assign show_block = true
+  elsif request.design_mode
+    assign show_block = true
+  endif
+%}
+
+{% if show_block %}
+  <div
+    class="eyesaloon-tryon"
+    data-eyesaloon-tryon
+    {% if selected_product != blank %}data-product-id="{{ selected_product.id }}"{% endif %}
+    {% if model_file != blank %}data-model-url="{{ model_file | file_url }}"{% endif %}
+  >
+    <div class="eyesaloon-tryon__copy">
+      <p class="eyesaloon-tryon__eyebrow">{{ 'tryon.eyebrow' | t }}</p>
+      <h3 class="eyesaloon-tryon__title">{{ block.settings.heading }}</h3>
+      <p class="eyesaloon-tryon__text">{{ block.settings.supporting_text }}</p>
+    </div>
+
+    <div class="eyesaloon-tryon__actions">
+      <button class="eyesaloon-tryon__button" type="button" aria-haspopup="dialog">
+        <span>{{ block.settings.button_label }}</span>
+      </button>
+
+      <span class="eyesaloon-tryon__chip">{{ 'tryon.privacy_chip' | t }}</span>
+    </div>
+
+    {% if request.design_mode and model_file == blank %}
+      <p class="eyesaloon-tryon__hint">
+        {{ 'tryon.missing_model' | t }}
+      </p>
+    {% endif %}
+
+    <div class="eyesaloon-tryon-modal" data-eyesaloon-tryon-modal hidden>
+      <button class="eyesaloon-tryon-modal__backdrop" type="button" data-eyesaloon-tryon-close>
+        <span class="visually-hidden">{{ 'tryon.close' | t }}</span>
+      </button>
+
+      <div
+        class="eyesaloon-tryon-modal__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="{{ block.settings.heading | escape }}"
+      >
+        <div class="eyesaloon-tryon-modal__header">
+          <div>
+            <p class="eyesaloon-tryon__eyebrow">{{ 'tryon.modal_eyebrow' | t }}</p>
+            <h3 class="eyesaloon-tryon-modal__title">{{ block.settings.heading }}</h3>
+          </div>
+
+          <button class="eyesaloon-tryon-modal__close" type="button" data-eyesaloon-tryon-close>
+            <span aria-hidden="true">x</span>
+            <span class="visually-hidden">{{ 'tryon.close' | t }}</span>
+          </button>
+        </div>
+
+        <div class="eyesaloon-tryon-modal__stage" data-eyesaloon-tryon-stage>
+          <div class="eyesaloon-tryon-modal__frame" aria-hidden="true">
+            <span class="eyesaloon-tryon-modal__lens eyesaloon-tryon-modal__lens--left"></span>
+            <span class="eyesaloon-tryon-modal__bridge"></span>
+            <span class="eyesaloon-tryon-modal__lens eyesaloon-tryon-modal__lens--right"></span>
+          </div>
+
+          <p class="eyesaloon-tryon-modal__status" data-eyesaloon-tryon-status>
+            {{ 'tryon.ready_status' | t }}
+          </p>
+        </div>
+
+        <div class="eyesaloon-tryon-modal__footer">
+          <span class="eyesaloon-tryon__chip">{{ 'tryon.fit_chip' | t }}</span>
+          <span class="eyesaloon-tryon__chip">{{ 'tryon.privacy_chip' | t }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Try-on",
+  "target": "section",
+  "stylesheet": "tryon.css",
+  "javascript": "tryon.js",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "autofill": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "See the fit before you order"
+    },
+    {
+      "type": "text",
+      "id": "supporting_text",
+      "label": "Supporting text",
+      "default": "Preview frame scale and lens width with a private on-device try-on."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Try on"
+    }
+  ]
+}
+{% endschema %}

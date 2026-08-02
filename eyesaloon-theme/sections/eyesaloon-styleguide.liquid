@@ -1,0 +1,73 @@
+<section class="page-width eyesaloon-styleguide">
+  {%- liquid
+    assign rx_ready_label = 'eyesaloon.styleguide.rx_ready' | t
+    assign cod_label = 'eyesaloon.styleguide.cod' | t
+    assign badge_label = 'eyesaloon.styleguide.badge' | t
+  -%}
+
+  <header class="eyesaloon-styleguide__panel">
+    <h1>{{ 'eyesaloon.styleguide.title' | t }}</h1>
+    <p>{{ 'eyesaloon.styleguide.intro' | t }}</p>
+  </header>
+
+  <div class="eyesaloon-styleguide__panel">
+    <h2>{{ 'eyesaloon.styleguide.buttons' | t }}</h2>
+    <div class="eyesaloon-styleguide__row">
+      <a href="{{ routes.collections_url }}" class="button">{{ 'eyesaloon.styleguide.primary_cta' | t }}</a>
+      <a href="{{ routes.root_url }}" class="button button--secondary">{{ 'eyesaloon.styleguide.secondary_cta' | t }}</a>
+      <button class="button button--ghost" type="button">{{ 'eyesaloon.styleguide.ghost_cta' | t }}</button>
+      <button class="button loading" type="button">{{ 'eyesaloon.styleguide.loading_cta' | t }}</button>
+    </div>
+  </div>
+
+  <div class="eyesaloon-styleguide__panel">
+    <h2>{{ 'eyesaloon.styleguide.compact_controls' | t }}</h2>
+    <div class="eyesaloon-styleguide__row">
+      {% render 'eyesaloon-chip', text: rx_ready_label, selected: true %}
+      {% render 'eyesaloon-chip', text: cod_label %}
+      {% render 'eyesaloon-badge', text: badge_label %}
+      {% render 'eyesaloon-rating-stars', rating: 4.9, count: 128 %}
+      {% render 'eyesaloon-price', price: 250000, compare_at_price: 320000 %}
+      {% render 'eyesaloon-swatch-dots' %}
+    </div>
+  </div>
+
+  <div class="eyesaloon-styleguide__panel">
+    <h2>{{ 'eyesaloon.styleguide.product_card' | t }}</h2>
+    <div class="eyesaloon-styleguide__grid">
+      {% render 'eyesaloon-product-card', show_swatches: true, badge: badge_label %}
+      <div class="eyesaloon-styleguide__surface">
+        {% render 'eyesaloon-skeleton', lines: 3 %}
+      </div>
+    </div>
+  </div>
+
+  <div class="eyesaloon-styleguide__panel">
+    <h2>{{ 'eyesaloon.styleguide.rx_support' | t }}</h2>
+    <div class="eyesaloon-styleguide__grid">
+      <div class="eyesaloon-styleguide__surface">
+        {% render 'eyesaloon-steps' %}
+      </div>
+      <div class="eyesaloon-styleguide__surface">
+        {% render 'eyesaloon-measurement-diagram' %}
+      </div>
+    </div>
+  </div>
+
+  <div class="eyesaloon-styleguide__panel">
+    <h2>{{ 'eyesaloon.styleguide.trust' | t }}</h2>
+    {% render 'eyesaloon-trust-strip' %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eyesaloon styleguide",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Eyesaloon styleguide"
+    }
+  ]
+}
+{% endschema %}

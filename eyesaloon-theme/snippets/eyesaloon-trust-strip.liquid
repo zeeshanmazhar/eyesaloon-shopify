@@ -1,0 +1,21 @@
+{% comment %}
+  API: render 'eyesaloon-trust-strip', compact: true
+{% endcomment %}
+<div class="eyesaloon-trust-strip{% if compact %} eyesaloon-trust-strip--compact{% endif %}">
+  <div class="eyesaloon-trust-item">
+    <p class="eyesaloon-trust-item__title">{{ 'eyesaloon.trust.rx_title' | t }}</p>
+    <p class="eyesaloon-trust-item__text">{{ 'eyesaloon.trust.rx_text' | t }}</p>
+  </div>
+  <div class="eyesaloon-trust-item">
+    <p class="eyesaloon-trust-item__title">{{ 'eyesaloon.trust.cod_title' | t }}</p>
+    <p class="eyesaloon-trust-item__text">{{ 'eyesaloon.trust.cod_text' | t }}</p>
+  </div>
+  <div class="eyesaloon-trust-item">
+    <p class="eyesaloon-trust-item__title">{{ 'eyesaloon.trust.remake_title' | t }}</p>
+    <p class="eyesaloon-trust-item__text">{{ 'eyesaloon.trust.remake_text' | t }}</p>
+  </div>
+  <div class="eyesaloon-trust-item">
+    <p class="eyesaloon-trust-item__title">{{ 'eyesaloon.trust.shop_title' | t }}</p>
+    <p class="eyesaloon-trust-item__text">{{ 'eyesaloon.trust.shop_text' | t }}</p>
+  </div>
+</div>
