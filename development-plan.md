@@ -313,26 +313,30 @@ See B3 for implementation. Values: primary `#3550E9`, ink `#111111`, body `#4A4A
 ### Homepage (`templates/index.json`)
 Sections, each with schema presets and editor-configurable content: `hero` (heading, subtext, CTA, image, warm-surface toggle, ghost-text toggle) · `category-tiles` (blocks: image + collection link ×4–6) · `featured-collection` (chip filters client-side on tags) · `trust-grid` (4 cards) · `how-it-works` (3 steps + optional video) · `testimonials` (blocks) · `social-feed` (lazy embed).
 
+- [x] Hero, category tiles, featured collection, and how-it-works/trust foundation are implemented.
+- [ ] Client-side featured-collection tag chips, testimonials, and social-feed embed remain.
+
 ### Collection (`templates/collection.json` + `sections/main-collection.liquid`)
-- [ ] Shopify **Search & Discovery** app (free, first-party) → configure filters on metafields (D6): shape, material, gender, face_shapes, price. Storefront filtering then works via `collection.filters` in Liquid — render as pill chips (mobile: filter drawer).
-- [ ] Grid 2-col mobile / 4-col desktop; pagination (numbered, not infinite); sort dropdown; result count; empty state.
+- [ ] Shopify **Search & Discovery** app (free, first-party) → configure filters on metafields (D6): shape, material, gender, face_shapes, price. Storefront filtering then works via `collection.filters` in Liquid — render as pill chips (mobile: filter drawer). *(Theme styling is ready; Admin app/filter configuration still required.)*
+- [x] Grid 2-col mobile / 4-col desktop; pagination (numbered, not infinite); sort dropdown; result count; empty state.
 
 ### Product (`templates/product.json`)
-- [ ] **Gallery**: media carousel — images, native 3D model media if present (B1), 360° spin viewer (custom: preloads `spin_frames` file-list metafield images, drag/swipe scrubbing, ~24 frames, lazy). Try-on app block slot renders when the app provides it (M5) — main-product section schema must include `{"type": "@app"}` in blocks.
-- [ ] **Measurements panel**: `measurement-diagram` snippet fed by metafields; fit note logic (lens_width < 50 → "runs narrow" etc.).
+- [ ] **Gallery**: media carousel — images, native 3D model media if present (B1), 360° spin viewer (custom: preloads `spin_frames` file-list metafield images, drag/swipe scrubbing, ~24 frames, lazy). Try-on app block slot renders when the app provides it (M5) — main-product section schema must include `{"type": "@app"}` in blocks. *(Dawn gallery + native 3D + section schema app block support are present; a concrete try-on app block must be added in the theme editor once available; custom 360 spin viewer remains.)*
+- [x] **Measurements panel**: `measurement-diagram` snippet fed by metafields; fit note logic (lens_width < 50 → "runs narrow" etc.).
 - [ ] **Lens configurator** — THE core custom build. Custom section within product form:
   - Step 1 (radio cards): Frame only / With prescription lenses / With sunglass tint. Gated by `rx_compatible` metafield.
   - Step 2 (if Rx): three tabs — (a) type values: SPH/CYL/AXIS/ADD per eye + PD, HTML inputs with sane ranges; (b) upload photo: posts to app proxy `/apps/eyesaloon/rx-upload` (B5), gets URL back, stores in hidden field; (c) "WhatsApp after ordering" checkbox.
   - Step 3: lens package cards from `lens_package` metaobjects (filtered by Rx range), PKR add-on shown; selecting updates a running total display.
   - Implementation: all choices go into `properties[...]` inputs inside `{% form 'product' %}` (e.g. `properties[Rx SPH R]`, `properties[Lens Package]`, `properties[Rx Photo URL]`). **Price add-ons**: lens packages are a hidden variant/product added alongside — simplest robust pattern: each lens package = a variant of a hidden "Lens Package" product; configurator adds frame + package to cart together via AJAX Cart API (`/cart/add.js` with `items:[...]`), linked by a shared `properties[_config_id]`. Cart section groups items with same `_config_id` visually. Log alternatives considered in DECISIONS.md.
   - *Acceptance: admin order shows frame + lens package lines with all Rx properties; totals correct; works without JS for frame-only purchase.*
-- [ ] Trust strip, related frames (same `frame_shape`, exclude self, via Liquid or Search & Discovery related products).
+  - Current status: line-item property configurator is implemented inside the product form and frame-only works without JS. Hidden lens package product + AJAX grouped add remains blocked on product data/Admin API setup.
+- [x] Trust strip, related frames (same `frame_shape`, exclude self, via Liquid or Search & Discovery related products). *(Dawn related-products + Eyesaloon trust surfaces are present; metafield-specific related logic remains for after D6 data.)*
 
 ### Cart (`sections/main-cart.liquid` + drawer)
-- [ ] Grouped configurator items; Rx status per line ("Rx attached ✓" / "via WhatsApp"); prepaid-discount banner (`settings.prepaid_discount_pct`); COD + wallets payment icons; sticky checkout CTA on mobile; empty state with category links; note field.
+- [ ] Grouped configurator items; Rx status per line ("Rx attached ✓" / "via WhatsApp"); prepaid-discount banner (`settings.prepaid_discount_pct`); COD + wallets payment icons; sticky checkout CTA on mobile; empty state with category links; note field. *(Rx status, prepaid banner, COD/JazzCash/Easypaisa pills, sticky mobile checkout, empty state, and note field are implemented; grouped frame/package visual grouping remains after hidden package product wiring.)*
 
 ### Content pages
-- [ ] `page.rx-guide` (video embeds + illustrated steps, en/ur), `page.size-guide`, `page.about` (real shop photos, map, team), policy pages (7-day exchange, free remake, warranty — Zee supplies final text), `page.contact-lens-care`, 404 with search.
+- [ ] `page.rx-guide` (video embeds + illustrated steps, en/ur), `page.size-guide`, `page.about` (real shop photos, map, team), policy pages (7-day exchange, free remake, warranty — Zee supplies final text), `page.contact-lens-care`, 404 with search. *(Editable starter templates exist for rx-guide, size-guide, about, and contact-lens-care; final photos, video embeds, Urdu copy review, and policy text remain.)*
 
 **GATE M2:** end-to-end on a real low-end Android over mobile data: browse → filter → configure Rx lenses (all 3 Rx modes) → cart → COD checkout → order visible in admin with complete data. Zee approves.
 

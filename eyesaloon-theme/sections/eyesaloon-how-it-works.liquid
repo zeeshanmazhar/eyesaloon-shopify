@@ -1,0 +1,41 @@
+<section class="eyesaloon-how">
+  <div class="page-width eyesaloon-how__inner">
+    <div class="eyesaloon-section-heading">
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.text }}</p>
+    </div>
+    <div class="eyesaloon-how__grid">
+      <div class="eyesaloon-how__panel">
+        {% render 'eyesaloon-steps' %}
+      </div>
+      <div class="eyesaloon-how__panel">
+        {% render 'eyesaloon-trust-strip', compact: true %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eyesaloon how it works",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How it works"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Pick a frame, add your prescription details, and confirm everything with our team before lenses are made."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Eyesaloon how it works"
+    }
+  ]
+}
+{% endschema %}

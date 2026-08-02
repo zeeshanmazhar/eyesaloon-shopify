@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 20
+      }
+    },
+    "trust": {
+      "type": "eyesaloon-how-it-works",
+      "settings": {
+        "heading": "Real optical shop support",
+        "text": "Eyesaloon serves customers from Bhakkar, Punjab, with prescription review, remake support, and WhatsApp confirmation."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "trust"
+  ]
+}

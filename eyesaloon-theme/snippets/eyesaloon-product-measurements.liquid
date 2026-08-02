@@ -1,0 +1,44 @@
+{% comment %}
+  API: render 'eyesaloon-product-measurements', product: product
+  Reads eyesaloon lens_width_mm, bridge_mm, temple_mm, lens_height_mm metafields.
+{% endcomment %}
+{%- liquid
+  assign lens_width = product.metafields.eyesaloon.lens_width_mm.value
+  assign bridge = product.metafields.eyesaloon.bridge_mm.value
+  assign temple = product.metafields.eyesaloon.temple_mm.value
+  assign lens_height = product.metafields.eyesaloon.lens_height_mm.value
+-%}
+
+<div class="eyesaloon-product-measurements">
+  <h2 class="h3">{{ 'eyesaloon.measurement.product_title' | t }}</h2>
+  {% render 'eyesaloon-measurement-diagram' %}
+  <dl class="eyesaloon-measurement-table">
+    <div>
+      <dt>{{ 'eyesaloon.measurement.lens_width' | t }}</dt>
+      <dd>{% if lens_width != blank %}{{ lens_width }} mm{% else %}{{ 'eyesaloon.common.to_confirm' | t }}{% endif %}</dd>
+    </div>
+    <div>
+      <dt>{{ 'eyesaloon.measurement.bridge' | t }}</dt>
+      <dd>{% if bridge != blank %}{{ bridge }} mm{% else %}{{ 'eyesaloon.common.to_confirm' | t }}{% endif %}</dd>
+    </div>
+    <div>
+      <dt>{{ 'eyesaloon.measurement.temple' | t }}</dt>
+      <dd>{% if temple != blank %}{{ temple }} mm{% else %}{{ 'eyesaloon.common.to_confirm' | t }}{% endif %}</dd>
+    </div>
+    <div>
+      <dt>{{ 'eyesaloon.measurement.lens_height' | t }}</dt>
+      <dd>{% if lens_height != blank %}{{ lens_height }} mm{% else %}{{ 'eyesaloon.common.to_confirm' | t }}{% endif %}</dd>
+    </div>
+  </dl>
+  {%- if lens_width != blank -%}
+    <p class="eyesaloon-fit-note">
+      {%- if lens_width < 50 -%}
+        {{ 'eyesaloon.measurement.fit_narrow' | t }}
+      {%- elsif lens_width > 54 -%}
+        {{ 'eyesaloon.measurement.fit_wide' | t }}
+      {%- else -%}
+        {{ 'eyesaloon.measurement.fit_regular' | t }}
+      {%- endif -%}
+    </p>
+  {%- endif -%}
+</div>

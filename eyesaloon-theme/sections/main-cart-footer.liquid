@@ -102,6 +102,11 @@
                     {%- endif -%}
                   {%- endif -%}
                 </small>
+                <div class="eyesaloon-cart-payments" aria-label="{{ 'eyesaloon.footer.cod' | t }}">
+                  <span class="eyesaloon-payment-pill">{{ 'eyesaloon.footer.cod' | t }}</span>
+                  <span class="eyesaloon-payment-pill">{{ 'eyesaloon.footer.jazzcash' | t }}</span>
+                  <span class="eyesaloon-payment-pill">{{ 'eyesaloon.footer.easypaisa' | t }}</span>
+                </div>
               </div>
             {%- else -%}
               <div class="cart__ctas" {{ block.shopify_attributes }}>

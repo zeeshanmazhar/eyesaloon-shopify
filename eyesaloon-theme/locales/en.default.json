@@ -5,6 +5,15 @@
       "available_colors": "Available colors",
       "rating_label": "{{ rating }} out of 5 stars from {{ count }} reviews"
     },
+    "common": {
+      "to_confirm": "To confirm"
+    },
+    "cart": {
+      "prepaid_title": "{{ discount }}% prepaid discount available",
+      "confirmation_note": "Eyesaloon confirms prescription orders on WhatsApp before fulfilment.",
+      "rx_attached": "Rx attached",
+      "rx_whatsapp": "Rx via WhatsApp"
+    },
     "footer": {
       "cod": "Cash on delivery",
       "jazzcash": "JazzCash",
@@ -12,9 +21,40 @@
     },
     "measurement": {
       "title": "Eyeglass frame measurement diagram",
+      "product_title": "Frame measurements",
       "lens_width": "Lens width",
+      "lens_height": "Lens height",
       "bridge": "Bridge",
-      "temple": "Temple length"
+      "temple": "Temple length",
+      "fit_narrow": "Fit note: runs narrow.",
+      "fit_regular": "Fit note: regular width.",
+      "fit_wide": "Fit note: runs wide."
+    },
+    "rx": {
+      "choose_lenses": "Choose lenses",
+      "frame_only": "Frame only",
+      "with_prescription": "With prescription lenses",
+      "with_sunglass_tint": "With sunglass tint",
+      "rx_method": "Prescription method",
+      "type_values": "Type values",
+      "upload_photo": "Upload photo",
+      "whatsapp_later": "WhatsApp later",
+      "sph_r": "SPH R",
+      "cyl_r": "CYL R",
+      "axis_r": "AXIS R",
+      "sph_l": "SPH L",
+      "cyl_l": "CYL L",
+      "axis_l": "AXIS L",
+      "add": "ADD",
+      "pd": "PD",
+      "photo_url": "Prescription photo URL",
+      "photo_placeholder": "Paste upload link for now",
+      "whatsapp_confirm": "Confirm prescription on WhatsApp before making lenses",
+      "yes": "Yes",
+      "lens_package": "Lens package",
+      "package_none": "Decide after order",
+      "package_note": "Lens package pricing will be confirmed with your order until the hidden package product is connected.",
+      "not_compatible": "This frame is not marked prescription compatible."
     },
     "steps": {
       "choose_frame": "Choose your frame",

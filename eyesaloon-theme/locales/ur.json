@@ -5,6 +5,15 @@
       "available_colors": "دستیاب رنگ",
       "rating_label": "{{ rating }} میں سے 5 ستارے، {{ count }} ریویوز"
     },
+    "common": {
+      "to_confirm": "تصدیق باقی ہے"
+    },
+    "cart": {
+      "prepaid_title": "{{ discount }}% پری پیڈ ڈسکاؤنٹ دستیاب ہے",
+      "confirmation_note": "آئی سیلون نسخہ آرڈرز کو fulfilment سے پہلے واٹس ایپ پر کنفرم کرتا ہے۔",
+      "rx_attached": "نسخہ شامل ہے",
+      "rx_whatsapp": "نسخہ واٹس ایپ پر"
+    },
     "footer": {
       "cod": "کیش آن ڈیلیوری",
       "jazzcash": "JazzCash",
@@ -12,9 +21,40 @@
     },
     "measurement": {
       "title": "چشمے کے فریم کی پیمائش کا خاکہ",
+      "product_title": "فریم پیمائش",
       "lens_width": "لینس چوڑائی",
+      "lens_height": "لینس اونچائی",
       "bridge": "برج",
-      "temple": "ٹیمپل لمبائی"
+      "temple": "ٹیمپل لمبائی",
+      "fit_narrow": "فٹ نوٹ: قدرے تنگ۔",
+      "fit_regular": "فٹ نوٹ: ریگولر چوڑائی۔",
+      "fit_wide": "فٹ نوٹ: قدرے چوڑا۔"
+    },
+    "rx": {
+      "choose_lenses": "لینس منتخب کریں",
+      "frame_only": "صرف فریم",
+      "with_prescription": "نسخہ لینس کے ساتھ",
+      "with_sunglass_tint": "سن گلاس ٹنٹ کے ساتھ",
+      "rx_method": "نسخہ طریقہ",
+      "type_values": "ویلیوز لکھیں",
+      "upload_photo": "تصویر اپ لوڈ",
+      "whatsapp_later": "بعد میں واٹس ایپ",
+      "sph_r": "SPH R",
+      "cyl_r": "CYL R",
+      "axis_r": "AXIS R",
+      "sph_l": "SPH L",
+      "cyl_l": "CYL L",
+      "axis_l": "AXIS L",
+      "add": "ADD",
+      "pd": "PD",
+      "photo_url": "نسخہ تصویر URL",
+      "photo_placeholder": "فی الحال اپ لوڈ لنک پیسٹ کریں",
+      "whatsapp_confirm": "لینس بنانے سے پہلے واٹس ایپ پر نسخہ کنفرم کریں",
+      "yes": "ہاں",
+      "lens_package": "لینس پیکج",
+      "package_none": "آرڈر کے بعد فیصلہ",
+      "package_note": "جب تک hidden package product کنیکٹ نہیں ہوتا، لینس پیکج قیمت آرڈر کے ساتھ کنفرم ہوگی۔",
+      "not_compatible": "یہ فریم نسخہ کے لیے compatible مارک نہیں ہے۔"
     },
     "steps": {
       "choose_frame": "اپنا فریم منتخب کریں",

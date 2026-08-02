@@ -1,42 +1,56 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "eyesaloon_hero": {
+      "type": "eyesaloon-hero",
+      "settings": {
+        "heading": "Prescription eyewear, fitted with care",
+        "subtext": "Choose frames online and confirm your prescription with the Eyesaloon optical team.",
+        "button_label": "Shop frames",
+        "button_link": "shopify://collections/all",
+        "warm_surface": true,
+        "show_ghost_text": true
+      }
+    },
+    "category_tiles": {
+      "type": "eyesaloon-category-tiles",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "optical": {
+          "type": "tile",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "title": "Optical frames",
+            "link": "shopify://collections/all"
           }
         },
-        "button": {
-          "type": "buttons",
+        "sunglasses": {
+          "type": "tile",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "title": "Sunglasses",
+            "link": "shopify://collections/all"
+          }
+        },
+        "contact_lenses": {
+          "type": "tile",
+          "settings": {
+            "title": "Contact lenses",
+            "link": "shopify://collections/all"
+          }
+        },
+        "rx_help": {
+          "type": "tile",
+          "settings": {
+            "title": "Prescription help",
+            "link": "shopify://pages/rx-guide"
           }
         }
       },
       "block_order": [
-        "heading",
-        "button"
+        "optical",
+        "sunglasses",
+        "contact_lenses",
+        "rx_help"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "heading": "Shop by category"
       }
     },
     "featured_collection": {
@@ -66,10 +80,19 @@
         "padding_top": 44,
         "padding_bottom": 36
       }
+    },
+    "how_it_works": {
+      "type": "eyesaloon-how-it-works",
+      "settings": {
+        "heading": "How it works",
+        "text": "Pick a frame, add your prescription details, and confirm everything with our team before lenses are made."
+      }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "eyesaloon_hero",
+    "category_tiles",
+    "featured_collection",
+    "how_it_works"
   ]
 }

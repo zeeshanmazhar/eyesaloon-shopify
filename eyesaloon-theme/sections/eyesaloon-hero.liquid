@@ -1,0 +1,80 @@
+<section class="eyesaloon-home-hero{% if section.settings.warm_surface %} eyesaloon-home-hero--warm{% endif %}">
+  <div class="page-width eyesaloon-home-hero__inner">
+    <div class="eyesaloon-home-hero__copy">
+      {%- if section.settings.show_ghost_text -%}
+        <span class="eyesaloon-home-hero__ghost" aria-hidden="true">EYESALOON</span>
+      {%- endif -%}
+      <h1>{{ section.settings.heading }}</h1>
+      <p>{{ section.settings.subtext }}</p>
+      {%- if section.settings.button_label != blank -%}
+        <a class="button" href="{{ section.settings.button_link | default: routes.collections_url }}">
+          {{ section.settings.button_label }}
+        </a>
+      {%- endif -%}
+    </div>
+    <div class="eyesaloon-home-hero__media">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1400
+          | image_tag: loading: 'eager', widths: '360, 540, 720, 960, 1200, 1400', fetchpriority: 'high'
+        }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eyesaloon hero",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Prescription eyewear, fitted with care"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Choose frames online and confirm your prescription with the Eyesaloon optical team."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop frames"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "warm_surface",
+      "label": "Use warm surface",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ghost_text",
+      "label": "Show ghost text",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Eyesaloon hero"
+    }
+  ]
+}
+{% endschema %}

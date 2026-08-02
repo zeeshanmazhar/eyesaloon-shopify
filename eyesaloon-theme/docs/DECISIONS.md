@@ -41,3 +41,9 @@
 - Options considered: delete every Dawn color-scheme reference now, or keep the OS 2.0 color-scheme plumbing while overriding customer-facing surfaces with Eyesaloon tokens.
 - Choice: keep the Dawn color-scheme group for section compatibility, remove the font-picker path, and make Eyesaloon tokens drive global typography, buttons, links, chips, badges, cards, footer, predictive search, and the M1 snippets.
 - Why: many Dawn sections still expose `color_scheme` settings. Keeping that compatibility lets the theme validate and upload while the product/templates work continues. The CI color audit prevents new hard-coded colors outside the token allowlist.
+
+## 2026-08-02 - M2 Rx configurator starts with line item properties
+
+- Options considered: build the full AJAX frame-plus-hidden-lens-package cart flow immediately, or first ship a no-JS-safe product form that captures Rx choices as line item properties.
+- Choice: start with line item properties inside Dawn's product form, including order type, Rx method, prescription values, photo URL placeholder, WhatsApp confirmation, and lens package selection.
+- Why: frame-only add-to-cart remains robust without JavaScript, and the admin order will expose Rx details as soon as products exist. The hidden lens package product and grouped AJAX add still require product data, package variants, and Admin API setup.

@@ -1,0 +1,72 @@
+<section class="page-width eyesaloon-category-tiles">
+  <div class="eyesaloon-section-heading">
+    <h2>{{ section.settings.heading }}</h2>
+  </div>
+  <div class="eyesaloon-category-tiles__grid">
+    {%- for block in section.blocks -%}
+      <a class="eyesaloon-category-tile" href="{{ block.settings.link | default: routes.collections_url }}" {{ block.shopify_attributes }}>
+        <span class="eyesaloon-category-tile__media">
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 700
+              | image_tag: loading: 'lazy', widths: '240, 360, 520, 700'
+            }}
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </span>
+        <span class="eyesaloon-category-tile__title">{{ block.settings.title }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eyesaloon category tiles",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by category"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Optical frames"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Eyesaloon category tiles",
+      "blocks": [
+        { "type": "tile" },
+        { "type": "tile" },
+        { "type": "tile" },
+        { "type": "tile" }
+      ]
+    }
+  ]
+}
+{% endschema %}
