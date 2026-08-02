@@ -106,6 +106,18 @@
       "cod": "Cash on delivery",
       "remake": "Free remake support",
       "shop": "Real shop in Bhakkar"
+    },
+    "collection": {
+      "filtered_count": "{{ count }} frames shown",
+      "shape": "Shape",
+      "all_shapes": "All shapes",
+      "material": "Material",
+      "all_materials": "All materials",
+      "gender": "For",
+      "all_genders": "All",
+      "face_shape": "Face shape",
+      "all_face_shapes": "All face shapes",
+      "no_filtered_products": "No frames match these filters."
     }
   },
   "general": {

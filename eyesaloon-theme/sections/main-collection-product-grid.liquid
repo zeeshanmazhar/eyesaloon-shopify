@@ -143,6 +143,126 @@
               </div>
             </div>
           {%- else -%}
+            {%- liquid
+              assign show_eyesaloon_filters = false
+              if section.settings.enable_filtering
+                assign show_eyesaloon_filters = true
+              endif
+            -%}
+            {%- if show_eyesaloon_filters -%}
+              <script src="{{ 'eyesaloon-collection-filters.js' | asset_url }}" defer="defer"></script>
+              {%- liquid
+                assign filter_shapes = ''
+                assign filter_materials = ''
+                assign filter_genders = ''
+                assign filter_faces = ''
+                assign filter_product_count = 0
+
+                for product in collection.products
+                  unless product.type == 'Lens Package'
+                    assign filter_product_count = filter_product_count | plus: 1
+
+                    assign shape_value = product.metafields.eyesaloon.frame_shape.value | default: ''
+                    if shape_value != blank
+                      assign shape_handle = shape_value | handle
+                      unless filter_shapes contains shape_handle
+                        assign filter_shapes = filter_shapes | append: shape_handle | append: '::' | append: shape_value | append: ','
+                      endunless
+                    endif
+
+                    assign material_value = product.metafields.eyesaloon.material.value | default: ''
+                    if material_value != blank
+                      assign material_handle = material_value | handle
+                      unless filter_materials contains material_handle
+                        assign filter_materials = filter_materials | append: material_handle | append: '::' | append: material_value | append: ','
+                      endunless
+                    endif
+
+                    assign gender_value = product.metafields.eyesaloon.gender.value | default: ''
+                    if gender_value != blank
+                      assign gender_handle = gender_value | handle
+                      unless filter_genders contains gender_handle
+                        assign filter_genders = filter_genders | append: gender_handle | append: '::' | append: gender_value | append: ','
+                      endunless
+                    endif
+
+                    for face_value in product.metafields.eyesaloon.face_shapes.value
+                      if face_value != blank
+                        assign face_handle = face_value | handle
+                        unless filter_faces contains face_handle
+                          assign filter_faces = filter_faces | append: face_handle | append: '::' | append: face_value | append: ','
+                        endunless
+                      endif
+                    endfor
+                  endunless
+                endfor
+
+                assign filter_shape_options = filter_shapes | split: ','
+                assign filter_material_options = filter_materials | split: ','
+                assign filter_gender_options = filter_genders | split: ','
+                assign filter_face_options = filter_faces | split: ','
+              -%}
+              <form class="eyesaloon-collection-filters" data-eyesaloon-collection-filters>
+                <p
+                  class="eyesaloon-collection-filters__count"
+                  data-eyesaloon-filter-count
+                  data-template="{{ 'eyesaloon.collection.filtered_count' | t: count: '[count]' | escape }}"
+                >
+                  {{ 'eyesaloon.collection.filtered_count' | t: count: filter_product_count }}
+                </p>
+                <label>
+                  <span>{{ 'eyesaloon.collection.shape' | t }}</span>
+                  <select class="select__select" name="shape" data-eyesaloon-collection-filter>
+                    <option value="">{{ 'eyesaloon.collection.all_shapes' | t }}</option>
+                    {%- for option in filter_shape_options -%}
+                      {%- assign option_parts = option | split: '::' -%}
+                      {%- if option_parts[0] != blank -%}
+                        <option value="{{ option_parts[0] | escape }}">{{ option_parts[1] | capitalize }}</option>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </select>
+                </label>
+                <label>
+                  <span>{{ 'eyesaloon.collection.material' | t }}</span>
+                  <select class="select__select" name="material" data-eyesaloon-collection-filter>
+                    <option value="">{{ 'eyesaloon.collection.all_materials' | t }}</option>
+                    {%- for option in filter_material_options -%}
+                      {%- assign option_parts = option | split: '::' -%}
+                      {%- if option_parts[0] != blank -%}
+                        <option value="{{ option_parts[0] | escape }}">{{ option_parts[1] | capitalize }}</option>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </select>
+                </label>
+                <label>
+                  <span>{{ 'eyesaloon.collection.gender' | t }}</span>
+                  <select class="select__select" name="gender" data-eyesaloon-collection-filter>
+                    <option value="">{{ 'eyesaloon.collection.all_genders' | t }}</option>
+                    {%- for option in filter_gender_options -%}
+                      {%- assign option_parts = option | split: '::' -%}
+                      {%- if option_parts[0] != blank -%}
+                        <option value="{{ option_parts[0] | escape }}">{{ option_parts[1] | capitalize }}</option>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </select>
+                </label>
+                <label>
+                  <span>{{ 'eyesaloon.collection.face_shape' | t }}</span>
+                  <select class="select__select" name="face" data-eyesaloon-collection-filter>
+                    <option value="">{{ 'eyesaloon.collection.all_face_shapes' | t }}</option>
+                    {%- for option in filter_face_options -%}
+                      {%- assign option_parts = option | split: '::' -%}
+                      {%- if option_parts[0] != blank -%}
+                        <option value="{{ option_parts[0] | escape }}">{{ option_parts[1] | capitalize }}</option>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </select>
+                </label>
+                <button class="button button--secondary" type="button" data-eyesaloon-filter-reset>
+                  {{ 'products.facets.clear_all' | t }}
+                </button>
+              </form>
+            {%- endif -%}
             <div
               class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
             >
@@ -150,6 +270,7 @@
               <ul
                 id="product-grid"
                 data-id="{{ section.id }}"
+                data-eyesaloon-filter-grid
                 class="
                   grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
                   grid--{{ section.settings.columns_desktop }}-col-desktop
@@ -165,6 +286,11 @@
                     {%- endif -%}
                     <li
                       class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                      data-eyesaloon-filter-item
+                      data-shape="{{ product.metafields.eyesaloon.frame_shape.value | handle }}"
+                      data-material="{{ product.metafields.eyesaloon.material.value | handle }}"
+                      data-gender="{{ product.metafields.eyesaloon.gender.value | handle }}"
+                      data-face="{% for face_value in product.metafields.eyesaloon.face_shapes.value %}{{ face_value | handle }}{% unless forloop.last %},{% endunless %}{% endfor %}"
                       {% if settings.animations_reveal_on_scroll %}
                         data-cascade
                         style="--animation-order: {{ forloop.index }};"
@@ -188,6 +314,11 @@
                   {%- endunless -%}
                 {%- endfor -%}
               </ul>
+              {%- if show_eyesaloon_filters -%}
+                <div class="eyesaloon-filter-empty" data-eyesaloon-filter-empty hidden>
+                  <p>{{ 'eyesaloon.collection.no_filtered_products' | t }}</p>
+                </div>
+              {%- endif -%}
 
               {%- if paginate.pages > 1 -%}
                 {% render 'pagination', paginate: paginate, anchor: '' %}

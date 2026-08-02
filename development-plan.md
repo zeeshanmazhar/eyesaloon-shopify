@@ -317,7 +317,7 @@ Sections, each with schema presets and editor-configurable content: `hero` (head
 - [x] Client-side featured-collection tag chips, testimonials, and social-feed placeholders are implemented. Real social embed/photos remain.
 
 ### Collection (`templates/collection.json` + `sections/main-collection.liquid`)
-- [ ] Shopify **Search & Discovery** app (free, first-party) → configure filters on metafields (D6): shape, material, gender, face_shapes, price. Storefront filtering then works via `collection.filters` in Liquid — render as pill chips (mobile: filter drawer). *(Theme styling is ready; Admin app/filter configuration still required.)*
+- [ ] Shopify **Search & Discovery** app (free, first-party) → configure filters on metafields (D6): shape, material, gender, face_shapes, price. Storefront filtering then works via `collection.filters` in Liquid — render as pill chips (mobile: filter drawer). *(Theme styling is ready; Admin app/filter configuration still required. In-theme fallback quick filters for shape/material/gender/face shape are implemented for M2 testing.)*
 - [x] Grid 2-col mobile / 4-col desktop; pagination (numbered, not infinite); sort dropdown; result count; empty state.
 
 ### Product (`templates/product.json`)
@@ -329,12 +329,12 @@ Sections, each with schema presets and editor-configurable content: `hero` (head
   - Step 3: lens package cards from `lens_package` metaobjects (filtered by Rx range), PKR add-on shown; selecting updates a running total display.
   - Implementation: all choices go into `properties[...]` inputs inside `{% form 'product' %}` (e.g. `properties[Rx SPH R]`, `properties[Lens Package]`, `properties[Rx Photo URL]`). **Price add-ons**: lens packages are a hidden variant/product added alongside — simplest robust pattern: each lens package = a variant of a hidden "Lens Package" product; configurator adds frame + package to cart together via AJAX Cart API (`/cart/add.js` with `items:[...]`), linked by a shared `properties[_config_id]`. Cart section groups items with same `_config_id` visually. Log alternatives considered in DECISIONS.md.
   - *Acceptance: admin order shows frame + lens package lines with all Rx properties; totals correct; works without JS for frame-only purchase.*
-  - Current status: line-item property configurator is implemented inside the product form and frame-only works without JS. Hidden lens package product + AJAX grouped add foundation is implemented on the development store; full validation waits on real frame products.
+  - Current status: line-item property configurator is implemented inside the product form and frame-only works without JS. Hidden lens package product + AJAX grouped add is validated on the development store with test frame products; admin order checkout succeeded with a test payment.
   - Rx upload app route scaffold exists at `/apps/eyesaloon/rx-upload`; persistent storage/file upload wiring remains.
 - [x] Trust strip, related frames (same `frame_shape`, exclude self, via Liquid or Search & Discovery related products). *(Dawn related-products + Eyesaloon trust surfaces are present; metafield-specific related logic remains for after D6 data.)*
 
 ### Cart (`sections/main-cart.liquid` + drawer)
-- [ ] Grouped configurator items; Rx status per line ("Rx attached ✓" / "via WhatsApp"); prepaid-discount banner (`settings.prepaid_discount_pct`); COD + wallets payment icons; sticky checkout CTA on mobile; empty state with category links; note field. *(Rx status, prepaid banner, COD/JazzCash/Easypaisa pills, sticky mobile checkout, empty state, and note field are implemented; grouped frame/package visual grouping remains after hidden package product wiring.)*
+- [x] Grouped configurator items; Rx status per line ("Rx attached ✓" / "via WhatsApp"); prepaid-discount banner (`settings.prepaid_discount_pct`); COD + wallets payment icons; sticky checkout CTA on mobile; empty state with category links; note field. *(Frame/package linked cart lines, Rx status, prepaid banner, COD/JazzCash/Easypaisa pills, sticky mobile checkout, empty state, and note field are implemented and validated with a test checkout.)*
 
 ### Content pages
 - [ ] `page.rx-guide` (video embeds + illustrated steps, en/ur), `page.size-guide`, `page.about` (real shop photos, map, team), policy pages (7-day exchange, free remake, warranty — Zee supplies final text), `page.contact-lens-care`, 404 with search. *(Editable starter templates exist for rx-guide, size-guide, about, and contact-lens-care; final photos, video embeds, Urdu copy review, and policy text remain.)*

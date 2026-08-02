@@ -921,6 +921,44 @@ button.shopify-payment-button__button--unbranded {
   color: var(--color-ink);
 }
 
+.eyesaloon-collection-filters {
+  align-items: end;
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: repeat(4, minmax(12rem, 1fr)) auto;
+  margin: 0 auto 2.4rem;
+  max-width: var(--page-width);
+  padding: 0 1.5rem;
+}
+
+.eyesaloon-collection-filters__count {
+  color: var(--color-body);
+  font-size: 1.3rem;
+  font-weight: 700;
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.eyesaloon-collection-filters label {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.eyesaloon-collection-filters label span {
+  color: var(--color-ink);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.eyesaloon-filter-empty {
+  background: var(--color-surface-warm);
+  border-radius: var(--radius-card);
+  color: var(--color-body);
+  margin-block-start: 1.6rem;
+  padding: 2rem;
+  text-align: center;
+}
+
 .eyesaloon-styleguide {
   display: grid;
   gap: 4rem;
@@ -1004,6 +1042,10 @@ html[dir='rtl'] h3 {
   }
 
   .eyesaloon-rx__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .eyesaloon-collection-filters {
     grid-template-columns: 1fr;
   }
 

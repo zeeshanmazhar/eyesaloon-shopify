@@ -106,6 +106,18 @@
       "cod": "کیش آن ڈیلیوری",
       "remake": "فری ریمیک سپورٹ",
       "shop": "بھکر میں حقیقی دکان"
+    },
+    "collection": {
+      "filtered_count": "{{ count }} فریمز دکھائے گئے",
+      "shape": "شکل",
+      "all_shapes": "تمام شکلیں",
+      "material": "مٹیریل",
+      "all_materials": "تمام مٹیریل",
+      "gender": "کے لیے",
+      "all_genders": "سب",
+      "face_shape": "چہرے کی شکل",
+      "all_face_shapes": "تمام چہرے",
+      "no_filtered_products": "ان فلٹرز کے مطابق کوئی فریم نہیں۔"
     }
   },
   "general": {
