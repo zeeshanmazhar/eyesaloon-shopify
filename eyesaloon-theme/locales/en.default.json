@@ -12,7 +12,9 @@
       "prepaid_title": "{{ discount }}% prepaid discount available",
       "confirmation_note": "Eyesaloon confirms prescription orders on WhatsApp before fulfilment.",
       "rx_attached": "Rx attached",
-      "rx_whatsapp": "Rx via WhatsApp"
+      "rx_whatsapp": "Rx via WhatsApp",
+      "lens_package_line": "Lens package",
+      "linked_lens_package": "Paired with the frame above"
     },
     "footer": {
       "cod": "Cash on delivery",
@@ -58,7 +60,12 @@
       "lens_package": "Lens package",
       "package_none": "Decide after order",
       "package_note": "Lens packages are added as a linked cart line so totals stay correct.",
-      "not_compatible": "This frame is not marked prescription compatible."
+      "not_compatible": "This frame is not marked prescription compatible.",
+      "lens_use": "Lens type",
+      "distance": "Distance",
+      "reading": "Reading",
+      "progressive": "Progressive",
+      "non_rx": "Non-Rx clear lenses"
     },
     "spin": {
       "label": "360 degree frame viewer",

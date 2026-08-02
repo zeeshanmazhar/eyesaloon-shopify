@@ -12,7 +12,9 @@
       "prepaid_title": "{{ discount }}% پری پیڈ ڈسکاؤنٹ دستیاب ہے",
       "confirmation_note": "آئی سیلون نسخہ آرڈرز کو fulfilment سے پہلے واٹس ایپ پر کنفرم کرتا ہے۔",
       "rx_attached": "نسخہ شامل ہے",
-      "rx_whatsapp": "نسخہ واٹس ایپ پر"
+      "rx_whatsapp": "نسخہ واٹس ایپ پر",
+      "lens_package_line": "لینس پیکج",
+      "linked_lens_package": "اوپر والے فریم کے ساتھ منسلک"
     },
     "footer": {
       "cod": "کیش آن ڈیلیوری",
@@ -58,7 +60,12 @@
       "lens_package": "لینس پیکج",
       "package_none": "آرڈر کے بعد فیصلہ",
       "package_note": "لینس پیکج cart میں linked line کے طور پر شامل ہوتا ہے تاکہ total درست رہے۔",
-      "not_compatible": "یہ فریم نسخہ کے لیے compatible مارک نہیں ہے۔"
+      "not_compatible": "یہ فریم نسخہ کے لیے compatible مارک نہیں ہے۔",
+      "lens_use": "لینس کی قسم",
+      "distance": "دور کی نظر",
+      "reading": "پڑھنے کے لیے",
+      "progressive": "پروگریسو",
+      "non_rx": "بغیر نمبر کلیئر لینس"
     },
     "spin": {
       "label": "360 ڈگری فریم ویور",

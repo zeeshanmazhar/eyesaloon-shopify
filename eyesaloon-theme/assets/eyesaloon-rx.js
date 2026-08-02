@@ -1,8 +1,58 @@
+const RX_SELECTOR = '[data-eyesaloon-rx]';
+
+function selectedOrderType(form) {
+  return form.querySelector('[data-eyesaloon-order-type]:checked')?.dataset.eyesaloonOrderType || 'frame_only';
+}
+
+function selectedRxMethod(form) {
+  return form.querySelector('[data-eyesaloon-rx-method]:checked')?.dataset.eyesaloonRxMethod || 'whatsapp';
+}
+
+function setInputsDisabled(container, disabled) {
+  container?.querySelectorAll('input, select, textarea').forEach((input) => {
+    input.disabled = disabled;
+  });
+}
+
+function syncRxForm(form) {
+  const rx = form.querySelector(RX_SELECTOR);
+  if (!rx) return;
+
+  const isFrameOnly = selectedOrderType(form) === 'frame_only';
+  const method = selectedRxMethod(form);
+  const panel = rx.querySelector('[data-eyesaloon-rx-panel]');
+
+  if (panel) {
+    panel.hidden = isFrameOnly;
+    setInputsDisabled(panel, isFrameOnly);
+  }
+
+  rx.querySelectorAll('[data-eyesaloon-rx-fields]').forEach((group) => {
+    const isActive = !isFrameOnly && group.dataset.eyesaloonRxFields === method;
+    group.hidden = !isActive;
+    setInputsDisabled(group, !isActive);
+  });
+}
+
+document.querySelectorAll(`form ${RX_SELECTOR}`).forEach((rx) => {
+  const form = rx.closest('form');
+  if (form instanceof HTMLFormElement) syncRxForm(form);
+});
+
+document.addEventListener('change', (event) => {
+  if (!event.target.closest?.(RX_SELECTOR)) return;
+  const form = event.target.closest('form');
+  if (form instanceof HTMLFormElement) syncRxForm(form);
+});
+
 document.addEventListener(
   'submit',
   async (event) => {
     const form = event.target;
-    if (!(form instanceof HTMLFormElement) || !form.querySelector('[data-eyesaloon-rx]')) return;
+    if (!(form instanceof HTMLFormElement) || !form.querySelector(RX_SELECTOR)) return;
+
+    syncRxForm(form);
+    if (selectedOrderType(form) === 'frame_only') return;
 
     const packageSelect = form.querySelector('[data-eyesaloon-lens-package]');
     const selectedPackage = packageSelect?.selectedOptions?.[0];

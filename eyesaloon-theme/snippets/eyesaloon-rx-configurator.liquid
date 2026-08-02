@@ -14,39 +14,59 @@
   <fieldset class="eyesaloon-rx__fieldset">
     <legend class="eyesaloon-rx__legend">{{ 'eyesaloon.rx.choose_lenses' | t }}</legend>
     <label class="eyesaloon-rx__card">
-      <input type="radio" name="properties[Order Type]" value="{{ 'eyesaloon.rx.frame_only' | t }}" checked>
+      <input type="radio" name="properties[Order Type]" value="{{ 'eyesaloon.rx.frame_only' | t }}" data-eyesaloon-order-type="frame_only" checked>
       <span>{{ 'eyesaloon.rx.frame_only' | t }}</span>
     </label>
     {%- if rx_compatible -%}
       <label class="eyesaloon-rx__card">
-        <input type="radio" name="properties[Order Type]" value="{{ 'eyesaloon.rx.with_prescription' | t }}">
+        <input type="radio" name="properties[Order Type]" value="{{ 'eyesaloon.rx.with_prescription' | t }}" data-eyesaloon-order-type="prescription">
         <span>{{ 'eyesaloon.rx.with_prescription' | t }}</span>
       </label>
       <label class="eyesaloon-rx__card">
-        <input type="radio" name="properties[Order Type]" value="{{ 'eyesaloon.rx.with_sunglass_tint' | t }}">
+        <input type="radio" name="properties[Order Type]" value="{{ 'eyesaloon.rx.with_sunglass_tint' | t }}" data-eyesaloon-order-type="tint">
         <span>{{ 'eyesaloon.rx.with_sunglass_tint' | t }}</span>
       </label>
     {%- endif -%}
   </fieldset>
 
   {%- if rx_compatible -%}
-    <div class="eyesaloon-rx__panel">
+    <div class="eyesaloon-rx__panel" data-eyesaloon-rx-panel hidden>
+      <fieldset class="eyesaloon-rx__fieldset">
+        <legend class="eyesaloon-rx__legend">{{ 'eyesaloon.rx.lens_use' | t }}</legend>
+        <label class="eyesaloon-rx__card">
+          <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.distance' | t }}" checked>
+          <span>{{ 'eyesaloon.rx.distance' | t }}</span>
+        </label>
+        <label class="eyesaloon-rx__card">
+          <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.reading' | t }}">
+          <span>{{ 'eyesaloon.rx.reading' | t }}</span>
+        </label>
+        <label class="eyesaloon-rx__card">
+          <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.progressive' | t }}">
+          <span>{{ 'eyesaloon.rx.progressive' | t }}</span>
+        </label>
+        <label class="eyesaloon-rx__card">
+          <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.non_rx' | t }}">
+          <span>{{ 'eyesaloon.rx.non_rx' | t }}</span>
+        </label>
+      </fieldset>
+
       <div class="eyesaloon-rx__tabs" role="tablist" aria-label="{{ 'eyesaloon.rx.rx_method' | t }}">
         <label class="eyesaloon-rx__tab">
-          <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.type_values' | t }}">
+          <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.type_values' | t }}" data-eyesaloon-rx-method="typed">
           <span>{{ 'eyesaloon.rx.type_values' | t }}</span>
         </label>
         <label class="eyesaloon-rx__tab">
-          <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.upload_photo' | t }}">
+          <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.upload_photo' | t }}" data-eyesaloon-rx-method="upload">
           <span>{{ 'eyesaloon.rx.upload_photo' | t }}</span>
         </label>
         <label class="eyesaloon-rx__tab">
-          <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.whatsapp_later' | t }}" checked>
+          <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.whatsapp_later' | t }}" data-eyesaloon-rx-method="whatsapp" checked>
           <span>{{ 'eyesaloon.rx.whatsapp_later' | t }}</span>
         </label>
       </div>
 
-      <div class="eyesaloon-rx__grid">
+      <div class="eyesaloon-rx__grid" data-eyesaloon-rx-fields="typed" hidden>
         <label>
           <span>{{ 'eyesaloon.rx.sph_r' | t }}</span>
           <input class="field__input" type="number" name="properties[Rx SPH R]" min="-20" max="20" step="0.25">
@@ -81,7 +101,7 @@
         </label>
       </div>
 
-      <label class="eyesaloon-rx__upload">
+      <label class="eyesaloon-rx__upload" data-eyesaloon-rx-fields="upload" hidden>
         <span>{{ 'eyesaloon.rx.photo_url' | t }}</span>
         <input class="field__input" type="url" name="properties[Rx Photo URL]" placeholder="{{ 'eyesaloon.rx.photo_placeholder' | t }}">
       </label>
