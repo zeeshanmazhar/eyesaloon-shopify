@@ -1,0 +1,13 @@
+handle,title_en,title_ur,product_type,vendor,price,compare_at,sku,option_color,lens_width_mm,bridge_mm,temple_mm,lens_height_mm,frame_shape,material,face_shapes,gender,rx_compatible,fit_note,image_filenames
+test-black-rectangle,Test Black Rectangle Frame,,Frames,Eyesaloon,2500,3200,ES-TEST-FR-001,Black,52,18,145,40,rectangle,Acetate,"oval,round",unisex,true,Regular width,test-black-rectangle-1.jpg
+test-tortoise-round,Test Tortoise Round Frame,,Frames,Eyesaloon,2800,3500,ES-TEST-FR-002,Tortoise,49,20,145,43,round,Acetate,"square,heart",unisex,true,Runs narrow,test-tortoise-round-1.jpg
+test-clear-square,Test Clear Square Frame,,Frames,Eyesaloon,3000,3800,ES-TEST-FR-003,Clear,53,18,145,42,square,Acetate,"oval,round",unisex,true,Regular width,test-clear-square-1.jpg
+test-gold-aviator-sunglasses,Test Gold Aviator Sunglasses,,Sunglasses,Eyesaloon,4200,5200,ES-TEST-SG-004,Gold,58,15,140,50,aviator,Metal,"oval,square",unisex,true,Runs wide,test-gold-aviator-sunglasses-1.jpg
+test-matte-navy-rectangle,Test Matte Navy Rectangle Frame,,Frames,Eyesaloon,2600,3300,ES-TEST-FR-005,Navy,54,17,145,41,rectangle,TR90,"oval,round",men,true,Regular width,test-matte-navy-rectangle-1.jpg
+test-rose-gold-cat-eye,Test Rose Gold Cat Eye Frame,,Frames,Eyesaloon,3400,4300,ES-TEST-FR-006,Rose Gold,51,17,140,42,cat-eye,Metal,"oval,diamond",women,true,Regular width,test-rose-gold-cat-eye-1.jpg
+test-black-wayfarer-sunglasses,Test Black Wayfarer Sunglasses,,Sunglasses,Eyesaloon,3600,4500,ES-TEST-SG-007,Black,55,18,145,45,wayfarer,Acetate,"oval,round",unisex,true,Runs wide,test-black-wayfarer-sunglasses-1.jpg
+test-beige-round,Test Beige Round Frame,,Frames,Eyesaloon,2900,3600,ES-TEST-FR-008,Beige,50,20,145,44,round,Acetate,"square,heart",unisex,true,Regular width,test-beige-round-1.jpg
+test-silver-rimless,Test Silver Rimless Frame,,Frames,Eyesaloon,3900,4800,ES-TEST-FR-009,Silver,53,18,140,39,rimless,Metal,"oval,round,square",unisex,true,Regular width,test-silver-rimless-1.jpg
+test-green-square-sunglasses,Test Green Square Sunglasses,,Sunglasses,Eyesaloon,4100,5000,ES-TEST-SG-010,Green,56,18,145,47,square,Acetate,"oval,round",unisex,true,Runs wide,test-green-square-sunglasses-1.jpg
+test-brown-browline,Test Brown Browline Frame,,Frames,Eyesaloon,3200,4100,ES-TEST-FR-011,Brown,52,19,145,40,browline,Metal Acetate,"oval,round",men,true,Regular width,test-brown-browline-1.jpg
+test-kids-blue-round,Test Kids Blue Round Frame,,Frames,Eyesaloon,2200,2800,ES-TEST-KD-012,Blue,46,16,130,38,round,TR90,"oval,square",kids,true,Runs narrow,test-kids-blue-round-1.jpg
