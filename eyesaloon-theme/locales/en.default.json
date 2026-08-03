@@ -118,6 +118,84 @@
       "face_shape": "Face shape",
       "all_face_shapes": "All face shapes",
       "no_filtered_products": "No frames match these filters."
+    },
+    "pages": {
+      "shop_frames": "Shop frames",
+      "ask_help": "Ask Eyesaloon",
+      "not_found": {
+        "text": "The page may have moved, but the frame collection and prescription help are still right here.",
+        "search_placeholder": "Search frames, lenses, or care"
+      },
+      "rx_guide": {
+        "kicker": "Prescription guide",
+        "title": "Order prescription glasses without guessing",
+        "intro": "Choose a frame first, then add prescription details by typing values, sharing a photo, or confirming everything on WhatsApp before lenses are made.",
+        "step_1_title": "Choose how you share Rx",
+        "step_1_text": "Enter SPH, CYL, AXIS and PD if you have them, upload a prescription link, or select WhatsApp later.",
+        "step_2_title": "Pick the lens use",
+        "step_2_text": "Distance, reading, progressive, clear non-Rx, and sunglass tint options keep the order clear before checkout.",
+        "step_3_title": "Confirm before fulfilment",
+        "step_3_text": "Eyesaloon reviews prescription orders and confirms unclear values before preparing the lenses.",
+        "values_title": "How to read common prescription values",
+        "sph_label": "SPH",
+        "sph_text": "Sphere shows the main lens power. Minus is commonly used for distance vision; plus is commonly used for near vision.",
+        "cyl_label": "CYL",
+        "cyl_text": "Cylinder shows astigmatism correction. If your prescription has no CYL, leave it blank.",
+        "axis_label": "AXIS",
+        "axis_text": "Axis is used with CYL and is usually a number from 1 to 180.",
+        "add_pd_label": "ADD / PD",
+        "add_pd_text": "ADD is used for reading or progressive lenses. PD is the distance between pupils and helps center the lenses."
+      },
+      "size_guide": {
+        "kicker": "Frame size guide",
+        "title": "Find a frame that sits comfortably",
+        "intro": "Compare lens width, bridge, and temple length with a frame you already like. Small differences are normal, but the pattern helps avoid a poor fit.",
+        "measure_title": "Where the frame measurements matter",
+        "measure_text": "Lens width affects face coverage, bridge affects nose fit, and temple length affects how the arms sit behind the ears.",
+        "narrow_title": "Narrow fit",
+        "narrow_text": "Best for smaller faces or customers whose current glasses feel loose at the temples.",
+        "regular_title": "Regular fit",
+        "regular_text": "A balanced everyday size for most adults and the safest starting point when unsure.",
+        "wide_title": "Wide fit",
+        "wide_text": "Better for broader faces or anyone whose current glasses press at the sides."
+      },
+      "about": {
+        "kicker": "About Eyesaloon",
+        "title": "A real optical shop experience, built for online ordering",
+        "intro": "Eyesaloon brings frame shopping, prescription support, and clear order confirmation together for customers across Pakistan.",
+        "shop_title": "Optical support from Bhakkar, Punjab",
+        "shop_text": "The store is built around practical eyewear service: help choosing frames, checking lens details, and keeping customers informed before fulfilment.",
+        "rx_title": "Prescription-first ordering",
+        "rx_text": "The product page keeps Rx choices visible so customers can order frame only, prescription lenses, or tint options with fewer mistakes.",
+        "delivery_title": "Made for local payment habits",
+        "delivery_text": "Cash on delivery, JazzCash, Easypaisa, and card-ready flows are planned around how customers actually shop.",
+        "support_title": "Human confirmation",
+        "support_text": "WhatsApp support gives Eyesaloon a simple way to confirm prescriptions, answer fit questions, and reduce wrong orders."
+      },
+      "contact_lens_care": {
+        "kicker": "Contact lens care",
+        "title": "Simple care habits for safer lens wear",
+        "intro": "Contact lenses need clean handling and the right solution every time. This guide keeps the essentials visible for customers.",
+        "clean_title": "Wash and dry hands",
+        "clean_text": "Handle lenses only with clean, dry hands. Avoid oily soaps, lotions, and touching the lens with sharp nails.",
+        "solution_title": "Use fresh solution",
+        "solution_text": "Never reuse old solution. Store lenses in clean solution and replace the case regularly.",
+        "stop_title": "Stop if eyes feel irritated",
+        "stop_text": "Remove lenses if there is redness, pain, unusual blur, or discomfort, then contact Eyesaloon or an eye-care professional.",
+        "warning_title": "Care note",
+        "warning_text": "Do not sleep in lenses unless they are specifically prescribed for overnight wear. Follow replacement timing for daily, monthly, or specialty lenses."
+      },
+      "policies": {
+        "kicker": "Customer care",
+        "title": "Clear support policies for eyewear orders",
+        "intro": "These customer-friendly policy notes help set expectations while final legal and payment-provider wording is being prepared.",
+        "exchange_title": "7-day exchange support",
+        "exchange_text": "Unused frames can be reviewed for exchange within 7 days when packaging and condition are suitable.",
+        "remake_title": "Prescription remake review",
+        "remake_text": "If a prescription issue appears after delivery, Eyesaloon can review the order details and advise the next step.",
+        "warranty_title": "Frame warranty guidance",
+        "warranty_text": "Manufacturing defects can be checked by support. Damage from misuse, scratches, or accidents is handled separately."
+      }
     }
   },
   "general": {

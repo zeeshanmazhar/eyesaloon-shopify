@@ -1,28 +1,15 @@
 {
   "sections": {
     "main": {
-      "type": "main-page",
+      "type": "eyesaloon-content-page",
       "settings": {
-        "padding_top": 28,
-        "padding_bottom": 20
-      }
-    },
-    "how": {
-      "type": "eyesaloon-how-it-works",
-      "settings": {
-        "heading": "Prescription ordering guide",
-        "text": "Enter your values, paste a prescription photo URL, or choose WhatsApp later. Eyesaloon confirms details before lenses are made."
-      }
-    },
-    "measurements": {
-      "type": "eyesaloon-styleguide",
-      "settings": {
+        "page_mode": "rx_guide",
+        "contact_link": "/pages/contact",
+        "color_scheme": "scheme-1"
       }
     }
   },
   "order": [
-    "main",
-    "how",
-    "measurements"
+    "main"
   ]
 }

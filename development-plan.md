@@ -337,7 +337,7 @@ Sections, each with schema presets and editor-configurable content: `hero` (head
 - [x] Grouped configurator items; Rx status per line ("Rx attached ✓" / "via WhatsApp"); prepaid-discount banner (`settings.prepaid_discount_pct`); COD + wallets payment icons; sticky checkout CTA on mobile; empty state with category links; note field. *(Frame/package linked cart lines, Rx status, prepaid banner, COD/JazzCash/Easypaisa pills, sticky mobile checkout, empty state, and note field are implemented and validated with a test checkout.)*
 
 ### Content pages
-- [ ] `page.rx-guide` (video embeds + illustrated steps, en/ur), `page.size-guide`, `page.about` (real shop photos, map, team), policy pages (7-day exchange, free remake, warranty — Zee supplies final text), `page.contact-lens-care`, 404 with search. *(Editable starter templates exist for rx-guide, size-guide, about, and contact-lens-care; final photos, video embeds, Urdu copy review, and policy text remain.)*
+- [ ] `page.rx-guide` (video embeds + illustrated steps, en/ur), `page.size-guide`, `page.about` (real shop photos, map, team), policy pages (7-day exchange, free remake, warranty — Zee supplies final text), `page.contact-lens-care`, 404 with search. *(Polished reusable content-page section, localized English/Urdu starter copy, rx-guide, size-guide, about, contact-lens-care, policy hub template, and search-led 404 are implemented. Final shop photos, map/team details, video embeds, Urdu copy review, and legally final policy text remain.)*
 
 **GATE M2:** end-to-end on a real low-end Android over mobile data: browse → filter → configure Rx lenses (all 3 Rx modes) → cart → COD checkout → order visible in admin with complete data. Zee approves.
 

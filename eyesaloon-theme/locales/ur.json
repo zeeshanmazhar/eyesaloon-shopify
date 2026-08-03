@@ -118,6 +118,84 @@
       "face_shape": "چہرے کی شکل",
       "all_face_shapes": "تمام چہرے",
       "no_filtered_products": "ان فلٹرز کے مطابق کوئی فریم نہیں۔"
+    },
+    "pages": {
+      "shop_frames": "فریمز خریدیں",
+      "ask_help": "آئی سیلون سے پوچھیں",
+      "not_found": {
+        "text": "یہ صفحہ شاید منتقل ہو گیا ہے، مگر فریم کلیکشن اور نسخہ مدد یہاں موجود ہے۔",
+        "search_placeholder": "فریمز، لینس یا کیئر تلاش کریں"
+      },
+      "rx_guide": {
+        "kicker": "نسخہ گائیڈ",
+        "title": "Prescription glasses بغیر اندازے کے آرڈر کریں",
+        "intro": "پہلے فریم منتخب کریں، پھر ویلیوز لکھ کر، تصویر شیئر کر کے، یا واٹس ایپ پر کنفرم کر کے نسخہ مکمل کریں۔",
+        "step_1_title": "Rx شیئر کرنے کا طریقہ",
+        "step_1_text": "اگر SPH، CYL، AXIS اور PD موجود ہوں تو درج کریں، prescription لنک شامل کریں، یا WhatsApp later منتخب کریں۔",
+        "step_2_title": "لینس استعمال منتخب کریں",
+        "step_2_text": "Distance، reading، progressive، clear non-Rx، اور sunglass tint آپشنز checkout سے پہلے آرڈر واضح رکھتے ہیں۔",
+        "step_3_title": "Fulfilment سے پہلے تصدیق",
+        "step_3_text": "آئی سیلون prescription orders ریویو کرتا ہے اور غیر واضح ویلیوز لینس بنانے سے پہلے کنفرم کرتا ہے۔",
+        "values_title": "عام prescription values کیسے پڑھیں",
+        "sph_label": "SPH",
+        "sph_text": "Sphere lens power بتاتا ہے۔ Minus عموماً distance vision اور plus عموماً near vision کے لیے ہوتا ہے۔",
+        "cyl_label": "CYL",
+        "cyl_text": "Cylinder astigmatism correction بتاتا ہے۔ اگر prescription میں CYL نہیں تو اسے خالی چھوڑ سکتے ہیں۔",
+        "axis_label": "AXIS",
+        "axis_text": "Axis CYL کے ساتھ استعمال ہوتا ہے اور عموماً 1 سے 180 تک نمبر ہوتا ہے۔",
+        "add_pd_label": "ADD / PD",
+        "add_pd_text": "ADD reading یا progressive lenses کے لیے ہوتا ہے۔ PD pupils کے درمیان فاصلہ ہے جس سے lenses center ہوتے ہیں۔"
+      },
+      "size_guide": {
+        "kicker": "فریم سائز گائیڈ",
+        "title": "آرام دہ فٹ والا فریم منتخب کریں",
+        "intro": "Lens width، bridge، اور temple length کو اپنے پسندیدہ موجودہ فریم سے compare کریں۔ تھوڑا فرق نارمل ہے، مگر یہ خراب fit سے بچاتا ہے۔",
+        "measure_title": "Frame measurements کہاں اہم ہیں",
+        "measure_text": "Lens width face coverage، bridge nose fit، اور temple length arms کے ear کے پیچھے بیٹھنے کو متاثر کرتا ہے۔",
+        "narrow_title": "Narrow fit",
+        "narrow_text": "چھوٹے face یا ایسے customers کے لیے بہتر جنہیں موجودہ glasses temples پر loose لگتے ہیں۔",
+        "regular_title": "Regular fit",
+        "regular_text": "زیادہ تر adults کے لیے balanced everyday size اور unsure ہونے پر بہترین starting point۔",
+        "wide_title": "Wide fit",
+        "wide_text": "broader faces یا ایسے customers کے لیے بہتر جن کے current glasses sides پر press کرتے ہیں۔"
+      },
+      "about": {
+        "kicker": "About Eyesaloon",
+        "title": "Real optical shop experience، online ordering کے لیے تیار",
+        "intro": "Eyesaloon پاکستان بھر کے customers کے لیے frame shopping، prescription support، اور clear order confirmation کو ایک جگہ لاتا ہے۔",
+        "shop_title": "Bhakkar، Punjab سے optical support",
+        "shop_text": "Store عملی eyewear service کے گرد بنایا گیا ہے: frames منتخب کرنے میں مدد، lens details چیک کرنا، اور fulfilment سے پہلے customers کو informed رکھنا۔",
+        "rx_title": "Prescription-first ordering",
+        "rx_text": "Product page پر Rx choices واضح رہتی ہیں تاکہ customer frame only، prescription lenses، یا tint options کم غلطیوں کے ساتھ order کر سکے۔",
+        "delivery_title": "Local payment habits کے مطابق",
+        "delivery_text": "Cash on delivery، JazzCash، Easypaisa، اور card-ready flows customers کے اصل shopping انداز کو مدنظر رکھ کر plan کیے گئے ہیں۔",
+        "support_title": "Human confirmation",
+        "support_text": "WhatsApp support prescription confirm کرنے، fit questions answer کرنے، اور wrong orders کم کرنے کا آسان طریقہ دیتا ہے۔"
+      },
+      "contact_lens_care": {
+        "kicker": "Contact lens care",
+        "title": "Lens wear کے لیے آسان اور محفوظ habits",
+        "intro": "Contact lenses کے لیے ہر بار clean handling اور درست solution ضروری ہے۔ یہ guide customers کے لیے essentials واضح رکھتی ہے۔",
+        "clean_title": "ہاتھ دھو کر خشک کریں",
+        "clean_text": "Lenses صرف صاف اور خشک ہاتھوں سے handle کریں۔ oily soaps، lotions، اور sharp nails سے lens touch کرنے سے بچیں۔",
+        "solution_title": "Fresh solution استعمال کریں",
+        "solution_text": "Old solution دوبارہ استعمال نہ کریں۔ Lenses صاف solution میں store کریں اور case regularly replace کریں۔",
+        "stop_title": "Irritation ہو تو فوراً روکیں",
+        "stop_text": "Redness، pain، unusual blur، یا discomfort ہو تو lenses نکال دیں، پھر Eyesaloon یا eye-care professional سے رابطہ کریں۔",
+        "warning_title": "Care note",
+        "warning_text": "Lenses میں نہ سوئیں جب تک وہ خاص طور پر overnight wear کے لیے prescribed نہ ہوں۔ Daily، monthly، یا specialty lenses کا replacement timing follow کریں۔"
+      },
+      "policies": {
+        "kicker": "Customer care",
+        "title": "Eyewear orders کے لیے clear support policies",
+        "intro": "یہ customer-friendly policy notes expectations واضح کرتے ہیں، جبکہ final legal اور payment-provider wording بعد میں تیار کی جائے گی۔",
+        "exchange_title": "7-day exchange support",
+        "exchange_text": "Unused frames کو 7 دن کے اندر exchange review کے لیے دیکھا جا سکتا ہے، بشرطیکہ packaging اور condition مناسب ہو۔",
+        "remake_title": "Prescription remake review",
+        "remake_text": "Delivery کے بعد prescription issue نظر آئے تو Eyesaloon order details review کر کے next step بتا سکتا ہے۔",
+        "warranty_title": "Frame warranty guidance",
+        "warranty_text": "Manufacturing defects support سے check کیے جا سکتے ہیں۔ Misuse، scratches، یا accidental damage الگ handle ہوتے ہیں۔"
+      }
     }
   },
   "general": {

@@ -3,7 +3,7 @@
     "main": {
       "type": "eyesaloon-content-page",
       "settings": {
-        "page_mode": "size_guide",
+        "page_mode": "policies",
         "contact_link": "/pages/contact",
         "color_scheme": "scheme-1"
       }

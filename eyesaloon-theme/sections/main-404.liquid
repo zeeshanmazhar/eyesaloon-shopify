@@ -1,23 +1,32 @@
-<style type="text/css">
-  .template-404 .title + * {
-    margin-top: 1rem;
-  }
+{{ 'eyesaloon.css' | asset_url | stylesheet_tag }}
 
-  @media screen and (min-width: 750px) {
-    .template-404 .title + * {
-      margin-top: 2rem;
-    }
-  }
-</style>
+<div class="eyesaloon-not-found page-width">
+  <div class="eyesaloon-not-found__copy">
+    <p class="eyesaloon-content-page__kicker">{{ 'templates.404.subtext' | t }}</p>
+    <h1 class="title">{{ 'templates.404.title' | t }}</h1>
+    <p>{{ 'eyesaloon.pages.not_found.text' | t }}</p>
+  </div>
 
-<div class="template-404 page-width page-margin center">
-  <p>
-    {{ 'templates.404.subtext' | t }}
-  </p>
-  <h1 class="title">
-    {{ 'templates.404.title' | t }}
-  </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
-  </a>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="eyesaloon-not-found__search">
+    <input type="hidden" name="type" value="product">
+    <label class="visually-hidden" for="EyesaloonNotFoundSearch">{{ 'general.search.search' | t }}</label>
+    <input
+      id="EyesaloonNotFoundSearch"
+      class="field__input"
+      type="search"
+      name="q"
+      value="{{ search.terms | escape }}"
+      placeholder="{{ 'eyesaloon.pages.not_found.search_placeholder' | t }}"
+    >
+    <button class="button" type="submit">{{ 'general.search.search' | t }}</button>
+  </form>
+
+  <div class="eyesaloon-not-found__actions">
+    <a href="{{ routes.all_products_collection_url }}" class="button">
+      {{ 'eyesaloon.pages.shop_frames' | t }}
+    </a>
+    <a href="/pages/contact" class="button button--secondary">
+      {{ 'eyesaloon.pages.ask_help' | t }}
+    </a>
+  </div>
 </div>

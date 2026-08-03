@@ -1,0 +1,188 @@
+{{ 'eyesaloon.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign page_mode = section.settings.page_mode
+  assign page_title_key = 'eyesaloon.pages.' | append: page_mode | append: '.title'
+  assign page_intro_key = 'eyesaloon.pages.' | append: page_mode | append: '.intro'
+  assign page_kicker_key = 'eyesaloon.pages.' | append: page_mode | append: '.kicker'
+  assign contact_link = section.settings.contact_link | default: '/pages/contact'
+-%}
+
+<section class="eyesaloon-content-page color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <header class="eyesaloon-content-page__hero">
+      <p class="eyesaloon-content-page__kicker">{{ page_kicker_key | t }}</p>
+      <h1>{{ page_title_key | t }}</h1>
+      <p>{{ page_intro_key | t }}</p>
+    </header>
+
+    {%- case page_mode -%}
+      {%- when 'rx_guide' -%}
+        <div class="eyesaloon-content-page__grid eyesaloon-content-page__grid--steps">
+          <article class="eyesaloon-content-card">
+            <span>1</span>
+            <h2>{{ 'eyesaloon.pages.rx_guide.step_1_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.rx_guide.step_1_text' | t }}</p>
+          </article>
+          <article class="eyesaloon-content-card">
+            <span>2</span>
+            <h2>{{ 'eyesaloon.pages.rx_guide.step_2_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.rx_guide.step_2_text' | t }}</p>
+          </article>
+          <article class="eyesaloon-content-card">
+            <span>3</span>
+            <h2>{{ 'eyesaloon.pages.rx_guide.step_3_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.rx_guide.step_3_text' | t }}</p>
+          </article>
+        </div>
+
+        <div class="eyesaloon-content-panel">
+          <h2>{{ 'eyesaloon.pages.rx_guide.values_title' | t }}</h2>
+          <div class="eyesaloon-content-table" role="table">
+            <div role="row">
+              <strong role="cell">{{ 'eyesaloon.pages.rx_guide.sph_label' | t }}</strong>
+              <span role="cell">{{ 'eyesaloon.pages.rx_guide.sph_text' | t }}</span>
+            </div>
+            <div role="row">
+              <strong role="cell">{{ 'eyesaloon.pages.rx_guide.cyl_label' | t }}</strong>
+              <span role="cell">{{ 'eyesaloon.pages.rx_guide.cyl_text' | t }}</span>
+            </div>
+            <div role="row">
+              <strong role="cell">{{ 'eyesaloon.pages.rx_guide.axis_label' | t }}</strong>
+              <span role="cell">{{ 'eyesaloon.pages.rx_guide.axis_text' | t }}</span>
+            </div>
+            <div role="row">
+              <strong role="cell">{{ 'eyesaloon.pages.rx_guide.add_pd_label' | t }}</strong>
+              <span role="cell">{{ 'eyesaloon.pages.rx_guide.add_pd_text' | t }}</span>
+            </div>
+          </div>
+        </div>
+
+      {%- when 'size_guide' -%}
+        <div class="eyesaloon-content-panel eyesaloon-content-panel--diagram">
+          {% render 'eyesaloon-measurement-diagram' %}
+          <div>
+            <h2>{{ 'eyesaloon.pages.size_guide.measure_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.size_guide.measure_text' | t }}</p>
+          </div>
+        </div>
+        <div class="eyesaloon-content-page__grid">
+          <article class="eyesaloon-content-card">
+            <h2>{{ 'eyesaloon.pages.size_guide.narrow_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.size_guide.narrow_text' | t }}</p>
+          </article>
+          <article class="eyesaloon-content-card">
+            <h2>{{ 'eyesaloon.pages.size_guide.regular_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.size_guide.regular_text' | t }}</p>
+          </article>
+          <article class="eyesaloon-content-card">
+            <h2>{{ 'eyesaloon.pages.size_guide.wide_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.size_guide.wide_text' | t }}</p>
+          </article>
+        </div>
+
+      {%- when 'about' -%}
+        <div class="eyesaloon-content-panel">
+          <h2>{{ 'eyesaloon.pages.about.shop_title' | t }}</h2>
+          <p>{{ 'eyesaloon.pages.about.shop_text' | t }}</p>
+        </div>
+        <div class="eyesaloon-content-page__grid">
+          <article class="eyesaloon-content-card">
+            <h2>{{ 'eyesaloon.pages.about.rx_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.about.rx_text' | t }}</p>
+          </article>
+          <article class="eyesaloon-content-card">
+            <h2>{{ 'eyesaloon.pages.about.delivery_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.about.delivery_text' | t }}</p>
+          </article>
+          <article class="eyesaloon-content-card">
+            <h2>{{ 'eyesaloon.pages.about.support_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.about.support_text' | t }}</p>
+          </article>
+        </div>
+
+      {%- when 'contact_lens_care' -%}
+        <div class="eyesaloon-content-page__grid eyesaloon-content-page__grid--steps">
+          <article class="eyesaloon-content-card">
+            <span>1</span>
+            <h2>{{ 'eyesaloon.pages.contact_lens_care.clean_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.contact_lens_care.clean_text' | t }}</p>
+          </article>
+          <article class="eyesaloon-content-card">
+            <span>2</span>
+            <h2>{{ 'eyesaloon.pages.contact_lens_care.solution_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.contact_lens_care.solution_text' | t }}</p>
+          </article>
+          <article class="eyesaloon-content-card">
+            <span>3</span>
+            <h2>{{ 'eyesaloon.pages.contact_lens_care.stop_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.contact_lens_care.stop_text' | t }}</p>
+          </article>
+        </div>
+        <div class="eyesaloon-content-panel">
+          <h2>{{ 'eyesaloon.pages.contact_lens_care.warning_title' | t }}</h2>
+          <p>{{ 'eyesaloon.pages.contact_lens_care.warning_text' | t }}</p>
+        </div>
+
+      {%- when 'policies' -%}
+        <div class="eyesaloon-content-page__grid">
+          <article class="eyesaloon-content-card">
+            <h2>{{ 'eyesaloon.pages.policies.exchange_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.policies.exchange_text' | t }}</p>
+          </article>
+          <article class="eyesaloon-content-card">
+            <h2>{{ 'eyesaloon.pages.policies.remake_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.policies.remake_text' | t }}</p>
+          </article>
+          <article class="eyesaloon-content-card">
+            <h2>{{ 'eyesaloon.pages.policies.warranty_title' | t }}</h2>
+            <p>{{ 'eyesaloon.pages.policies.warranty_text' | t }}</p>
+          </article>
+        </div>
+    {%- endcase -%}
+
+    <footer class="eyesaloon-content-page__cta">
+      <a class="button" href="{{ routes.all_products_collection_url }}">{{ 'eyesaloon.pages.shop_frames' | t }}</a>
+      <a class="button button--secondary" href="{{ contact_link }}">{{ 'eyesaloon.pages.ask_help' | t }}</a>
+    </footer>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eyesaloon content page",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "page_mode",
+      "label": "Page content",
+      "options": [
+        { "value": "rx_guide", "label": "Rx guide" },
+        { "value": "size_guide", "label": "Size guide" },
+        { "value": "about", "label": "About" },
+        { "value": "contact_lens_care", "label": "Contact lens care" },
+        { "value": "policies", "label": "Policies" }
+      ],
+      "default": "rx_guide"
+    },
+    {
+      "type": "url",
+      "id": "contact_link",
+      "label": "Contact link"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Eyesaloon content page"
+    }
+  ]
+}
+{% endschema %}

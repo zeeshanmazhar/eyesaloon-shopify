@@ -989,6 +989,173 @@ button.shopify-payment-button__button--unbranded {
   padding: 2rem;
 }
 
+.eyesaloon-content-page {
+  padding-block: 4.8rem 6.4rem;
+}
+
+.eyesaloon-content-page__hero {
+  display: grid;
+  gap: 1.2rem;
+  max-width: 82rem;
+  padding-block-end: 3.2rem;
+}
+
+.eyesaloon-content-page__hero h1,
+.eyesaloon-not-found h1 {
+  color: var(--color-ink);
+  font-size: clamp(3.2rem, 6vw, 5.8rem);
+  line-height: 1;
+  margin: 0;
+}
+
+.eyesaloon-content-page__hero p,
+.eyesaloon-not-found__copy p {
+  color: var(--color-body);
+  font-size: 1.7rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 72rem;
+}
+
+.eyesaloon-content-page__kicker {
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.eyesaloon-content-page__grid {
+  display: grid;
+  gap: 1.6rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-block: 2rem;
+}
+
+.eyesaloon-content-card,
+.eyesaloon-content-panel,
+.eyesaloon-not-found {
+  background: var(--color-surface);
+  border: 1px solid rgba(var(--color-foreground), 0.1);
+  border-radius: var(--radius-card);
+  box-shadow: 0 1rem 3rem rgba(var(--color-shadow), 0.08);
+  color: var(--color-body);
+}
+
+.eyesaloon-content-card {
+  display: grid;
+  gap: 1rem;
+  min-height: 18rem;
+  padding: 2.4rem;
+}
+
+.eyesaloon-content-card span {
+  align-items: center;
+  background: var(--color-primary-soft);
+  border-radius: 50%;
+  color: var(--color-primary);
+  display: inline-flex;
+  font-size: 1.4rem;
+  font-weight: 800;
+  height: 3.6rem;
+  justify-content: center;
+  width: 3.6rem;
+}
+
+.eyesaloon-content-card h2,
+.eyesaloon-content-panel h2 {
+  color: var(--color-ink);
+  font-size: 2rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.eyesaloon-content-card p,
+.eyesaloon-content-panel p {
+  color: var(--color-body);
+  font-size: 1.5rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.eyesaloon-content-panel {
+  display: grid;
+  gap: 1.8rem;
+  margin-block: 2rem;
+  padding: 2.8rem;
+}
+
+.eyesaloon-content-panel--diagram {
+  align-items: center;
+  grid-template-columns: minmax(24rem, 0.9fr) minmax(0, 1.1fr);
+}
+
+.eyesaloon-content-panel--diagram .eyesaloon-measurement {
+  background: var(--color-surface-warm);
+  border-radius: var(--radius-card);
+  color: var(--color-ink);
+  padding: 1.8rem;
+}
+
+.eyesaloon-content-table {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid rgba(var(--color-foreground), 0.1);
+  border-radius: var(--radius-card);
+}
+
+.eyesaloon-content-table > div {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: minmax(9rem, 0.35fr) 1fr;
+  padding: 1.4rem 1.6rem;
+}
+
+.eyesaloon-content-table > div + div {
+  border-block-start: 1px solid rgba(var(--color-foreground), 0.1);
+}
+
+.eyesaloon-content-table strong {
+  color: var(--color-ink);
+}
+
+.eyesaloon-content-table span {
+  color: var(--color-body);
+}
+
+.eyesaloon-content-page__cta,
+.eyesaloon-not-found__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin-block-start: 3rem;
+}
+
+.eyesaloon-not-found {
+  display: grid;
+  gap: 2rem;
+  margin-block: 5.6rem;
+  padding: 3.2rem;
+}
+
+.eyesaloon-not-found__copy {
+  display: grid;
+  gap: 1rem;
+}
+
+.eyesaloon-not-found__search {
+  align-items: center;
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: 1fr auto;
+  max-width: 68rem;
+}
+
+.eyesaloon-not-found__search .field__input {
+  min-height: 4.8rem;
+}
+
 html[lang='ur'],
 html[dir='rtl'] body {
   font-family: var(--font-brand-urdu);
@@ -1046,6 +1213,35 @@ html[dir='rtl'] h3 {
   }
 
   .eyesaloon-collection-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .eyesaloon-content-page {
+    padding-block: 3.2rem 4.8rem;
+  }
+
+  .eyesaloon-content-page__hero {
+    padding-block-end: 1.6rem;
+  }
+
+  .eyesaloon-content-page__hero h1,
+  .eyesaloon-not-found h1 {
+    font-size: 3.6rem;
+  }
+
+  .eyesaloon-content-page__grid,
+  .eyesaloon-content-panel--diagram,
+  .eyesaloon-not-found__search {
+    grid-template-columns: 1fr;
+  }
+
+  .eyesaloon-content-card,
+  .eyesaloon-content-panel,
+  .eyesaloon-not-found {
+    padding: 2rem;
+  }
+
+  .eyesaloon-content-table > div {
     grid-template-columns: 1fr;
   }
 
