@@ -32,6 +32,15 @@ button.shopify-payment-button__button--unbranded {
   letter-spacing: 0;
 }
 
+.button::before,
+.button::after,
+.shopify-challenge__button::before,
+.shopify-challenge__button::after,
+.customer button::before,
+.customer button::after {
+  box-shadow: none;
+}
+
 .button,
 .button.button--primary,
 .shopify-challenge__button,
