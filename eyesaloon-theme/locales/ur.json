@@ -8,6 +8,10 @@
     "common": {
       "to_confirm": "تصدیق باقی ہے"
     },
+    "seo": {
+      "default_description": "Eyesaloon سے prescription eyeglasses، sunglasses، اور contact lens support پاکستان بھر میں حاصل کریں۔",
+      "business_description": "Eyesaloon پاکستان کے مختلف شہروں میں shops کے ذریعے prescription eyeglasses، sunglasses، contact lens care، اور optical support فراہم کرتا ہے۔"
+    },
     "cart": {
       "prepaid_title": "{{ discount }}% پری پیڈ ڈسکاؤنٹ دستیاب ہے",
       "confirmation_note": "آئی سیلون نسخہ آرڈرز کو fulfilment سے پہلے واٹس ایپ پر کنفرم کرتا ہے۔",
@@ -200,6 +204,9 @@
     }
   },
   "general": {
+    "breadcrumbs": {
+      "home": "Home"
+    },
     "password_page": {
       "login_form_heading": "Enter store using password:",
       "login_password_button": "Enter using password",

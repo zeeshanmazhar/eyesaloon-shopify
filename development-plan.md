@@ -393,8 +393,8 @@ Performance budgets (CI-enforced via `perf-check.mjs` / Lighthouse CI on preview
 - [ ] Lighthouse mobile perf ≥ 80 on home/collection/product; LCP ≤ 2.5s (Slow 4G sim); CLS < 0.1.
 - [ ] JS ≤ 150 KB gzip on product page excluding try-on; no render-blocking third-party scripts; all below-fold images lazy; responsive `srcset` everywhere (`image_url` filter with widths).
 SEO/analytics:
-- [ ] JSON-LD: Product/Offer on product pages, LocalBusiness (shop address/hours/geo) sitewide, BreadcrumbList; meta titles/descriptions templates; `hreflang` en/ur (Shopify emits when Urdu published — verify).
-- [ ] Meta Pixel + TikTok Pixel + GA4 via theme settings toggles (single `analytics.liquid` snippet, no tag-manager bloat).
+- [ ] JSON-LD: Product/Offer on product pages, LocalBusiness (shop address/hours/geo) sitewide, BreadcrumbList; meta titles/descriptions templates; `hreflang` en/ur (Shopify emits when Urdu published — verify). *(SEO foundation implemented: meta description fallbacks, Open Graph image fallback setting, centralized WebSite + LocalBusiness + BreadcrumbList JSON-LD, and Dawn duplicate header schema removed. Final shop addresses/hours/geo and Urdu language publication still need Admin data.)*
+- [x] Meta Pixel + TikTok Pixel + GA4 via theme settings toggles (single `analytics.liquid` snippet, no tag-manager bloat). *(Settings and conditional loaders are implemented; scripts stay inactive until pixel IDs are entered.)*
 - [ ] Urdu landing pages for key search terms (Zee validates: چشمہ آن لائن، نظر کا چشمہ، دھوپ کا چشمہ).
 Launch checklist:
 - [ ] 10 scripted test orders covering: COD, prepaid, each Rx mode, contacts, multi-item, discount code, cancel, refund, exchange tags.

@@ -1,0 +1,187 @@
+{%- liquid
+  assign business_name = settings.seo_business_name | default: shop.name
+  assign business_type = settings.seo_business_type | default: 'Optician'
+  assign business_description = settings.seo_business_description | default: shop.description | default: 'eyesaloon.seo.business_description' | t
+  assign business_url = request.origin
+  assign business_image = settings.seo_social_share_image | default: settings.logo
+  assign has_same_as = false
+  assign search_action_target = business_url | append: routes.search_url | append: '?q={search_term_string}'
+
+  if settings.social_facebook_link != blank
+    assign has_same_as = true
+  endif
+  if settings.social_instagram_link != blank
+    assign has_same_as = true
+  endif
+  if settings.social_youtube_link != blank
+    assign has_same_as = true
+  endif
+  if settings.social_tiktok_link != blank
+    assign has_same_as = true
+  endif
+  if settings.social_twitter_link != blank
+    assign has_same_as = true
+  endif
+  if settings.social_pinterest_link != blank
+    assign has_same_as = true
+  endif
+
+  assign breadcrumb_position = 1
+-%}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": {{ business_url | append: '#website' | json }},
+    "name": {{ shop.name | json }},
+    "url": {{ business_url | json }},
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {{ search_action_target | json }},
+      "query-input": "required name=search_term_string"
+    }
+  }
+</script>
+
+{%- if settings.seo_enable_local_business_schema -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": {{ business_type | json }},
+      "@id": {{ business_url | append: '#localbusiness' | json }},
+      "name": {{ business_name | json }},
+      "url": {{ business_url | json }},
+      "description": {{ business_description | strip_html | json }},
+      {%- if business_image != blank %}
+        "image": {{ business_image | image_url: width: 1200 | prepend: 'https:' | json }},
+        "logo": {{ business_image | image_url: width: 512 | prepend: 'https:' | json }},
+      {%- endif %}
+      {%- if settings.whatsapp_number != blank %}
+        "telephone": {{ settings.whatsapp_number | prepend: '+' | json }},
+      {%- endif %}
+      {%- if settings.seo_price_range != blank %}
+        "priceRange": {{ settings.seo_price_range | json }},
+      {%- endif %}
+      {%- if settings.seo_address != blank or settings.seo_city != blank or settings.seo_country != blank %}
+        "address": {
+          "@type": "PostalAddress",
+          {%- if settings.seo_address != blank %}
+            "streetAddress": {{ settings.seo_address | json }},
+          {%- endif %}
+          {%- if settings.seo_city != blank %}
+            "addressLocality": {{ settings.seo_city | json }},
+          {%- endif %}
+          {%- if settings.seo_region != blank %}
+            "addressRegion": {{ settings.seo_region | json }},
+          {%- endif %}
+          "addressCountry": {{ settings.seo_country | default: 'PK' | json }}
+        },
+      {%- endif %}
+      {%- if settings.seo_latitude != blank and settings.seo_longitude != blank %}
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": {{ settings.seo_latitude | json }},
+          "longitude": {{ settings.seo_longitude | json }}
+        },
+      {%- endif %}
+      {%- if settings.seo_opening_hours != blank %}
+        "openingHours": {{ settings.seo_opening_hours | split: ',' | json }},
+      {%- endif %}
+      "sameAs": [
+        {%- if has_same_as -%}
+          {%- assign same_as_written = false -%}
+          {%- if settings.social_facebook_link != blank -%}
+            {{ settings.social_facebook_link | json }}
+            {%- assign same_as_written = true -%}
+          {%- endif -%}
+          {%- if settings.social_instagram_link != blank -%}
+            {%- if same_as_written -%},{%- endif -%}
+            {{ settings.social_instagram_link | json }}
+            {%- assign same_as_written = true -%}
+          {%- endif -%}
+          {%- if settings.social_youtube_link != blank -%}
+            {%- if same_as_written -%},{%- endif -%}
+            {{ settings.social_youtube_link | json }}
+            {%- assign same_as_written = true -%}
+          {%- endif -%}
+          {%- if settings.social_tiktok_link != blank -%}
+            {%- if same_as_written -%},{%- endif -%}
+            {{ settings.social_tiktok_link | json }}
+            {%- assign same_as_written = true -%}
+          {%- endif -%}
+          {%- if settings.social_twitter_link != blank -%}
+            {%- if same_as_written -%},{%- endif -%}
+            {{ settings.social_twitter_link | json }}
+            {%- assign same_as_written = true -%}
+          {%- endif -%}
+          {%- if settings.social_pinterest_link != blank -%}
+            {%- if same_as_written -%},{%- endif -%}
+            {{ settings.social_pinterest_link | json }}
+          {%- endif -%}
+        {%- endif -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": {{ breadcrumb_position }},
+        "name": {{ 'general.breadcrumbs.home' | t | default: 'Home' | json }},
+        "item": {{ business_url | json }}
+      }
+      {%- assign breadcrumb_position = breadcrumb_position | plus: 1 -%}
+      {%- if request.page_type == 'collection' and collection -%}
+        ,{
+          "@type": "ListItem",
+          "position": {{ breadcrumb_position }},
+          "name": {{ collection.title | json }},
+          "item": {{ business_url | append: collection.url | json }}
+        }
+      {%- elsif request.page_type == 'product' and product -%}
+        {%- if collection -%}
+          ,{
+            "@type": "ListItem",
+            "position": {{ breadcrumb_position }},
+            "name": {{ collection.title | json }},
+            "item": {{ business_url | append: collection.url | json }}
+          }
+          {%- assign breadcrumb_position = breadcrumb_position | plus: 1 -%}
+        {%- endif -%}
+        ,{
+          "@type": "ListItem",
+          "position": {{ breadcrumb_position }},
+          "name": {{ product.title | json }},
+          "item": {{ business_url | append: product.url | json }}
+        }
+      {%- elsif request.page_type == 'page' and page -%}
+        ,{
+          "@type": "ListItem",
+          "position": {{ breadcrumb_position }},
+          "name": {{ page.title | json }},
+          "item": {{ business_url | append: page.url | json }}
+        }
+      {%- elsif request.page_type == 'article' and article -%}
+        ,{
+          "@type": "ListItem",
+          "position": {{ breadcrumb_position }},
+          "name": {{ blog.title | json }},
+          "item": {{ business_url | append: blog.url | json }}
+        }
+        {%- assign breadcrumb_position = breadcrumb_position | plus: 1 -%}
+        ,{
+          "@type": "ListItem",
+          "position": {{ breadcrumb_position }},
+          "name": {{ article.title | json }},
+          "item": {{ business_url | append: article.url | json }}
+        }
+      {%- endif -%}
+    ]
+  }
+</script>

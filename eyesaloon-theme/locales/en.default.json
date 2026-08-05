@@ -8,6 +8,10 @@
     "common": {
       "to_confirm": "To confirm"
     },
+    "seo": {
+      "default_description": "Shop prescription eyeglasses, sunglasses, and contact lens support from Eyesaloon across Pakistan.",
+      "business_description": "Prescription eyeglasses, sunglasses, contact lens care, and optical support through Eyesaloon shops in different cities of Pakistan."
+    },
     "cart": {
       "prepaid_title": "{{ discount }}% prepaid discount available",
       "confirmation_note": "Eyesaloon confirms prescription orders on WhatsApp before fulfilment.",
@@ -200,6 +204,9 @@
     }
   },
   "general": {
+    "breadcrumbs": {
+      "home": "Home"
+    },
     "password_page": {
       "login_form_heading": "Enter store using password:",
       "login_password_button": "Enter using password",

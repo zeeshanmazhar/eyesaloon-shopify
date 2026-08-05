@@ -139,12 +139,125 @@
         "type": "text",
         "id": "shop_address",
         "label": "Shop address",
-        "default": "Eyesaloon, Bhakkar, Punjab, Pakistan"
+        "default": "Eyesaloon optical shops, Pakistan"
       },
       {
         "type": "url",
         "id": "google_maps_url",
         "label": "Google Maps URL"
+      }
+    ]
+  },
+  {
+    "name": "Eyesaloon SEO",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "seo_social_share_image",
+        "label": "Default social share image"
+      },
+      {
+        "type": "checkbox",
+        "id": "seo_enable_local_business_schema",
+        "label": "Enable LocalBusiness structured data",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "seo_business_name",
+        "label": "Business name",
+        "default": "Eyesaloon"
+      },
+      {
+        "type": "select",
+        "id": "seo_business_type",
+        "label": "Schema business type",
+        "options": [
+          {
+            "value": "Optician",
+            "label": "Optician"
+          },
+          {
+            "value": "Store",
+            "label": "Store"
+          },
+          {
+            "value": "LocalBusiness",
+            "label": "LocalBusiness"
+          }
+        ],
+        "default": "Optician"
+      },
+      {
+        "type": "textarea",
+        "id": "seo_business_description",
+        "label": "Business description",
+        "default": "Eyesaloon offers prescription eyeglasses, sunglasses, contact lens care, and optical support through shops in different cities of Pakistan."
+      },
+      {
+        "type": "text",
+        "id": "seo_address",
+        "label": "Street address or service area",
+        "default": "Optical shops in different cities of Pakistan"
+      },
+      {
+        "type": "text",
+        "id": "seo_city",
+        "label": "City",
+        "default": "Pakistan"
+      },
+      {
+        "type": "text",
+        "id": "seo_region",
+        "label": "Region"
+      },
+      {
+        "type": "text",
+        "id": "seo_country",
+        "label": "Country code",
+        "default": "PK"
+      },
+      {
+        "type": "text",
+        "id": "seo_price_range",
+        "label": "Price range",
+        "default": "Rs"
+      },
+      {
+        "type": "text",
+        "id": "seo_opening_hours",
+        "label": "Opening hours",
+        "info": "Comma-separated schema values, for example Mo-Sa 10:00-21:00"
+      },
+      {
+        "type": "text",
+        "id": "seo_latitude",
+        "label": "Latitude"
+      },
+      {
+        "type": "text",
+        "id": "seo_longitude",
+        "label": "Longitude"
+      }
+    ]
+  },
+  {
+    "name": "Eyesaloon analytics",
+    "settings": [
+      {
+        "type": "text",
+        "id": "analytics_ga4_id",
+        "label": "GA4 measurement ID"
+      },
+      {
+        "type": "text",
+        "id": "analytics_meta_pixel_id",
+        "label": "Meta Pixel ID"
+      },
+      {
+        "type": "text",
+        "id": "analytics_tiktok_pixel_id",
+        "label": "TikTok Pixel ID"
       }
     ]
   },

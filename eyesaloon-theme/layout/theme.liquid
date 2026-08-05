@@ -21,11 +21,23 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
-    {% endif %}
+    {%- liquid
+      assign eyesaloon_meta_description = page_description
+      if eyesaloon_meta_description == blank
+        if request.page_type == 'product'
+          assign eyesaloon_meta_description = product.description | strip_html | truncate: 155
+        elsif request.page_type == 'collection'
+          assign eyesaloon_meta_description = collection.description | strip_html | truncate: 155
+        elsif request.page_type == 'page'
+          assign eyesaloon_meta_description = page.content | strip_html | truncate: 155
+        endif
+      endif
+      assign eyesaloon_meta_description = eyesaloon_meta_description | default: shop.description | default: 'eyesaloon.seo.default_description' | t
+    -%}
+    <meta name="description" content="{{ eyesaloon_meta_description | strip_html | escape }}">
 
     {% render 'meta-tags' %}
+    {% render 'eyesaloon-seo' %}
     {% render 'css-variables' %}
 
     <script type="module">
@@ -64,6 +76,7 @@
     {%- endif -%}
 
     {{ content_for_header }}
+    {% render 'eyesaloon-analytics' %}
 
     {% style %}
       {% assign scheme_classes = '' %}
