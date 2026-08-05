@@ -399,7 +399,7 @@ SEO/analytics:
 Launch checklist:
 - [ ] 10 scripted test orders covering: COD, prepaid, each Rx mode, contacts, multi-item, discount code, cancel, refund, exchange tags.
 - [ ] Color-change drill (B3 acceptance) recorded as video for the record.
-- [ ] `robots`/sitemap verified, Search Console + Bing submitted; favicons + social share images from logo; password page off; publish `main` theme; DNS/SSL green.
+- [ ] `robots`/sitemap verified, Search Console + Bing submitted; favicons + social share images from logo; password page off; publish `main` theme; DNS/SSL green. *(Fallback favicon/social share theme assets and SEO validation script are implemented; final brand artwork can replace them in Theme Editor.)*
 
 ---
 

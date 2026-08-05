@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Eyesaloon optical shop">
+  <rect width="1200" height="630" fill="#F6F1EA"/>
+  <rect x="72" y="72" width="1056" height="486" rx="28" fill="#fff"/>
+  <path d="M165 346c42-118 118-178 228-178 94 0 155 52 189 134 34-82 95-134 189-134 110 0 186 60 228 178-42 90-118 136-228 136-96 0-158-48-189-124-31 76-93 124-189 124-110 0-186-46-228-136Z" fill="none" stroke="#3550E9" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M118 334h75M1007 334h75M532 328h100" fill="none" stroke="#111" stroke-width="24" stroke-linecap="round"/>
+  <text x="142" y="152" fill="#111" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">Eyesaloon</text>
+  <text x="146" y="520" fill="#4A4A4A" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="600">Prescription glasses, sunglasses, and optical support across Pakistan</text>
+</svg>

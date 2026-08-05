@@ -4,6 +4,7 @@
   assign business_description = settings.seo_business_description | default: shop.description | default: 'eyesaloon.seo.business_description' | t
   assign business_url = request.origin
   assign business_image = settings.seo_social_share_image | default: settings.logo
+  assign business_asset_image_url = 'eyesaloon-social-share.svg' | asset_url | prepend: 'https:'
   assign has_same_as = false
   assign search_action_target = business_url | append: routes.search_url | append: '?q={search_term_string}'
 
@@ -56,6 +57,9 @@
       {%- if business_image != blank %}
         "image": {{ business_image | image_url: width: 1200 | prepend: 'https:' | json }},
         "logo": {{ business_image | image_url: width: 512 | prepend: 'https:' | json }},
+      {%- else %}
+        "image": {{ business_asset_image_url | json }},
+        "logo": {{ business_asset_image_url | json }},
       {%- endif %}
       {%- if settings.whatsapp_number != blank %}
         "telephone": {{ settings.whatsapp_number | prepend: '+' | json }},

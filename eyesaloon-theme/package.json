@@ -11,6 +11,7 @@
     "setup:metafields": "node scripts/setup-metafields.mjs",
     "setup:lens-packages": "node scripts/setup-lens-packages.mjs",
     "import:products": "node scripts/import-products.mjs",
+    "validate:seo": "node scripts/validate-seo.mjs",
     "ci": "npm run theme:check && npm run audit:colors"
   }
 }
