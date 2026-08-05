@@ -84,7 +84,7 @@
       "remake_title": "Free remake support",
       "remake_text": "We help correct prescription mistakes after review.",
       "shop_title": "Real optical shop",
-      "shop_text": "Eyesaloon serves customers from Bhakkar, Punjab."
+      "shop_text": "Eyesaloon serves customers through optical shops in different cities across Pakistan."
     },
     "styleguide": {
       "title": "Eyesaloon styleguide",
@@ -105,7 +105,7 @@
       "rx_ready": "Prescription ready",
       "cod": "Cash on delivery",
       "remake": "Free remake support",
-      "shop": "Real shop in Bhakkar"
+      "shop": "Shops across Pakistan"
     },
     "collection": {
       "filtered_count": "{{ count }} frames shown",
@@ -163,8 +163,8 @@
         "kicker": "About Eyesaloon",
         "title": "A real optical shop experience, built for online ordering",
         "intro": "Eyesaloon brings frame shopping, prescription support, and clear order confirmation together for customers across Pakistan.",
-        "shop_title": "Optical support from Bhakkar, Punjab",
-        "shop_text": "The store is built around practical eyewear service: help choosing frames, checking lens details, and keeping customers informed before fulfilment.",
+        "shop_title": "Optical support across Pakistan",
+        "shop_text": "Eyesaloon is built around practical eyewear service through shops in different cities of Pakistan: help choosing frames, checking lens details, and keeping customers informed before fulfilment.",
         "rx_title": "Prescription-first ordering",
         "rx_text": "The product page keeps Rx choices visible so customers can order frame only, prescription lenses, or tint options with fewer mistakes.",
         "delivery_title": "Made for local payment habits",
