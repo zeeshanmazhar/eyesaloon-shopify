@@ -105,7 +105,7 @@
       "rx_ready": "نسخہ تیار",
       "cod": "کیش آن ڈیلیوری",
       "remake": "فری ریمیک سپورٹ",
-      "shop": "بھکر میں حقیقی دکان"
+      "shop": "پاکستان بھر میں شاپس"
     },
     "collection": {
       "filtered_count": "{{ count }} فریمز دکھائے گئے",
@@ -117,6 +117,7 @@
       "all_genders": "سب",
       "face_shape": "چہرے کی شکل",
       "all_face_shapes": "تمام چہرے",
+      "active_filters": "Active filters",
       "no_filtered_products": "ان فلٹرز کے مطابق کوئی فریم نہیں۔"
     },
     "pages": {

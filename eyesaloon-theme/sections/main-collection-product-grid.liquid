@@ -203,16 +203,29 @@
                 assign filter_face_options = filter_faces | split: ','
               -%}
               <form class="eyesaloon-collection-filters" data-eyesaloon-collection-filters>
-                <p
-                  class="eyesaloon-collection-filters__count"
-                  data-eyesaloon-filter-count
-                  data-template="{{ 'eyesaloon.collection.filtered_count' | t: count: '[count]' | escape }}"
-                >
-                  {{ 'eyesaloon.collection.filtered_count' | t: count: filter_product_count }}
-                </p>
+                <div class="eyesaloon-collection-filters__summary">
+                  <p
+                    class="eyesaloon-collection-filters__count"
+                    data-eyesaloon-filter-count
+                    data-template="{{ 'eyesaloon.collection.filtered_count' | t: count: '[count]' | escape }}"
+                  >
+                    {{ 'eyesaloon.collection.filtered_count' | t: count: filter_product_count }}
+                  </p>
+                  <div
+                    class="eyesaloon-collection-filters__active"
+                    aria-label="{{ 'eyesaloon.collection.active_filters' | t }}"
+                    aria-live="polite"
+                    data-eyesaloon-active-filters
+                  ></div>
+                </div>
                 <label>
                   <span>{{ 'eyesaloon.collection.shape' | t }}</span>
-                  <select class="select__select" name="shape" data-eyesaloon-collection-filter>
+                  <select
+                    class="select__select"
+                    name="shape"
+                    data-label="{{ 'eyesaloon.collection.shape' | t | escape }}"
+                    data-eyesaloon-collection-filter
+                  >
                     <option value="">{{ 'eyesaloon.collection.all_shapes' | t }}</option>
                     {%- for option in filter_shape_options -%}
                       {%- assign option_parts = option | split: '::' -%}
@@ -224,7 +237,12 @@
                 </label>
                 <label>
                   <span>{{ 'eyesaloon.collection.material' | t }}</span>
-                  <select class="select__select" name="material" data-eyesaloon-collection-filter>
+                  <select
+                    class="select__select"
+                    name="material"
+                    data-label="{{ 'eyesaloon.collection.material' | t | escape }}"
+                    data-eyesaloon-collection-filter
+                  >
                     <option value="">{{ 'eyesaloon.collection.all_materials' | t }}</option>
                     {%- for option in filter_material_options -%}
                       {%- assign option_parts = option | split: '::' -%}
@@ -236,7 +254,12 @@
                 </label>
                 <label>
                   <span>{{ 'eyesaloon.collection.gender' | t }}</span>
-                  <select class="select__select" name="gender" data-eyesaloon-collection-filter>
+                  <select
+                    class="select__select"
+                    name="gender"
+                    data-label="{{ 'eyesaloon.collection.gender' | t | escape }}"
+                    data-eyesaloon-collection-filter
+                  >
                     <option value="">{{ 'eyesaloon.collection.all_genders' | t }}</option>
                     {%- for option in filter_gender_options -%}
                       {%- assign option_parts = option | split: '::' -%}
@@ -248,7 +271,12 @@
                 </label>
                 <label>
                   <span>{{ 'eyesaloon.collection.face_shape' | t }}</span>
-                  <select class="select__select" name="face" data-eyesaloon-collection-filter>
+                  <select
+                    class="select__select"
+                    name="face"
+                    data-label="{{ 'eyesaloon.collection.face_shape' | t | escape }}"
+                    data-eyesaloon-collection-filter
+                  >
                     <option value="">{{ 'eyesaloon.collection.all_face_shapes' | t }}</option>
                     {%- for option in filter_face_options -%}
                       {%- assign option_parts = option | split: '::' -%}
@@ -258,7 +286,7 @@
                     {%- endfor -%}
                   </select>
                 </label>
-                <button class="button button--secondary" type="button" data-eyesaloon-filter-reset>
+                <button class="button button--secondary" type="button" data-eyesaloon-filter-reset hidden>
                   {{ 'products.facets.clear_all' | t }}
                 </button>
               </form>

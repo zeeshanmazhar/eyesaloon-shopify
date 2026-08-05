@@ -932,20 +932,61 @@ button.shopify-payment-button__button--unbranded {
 
 .eyesaloon-collection-filters {
   align-items: end;
+  background: var(--color-surface-warm);
+  border: 1px solid rgba(var(--color-foreground), 0.08);
+  border-radius: var(--radius-card);
   display: grid;
   gap: 1.2rem;
   grid-template-columns: repeat(4, minmax(12rem, 1fr)) auto;
   margin: 0 auto 2.4rem;
   max-width: var(--page-width);
-  padding: 0 1.5rem;
+  padding: 1.6rem;
+}
+
+.eyesaloon-collection-filters__summary {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  grid-column: 1 / -1;
+  justify-content: space-between;
 }
 
 .eyesaloon-collection-filters__count {
   color: var(--color-body);
   font-size: 1.3rem;
   font-weight: 700;
-  grid-column: 1 / -1;
   margin: 0;
+}
+
+.eyesaloon-collection-filters__active {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.eyesaloon-active-filter {
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid rgba(var(--color-foreground), 0.12);
+  border-radius: var(--radius-chip);
+  color: var(--color-ink);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  gap: 0.6rem;
+  line-height: 1;
+  min-height: 3.2rem;
+  padding: 0.7rem 1rem;
+}
+
+.eyesaloon-active-filter::after {
+  content: '\00d7';
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  line-height: 1;
 }
 
 .eyesaloon-collection-filters label {
@@ -957,6 +998,10 @@ button.shopify-payment-button__button--unbranded {
   color: var(--color-ink);
   font-size: 1.2rem;
   font-weight: 700;
+}
+
+.eyesaloon-collection-filters .select__select {
+  background-color: var(--color-surface);
 }
 
 .eyesaloon-filter-empty {
