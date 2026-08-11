@@ -1,0 +1,75 @@
+{%- liquid
+  assign item_count = section.blocks.size
+-%}
+
+{%- if item_count > 0 -%}
+  <div
+    class="eyesaloon-marquee"
+    data-eyesaloon-marquee
+    style="--eyesaloon-marquee-duration: {{ section.settings.speed_seconds }}s;"
+  >
+    <div class="eyesaloon-marquee__track" aria-hidden="true">
+      {%- for repeat in (1..2) -%}
+        <span class="eyesaloon-marquee__group">
+          {%- for block in section.blocks -%}
+            <span class="eyesaloon-marquee__item" {{ block.shopify_attributes }}>
+              {%- if forloop.first -%}
+                <b>{{ block.settings.text }}</b>
+              {%- else -%}
+                {{ block.settings.text }}
+              {%- endif -%}
+            </span>
+          {%- endfor -%}
+        </span>
+      {%- endfor -%}
+    </div>
+    <span class="visually-hidden">
+      {%- for block in section.blocks -%}
+        {{ block.settings.text }}{% unless forloop.last %}, {% endunless %}
+      {%- endfor -%}
+    </span>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Eyesaloon marquee trust",
+  "settings": [
+    {
+      "type": "range",
+      "id": "speed_seconds",
+      "label": "Scroll speed (seconds per loop)",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 26
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Real optician fitted"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Eyesaloon marquee trust",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Real optician fitted" } },
+        { "type": "item", "settings": { "text": "COD nationwide" } },
+        { "type": "item", "settings": { "text": "7-day exchange" } },
+        { "type": "item", "settings": { "text": "Free Rx remake" } },
+        { "type": "item", "settings": { "text": "WhatsApp confirmation" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -4,21 +4,44 @@
   "sections": {
     "footer": {
       "type": "footer",
-      "blocks": {},
-      "block_order": [],
+      "blocks": {
+        "shop_links": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Shop",
+            "menu": "main-menu"
+          }
+        },
+        "support_links": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Support",
+            "menu": "footer"
+          }
+        },
+        "visit_us": {
+          "type": "text",
+          "settings": {
+            "heading": "Visit us",
+            "subtext": "<p>Eyesaloon serves customers through optical shops in different cities across Pakistan.</p>"
+          }
+        }
+      },
+      "block_order": ["shop_links", "support_links", "visit_us"],
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,
         "newsletter_heading": "Subscribe to our emails",
+        "show_eyesaloon_trust": false,
         "enable_follow_on_shop": true,
         "show_social": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
         "payment_enable": true,
         "show_policy": true,
         "margin_top": 0,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 32,
+        "padding_bottom": 28
       }
     }
   },

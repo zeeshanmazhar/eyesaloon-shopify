@@ -1,0 +1,102 @@
+{%- liquid
+  assign image_position = section.settings.image_position | default: 'right'
+-%}
+<section class="eyesaloon-split-feature eyesaloon-split-feature--image-{{ image_position }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="page-width eyesaloon-split-feature__inner">
+    <div class="eyesaloon-split-feature__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyesaloon-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2>{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="eyesaloon-split-feature__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.settings.checklist_1 != blank or section.settings.checklist_2 != blank or section.settings.checklist_3 != blank -%}
+        <ul class="eyesaloon-checklist">
+          {%- if section.settings.checklist_1 != blank -%}
+            <li class="eyesaloon-checklist__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10" /></svg>
+              <span>{{ section.settings.checklist_1 }}</span>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.checklist_2 != blank -%}
+            <li class="eyesaloon-checklist__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10" /></svg>
+              <span>{{ section.settings.checklist_2 }}</span>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.checklist_3 != blank -%}
+            <li class="eyesaloon-checklist__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l4 4 10-10" /></svg>
+              <span>{{ section.settings.checklist_3 }}</span>
+            </li>
+          {%- endif -%}
+        </ul>
+      {%- endif -%}
+    </div>
+    <div class="eyesaloon-split-feature__panel">
+      {% render 'eyesaloon-measurement-diagram' %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eyesaloon split feature",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Prescription, verified"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your prescription. Checked by a real optician."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Type your Rx, upload a photo, or confirm on WhatsApp. Every order is reviewed by an in-house optician before lenses are made.</p>"
+    },
+    {
+      "type": "text",
+      "id": "checklist_1",
+      "label": "Checklist item 1",
+      "default": "Type or upload your prescription"
+    },
+    {
+      "type": "text",
+      "id": "checklist_2",
+      "label": "Checklist item 2",
+      "default": "Reviewed in-house before it ships"
+    },
+    {
+      "type": "text",
+      "id": "checklist_3",
+      "label": "Checklist item 3",
+      "default": "Free remake if it's wrong"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Panel position",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "right"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Eyesaloon split feature"
+    }
+  ]
+}
+{% endschema %}

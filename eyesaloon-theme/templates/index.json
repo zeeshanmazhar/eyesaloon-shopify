@@ -1,14 +1,121 @@
 {
   "sections": {
-    "eyesaloon_hero": {
-      "type": "eyesaloon-hero",
+    "hero_carousel": {
+      "type": "eyesaloon-hero-carousel",
+      "blocks": {
+        "slide_frames": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Prescription frames",
+            "heading_line_1": "Frames that fit.",
+            "heading_line_2": "Rx you can trust.",
+            "subtext": "Own-label frames from Rs. 1,500, checked by an in-house optician before they ship.",
+            "primary_cta_label": "Shop frames",
+            "primary_cta_link": "shopify://collections/all",
+            "secondary_cta_label": "How it works",
+            "secondary_cta_link": "#how-it-works",
+            "trust_1": "Real optician fitted",
+            "trust_2": "COD nationwide",
+            "trust_3": "7-day exchange",
+            "tag_type": "rating",
+            "tag_price": "Rs. 2,200",
+            "tag_product_name": "Bhakkar Round",
+            "tag_rating": "4.8",
+            "tag_review_count": "340"
+          }
+        },
+        "slide_sunglasses": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Sunglasses",
+            "heading_line_1": "UV400 protection,",
+            "heading_line_2": "everyday style.",
+            "subtext": "Aviators, cat-eyes and classic shapes built for Punjab's sun — polarized options available.",
+            "primary_cta_label": "Shop sunglasses",
+            "primary_cta_link": "shopify://collections/all",
+            "secondary_cta_label": "View collection",
+            "secondary_cta_link": "shopify://collections/all",
+            "trust_1": "UV400 protection",
+            "trust_2": "COD nationwide",
+            "trust_3": "7-day exchange",
+            "tag_type": "rating",
+            "tag_price": "Rs. 3,400",
+            "tag_product_name": "Mianwali Aviator",
+            "tag_rating": "4.7",
+            "tag_review_count": "210"
+          }
+        },
+        "slide_contacts": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Contact lenses",
+            "heading_line_1": "Daily and monthly,",
+            "heading_line_2": "fitted right.",
+            "subtext": "Soft lenses fitted to your prescription, with reminders when it's time to reorder.",
+            "primary_cta_label": "Shop lenses",
+            "primary_cta_link": "shopify://collections/all",
+            "secondary_cta_label": "Lens guide",
+            "secondary_cta_link": "shopify://pages/contact-lens-care",
+            "trust_1": "Fitted by opticians",
+            "trust_2": "COD nationwide",
+            "trust_3": "Reorder reminders",
+            "tag_type": "price",
+            "tag_price": "From Rs. 1,200",
+            "tag_product_name": "per box"
+          }
+        },
+        "slide_rx": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Prescription, verified",
+            "heading_line_1": "Your prescription,",
+            "heading_line_2": "checked by a real optician.",
+            "subtext": "Type your Rx, upload a photo, or confirm on WhatsApp — every order reviewed before it ships.",
+            "primary_cta_label": "Verify your prescription",
+            "primary_cta_link": "shopify://pages/rx-guide",
+            "secondary_cta_label": "Rx guide",
+            "secondary_cta_link": "shopify://pages/rx-guide",
+            "trust_1": "In-house review",
+            "trust_2": "WhatsApp confirmation",
+            "trust_3": "Free remake",
+            "tag_type": "badge",
+            "tag_badge_text": "Free remake if it's wrong"
+          }
+        }
+      },
+      "block_order": ["slide_frames", "slide_sunglasses", "slide_contacts", "slide_rx"],
       "settings": {
-        "heading": "Prescription eyewear, fitted with care",
-        "subtext": "Choose frames online and confirm your prescription with the Eyesaloon optical team.",
-        "button_label": "Shop frames",
-        "button_link": "shopify://collections/all",
-        "warm_surface": true,
-        "show_ghost_text": true
+        "autoplay_enabled": true,
+        "autoplay_interval_ms": 5000
+      }
+    },
+    "marquee_trust": {
+      "type": "eyesaloon-marquee-trust",
+      "blocks": {
+        "item_optician": {
+          "type": "item",
+          "settings": { "text": "Real optician fitted" }
+        },
+        "item_cod": {
+          "type": "item",
+          "settings": { "text": "COD nationwide" }
+        },
+        "item_exchange": {
+          "type": "item",
+          "settings": { "text": "7-day exchange" }
+        },
+        "item_remake": {
+          "type": "item",
+          "settings": { "text": "Free Rx remake" }
+        },
+        "item_whatsapp": {
+          "type": "item",
+          "settings": { "text": "WhatsApp confirmation" }
+        }
+      },
+      "block_order": ["item_optician", "item_cod", "item_exchange", "item_remake", "item_whatsapp"],
+      "settings": {
+        "speed_seconds": 26
       }
     },
     "category_tiles": {
@@ -17,29 +124,46 @@
         "optical": {
           "type": "tile",
           "settings": {
-            "title": "Optical frames",
-            "link": "shopify://collections/all"
+            "title": "Prescription frames",
+            "description": "60+ own-label frames, every face shape, from Rs. 1,500",
+            "link_label": "Shop frames",
+            "link": "shopify://collections/all",
+            "size": "large",
+            "background": "primary",
+            "icon": "glasses"
           }
         },
         "sunglasses": {
           "type": "tile",
           "settings": {
             "title": "Sunglasses",
-            "link": "shopify://collections/all"
+            "description": "UV400 protection, everyday style",
+            "link_label": "Shop sunglasses",
+            "link": "shopify://collections/all",
+            "size": "small",
+            "background": "warm"
           }
         },
         "contact_lenses": {
           "type": "tile",
           "settings": {
             "title": "Contact lenses",
-            "link": "shopify://collections/all"
+            "description": "Daily and monthly, fitted right",
+            "link_label": "Shop lenses",
+            "link": "shopify://collections/all",
+            "size": "small",
+            "background": "warm_dark"
           }
         },
         "rx_help": {
           "type": "tile",
           "settings": {
             "title": "Prescription help",
-            "link": "shopify://pages/rx-guide"
+            "description": "Type it in, upload a photo, or confirm on WhatsApp",
+            "link_label": "Rx guide",
+            "link": "shopify://pages/rx-guide",
+            "size": "small",
+            "background": "warm"
           }
         }
       },
@@ -81,11 +205,64 @@
         "padding_bottom": 36
       }
     },
+    "split_feature": {
+      "type": "eyesaloon-split-feature",
+      "settings": {
+        "eyebrow": "Prescription, verified",
+        "heading": "Your prescription. Checked by a real optician.",
+        "text": "<p>Type your Rx, upload a photo, or confirm on WhatsApp. Every order is reviewed by an in-house optician before lenses are made.</p>",
+        "checklist_1": "Type or upload your prescription",
+        "checklist_2": "Reviewed in-house before it ships",
+        "checklist_3": "Free remake if it's wrong",
+        "image_position": "right"
+      }
+    },
     "how_it_works": {
       "type": "eyesaloon-how-it-works",
       "settings": {
         "heading": "How it works",
         "text": "Pick a frame, add your prescription details, and confirm everything with our team before lenses are made."
+      }
+    },
+    "trust_grid": {
+      "type": "eyesaloon-trust-grid",
+      "blocks": {
+        "fitted": {
+          "type": "card",
+          "settings": {
+            "icon": "eye",
+            "heading": "Real optician fitted",
+            "text": "Every prescription checked before your frame ships."
+          }
+        },
+        "exchange": {
+          "type": "card",
+          "settings": {
+            "icon": "return",
+            "heading": "7-day exchange",
+            "text": "Wrong fit or shape? Swap it within a week."
+          }
+        },
+        "remake": {
+          "type": "card",
+          "settings": {
+            "icon": "recycle",
+            "heading": "Free Rx remake",
+            "text": "If the prescription is off, we remake the lenses free."
+          }
+        },
+        "cod": {
+          "type": "card",
+          "settings": {
+            "icon": "truck",
+            "heading": "COD nationwide",
+            "text": "Pay when your order arrives, anywhere in Pakistan."
+          }
+        }
+      },
+      "block_order": ["fitted", "exchange", "remake", "cod"],
+      "settings": {
+        "heading": "Why customers trust Eyesaloon"
       }
     },
     "testimonials": {
@@ -94,24 +271,27 @@
         "first": {
           "type": "testimonial",
           "settings": {
-            "quote": "Prescription support was clear and the frame fit well.",
-            "name": "Eyesaloon customer",
+            "quote": "I was nervous ordering glasses online, but their optician actually checked my prescription before it shipped. Fit was perfect.",
+            "name": "Ayesha K.",
+            "city": "Lahore",
             "rating": 5
           }
         },
         "second": {
           "type": "testimonial",
           "settings": {
-            "quote": "The WhatsApp confirmation made ordering lenses easier.",
-            "name": "Eyesaloon customer",
+            "quote": "The WhatsApp confirmation caught an error in my old prescription before it became a problem. That's real support, not just a checkout.",
+            "name": "Bilal R.",
+            "city": "Karachi",
             "rating": 5
           }
         },
         "third": {
           "type": "testimonial",
           "settings": {
-            "quote": "Good help with sizing before I placed my order.",
-            "name": "Eyesaloon customer",
+            "quote": "Real optician, real answers to my questions about lens thickness. No 'master copy' guesswork like other online stores.",
+            "name": "Hina S.",
+            "city": "Islamabad",
             "rating": 4.5
           }
         }
@@ -166,10 +346,13 @@
     }
   },
   "order": [
-    "eyesaloon_hero",
+    "hero_carousel",
+    "marquee_trust",
     "category_tiles",
     "featured_collection",
+    "split_feature",
     "how_it_works",
+    "trust_grid",
     "testimonials",
     "social_feed"
   ]

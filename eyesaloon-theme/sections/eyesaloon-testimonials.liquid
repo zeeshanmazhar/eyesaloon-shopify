@@ -1,4 +1,4 @@
-<section class="page-width eyesaloon-testimonials">
+<section class="page-width eyesaloon-testimonials{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
   <div class="eyesaloon-section-heading">
     <h2>{{ section.settings.heading }}</h2>
   </div>
@@ -7,7 +7,10 @@
       <figure class="eyesaloon-testimonial" {{ block.shopify_attributes }}>
         {% render 'eyesaloon-rating-stars', rating: block.settings.rating, count: 0 %}
         <blockquote>{{ block.settings.quote }}</blockquote>
-        <figcaption>{{ block.settings.name }}</figcaption>
+        <figcaption>
+          {{- block.settings.name -}}
+          {%- if block.settings.city != blank -%}, {{ block.settings.city }}{%- endif -%}
+        </figcaption>
       </figure>
     {%- endfor -%}
   </div>
@@ -42,6 +45,12 @@
           "default": "Eyesaloon customer"
         },
         {
+          "type": "text",
+          "id": "city",
+          "label": "City",
+          "default": "Lahore"
+        },
+        {
           "type": "range",
           "id": "rating",
           "label": "Rating",
@@ -57,9 +66,33 @@
     {
       "name": "Eyesaloon testimonials",
       "blocks": [
-        { "type": "testimonial" },
-        { "type": "testimonial" },
-        { "type": "testimonial" }
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I was nervous ordering glasses online, but their optician actually checked my prescription before it shipped. Fit was perfect.",
+            "name": "Ayesha K.",
+            "city": "Lahore",
+            "rating": 5
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The WhatsApp confirmation caught an error in my old prescription before it became a problem. That's real support, not just a checkout.",
+            "name": "Bilal R.",
+            "city": "Karachi",
+            "rating": 5
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Real optician, real answers to my questions about lens thickness. No 'master copy' guesswork like other online stores.",
+            "name": "Hina S.",
+            "city": "Islamabad",
+            "rating": 4.5
+          }
+        }
       ]
     }
   ]

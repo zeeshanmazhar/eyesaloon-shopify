@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eyesaloon — A real optician, online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-primary:#3550E9;
+    --color-primary-hover:#2A41C4;
+    --color-primary-soft:#EAEDFC;
+    --color-ink:#111111;
+    --color-body:#4A4A4A;
+    --color-muted:#B2B2B2;
+    --color-surface:#FFFFFF;
+    --color-surface-warm:#F6F1EA;
+    --color-accent-warm:#B08D64;
+    --color-success:#1E9E4A;
+    --color-error:#D93025;
+    --radius-card:20px;
+    --radius-button:12px;
+    --radius-chip:999px;
+    --max:1240px;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Libre Franklin', -apple-system, BlinkMacSystemFont, sans-serif;
+    color:var(--color-body);
+    background:var(--color-surface);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  button{font-family:inherit; cursor:pointer; border:none; background:none;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 32px;}
+  h1,h2,h3{color:var(--color-ink); font-weight:600; letter-spacing:-0.02em;}
+  .eyebrow{
+    font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--color-primary);
+  }
+
+  /* reveal */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .9s var(--ease), transform .9s var(--ease);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* announcement bar */
+  .announce{
+    background:var(--color-ink); color:#fff; text-align:center;
+    font-size:13px; font-weight:500; letter-spacing:0.01em;
+    padding:9px 16px;
+  }
+  .announce span{color:var(--color-primary); font-weight:600;}
+
+  /* header */
+  header{
+    position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(17,17,17,0.06);
+    transition:padding .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  header.shrink{box-shadow:0 6px 24px rgba(17,17,17,0.06);}
+  .nav-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 0; transition:padding .35s var(--ease);
+  }
+  header.shrink .nav-row{padding:14px 0;}
+  .logo{
+    font-size:20px; font-weight:700; letter-spacing:0.02em; color:var(--color-ink);
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo .dot{width:8px; height:8px; border-radius:50%; background:var(--color-primary);}
+  nav.main-nav{display:flex; gap:36px;}
+  nav.main-nav a{
+    font-size:14px; font-weight:500; color:var(--color-body);
+    position:relative; padding:4px 0; transition:color .25s;
+  }
+  nav.main-nav a:hover{color:var(--color-ink);}
+  nav.main-nav a::after{
+    content:''; position:absolute; left:0; bottom:-2px; width:0; height:1.5px;
+    background:var(--color-primary); transition:width .3s var(--ease);
+  }
+  nav.main-nav a:hover::after{width:100%;}
+  .icon-row{display:flex; align-items:center; gap:20px;}
+  .icon-btn{display:flex; align-items:center; justify-content:center; width:20px; height:20px; color:var(--color-ink); position:relative;}
+  .icon-btn svg{width:20px; height:20px;}
+  .cart-count{
+    position:absolute; top:-8px; right:-9px; background:var(--color-primary); color:#fff;
+    font-size:9px; font-weight:700; width:15px; height:15px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .menu-btn{display:none;}
+
+  /* hero carousel */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-size:15px; font-weight:600; padding:15px 30px; border-radius:var(--radius-button);
+    transition:transform .25s var(--ease), background .25s, box-shadow .25s;
+  }
+  .btn-primary{background:var(--color-primary); color:#fff;}
+  .btn-primary:hover{background:var(--color-primary-hover); transform:translateY(-2px); box-shadow:0 10px 24px rgba(53,80,233,0.28);}
+  .btn-ghost{background:transparent; color:var(--color-ink); border:1.5px solid rgba(17,17,17,0.15);}
+  .btn-ghost:hover{border-color:var(--color-ink); transform:translateY(-2px);}
+  .cta-row{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+
+  .hero-carousel{background:#fff; padding:56px 0 48px; overflow:hidden;}
+  .hc-track{position:relative; min-height:460px;}
+  .hc-slide{
+    position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;
+    opacity:0; transform:translateX(28px); pointer-events:none;
+    transition:opacity .6s var(--ease), transform .6s var(--ease);
+  }
+  .hc-slide.active{opacity:1; transform:translateX(0); pointer-events:auto;}
+  .hc-slide h1{font-size:clamp(36px,4.4vw,60px); line-height:1.05; margin:16px 0 18px;}
+  .hc-slide p.sub{font-size:16px; max-width:440px; margin-bottom:26px;}
+  .trust-inline{display:flex; gap:18px; flex-wrap:wrap; margin-top:26px; font-size:13px; color:var(--color-body);}
+  .trust-inline span{display:flex; align-items:center; gap:6px;}
+  .trust-inline svg{width:14px; height:14px; color:var(--color-primary);}
+  .hc-visual{
+    position:relative; background:var(--color-surface-warm); border-radius:28px; padding:48px;
+    min-height:400px; display:flex; align-items:center; justify-content:center;
+  }
+  .hc-visual svg{width:70%;}
+  .float-tag{
+    position:absolute; background:#fff; border-radius:14px; padding:12px 16px;
+    box-shadow:0 12px 32px rgba(17,17,17,0.1); font-size:13px;
+  }
+  .float-tag.price{bottom:28px; left:28px; font-weight:700; color:var(--color-ink);}
+  .float-tag.price span{display:block; font-size:11px; font-weight:500; color:var(--color-muted);}
+  .float-tag.rating{top:28px; right:28px; display:flex; align-items:center; gap:6px; color:var(--color-accent-warm); font-weight:600;}
+  .float-tag.badge{top:28px; right:28px; display:flex; align-items:center; gap:8px; color:var(--color-success); font-weight:600;}
+  .float-tag.badge svg{width:15px; height:15px;}
+
+  .hc-controls{display:flex; align-items:center; justify-content:center; gap:18px; margin-top:40px;}
+  .hc-arrow{
+    width:40px; height:40px; border-radius:50%; border:1.5px solid rgba(17,17,17,0.12);
+    display:flex; align-items:center; justify-content:center; transition:all .2s; flex-shrink:0;
+  }
+  .hc-arrow:hover{border-color:var(--color-ink);}
+  .hc-arrow svg{width:16px; height:16px;}
+  .hc-dots{display:flex; gap:8px;}
+  .hc-dot{width:8px; height:8px; border-radius:50%; background:rgba(17,17,17,0.15); transition:all .3s var(--ease); cursor:pointer;}
+  .hc-dot.active{width:26px; border-radius:999px; background:var(--color-primary);}
+
+  /* marquee */
+  .marquee-wrap{
+    background:var(--color-ink); overflow:hidden; padding:14px 0;
+  }
+  .marquee-track{display:flex; gap:48px; width:max-content; animation:scroll 26s linear infinite;}
+  .marquee-track span{
+    font-size:13px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.55);
+    display:flex; align-items:center; gap:48px; white-space:nowrap;
+  }
+  .marquee-track span b{color:#fff;}
+  @keyframes scroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  section{padding:112px 0;}
+  .section-head{text-align:center; max-width:640px; margin:0 auto 56px;}
+  .section-head h2{font-size:clamp(30px,3.6vw,44px); line-height:1.08; margin-top:14px;}
+  .section-head p{font-size:16px; color:var(--color-body); margin-top:14px;}
+
+  /* category tiles */
+  .tiles{display:grid; grid-template-columns:1.4fr 1fr; gap:20px;}
+  .tile{
+    position:relative; border-radius:var(--radius-card); padding:40px; min-height:340px;
+    display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;
+    transition:transform .5s var(--ease);
+  }
+  .tile:hover{transform:translateY(-6px);}
+  .tile-a{background:var(--color-primary); grid-row:span 2;}
+  .tile-b{background:var(--color-surface-warm);}
+  .tile-c{background:#EFEAE0;}
+  .tile-icon{position:absolute; top:32px; right:32px; opacity:0.9;}
+  .tile h3{font-size:26px; margin-bottom:6px;}
+  .tile-a h3{color:#fff;}
+  .tile-b h3, .tile-c h3{color:var(--color-ink);}
+  .tile p{font-size:14px;}
+  .tile-a p{color:rgba(255,255,255,0.75);}
+  .tile-b p, .tile-c p{color:var(--color-body);}
+  .tile-link{
+    margin-top:16px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:6px;
+  }
+  .tile-a .tile-link{color:#fff;}
+  .tile-b .tile-link, .tile-c .tile-link{color:var(--color-primary);}
+  .tile-right{display:grid; gap:20px;}
+
+  /* chips + filter */
+  .chip-row{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:48px;}
+  .chip{
+    padding:10px 20px; border-radius:var(--radius-chip); font-size:13px; font-weight:600;
+    border:1.5px solid rgba(17,17,17,0.12); color:var(--color-body); transition:all .25s var(--ease);
+  }
+  .chip:hover{border-color:var(--color-ink); color:var(--color-ink);}
+  .chip.active{background:var(--color-ink); border-color:var(--color-ink); color:#fff;}
+
+  .product-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .product-card{
+    background:var(--color-surface-warm); border-radius:var(--radius-card); padding:28px 24px;
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .product-card:hover{transform:translateY(-6px); box-shadow:0 20px 40px rgba(17,17,17,0.08);}
+  .product-media{
+    background:#fff; border-radius:14px; aspect-ratio:1/0.82; display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px; padding:20px;
+  }
+  .product-media svg{width:80%;}
+  .product-card h4{font-size:15px; font-weight:600; color:var(--color-ink); margin-bottom:6px;}
+  .price-row{display:flex; align-items:baseline; gap:8px; margin-bottom:12px;}
+  .price{font-size:15px; font-weight:700; color:var(--color-ink);}
+  .price-old{font-size:13px; color:var(--color-muted); text-decoration:line-through;}
+  .swatches{display:flex; gap:6px;}
+  .swatch{width:14px; height:14px; border-radius:50%; border:1px solid rgba(17,17,17,0.08);}
+
+  /* split feature */
+  .split{display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;}
+  .split .eyebrow{margin-bottom:14px;}
+  .split h2{font-size:clamp(30px,3.4vw,42px); line-height:1.1; margin-bottom:20px;}
+  .split p{font-size:16px; color:var(--color-body); margin-bottom:28px; max-width:460px;}
+  .split-visual{background:var(--color-surface-warm); border-radius:var(--radius-card); padding:48px;}
+  .split-list{display:grid; gap:14px;}
+  .split-list li{display:flex; gap:12px; font-size:14px; color:var(--color-body); align-items:flex-start;}
+  .split-list svg{flex-shrink:0; margin-top:2px; color:var(--color-success);}
+
+  /* steps */
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:32px;}
+  .step{padding:8px;}
+  .step-num{
+    font-size:13px; font-weight:700; color:var(--color-primary); background:var(--color-primary-soft);
+    width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;
+  }
+  .step h3{font-size:19px; margin-bottom:10px;}
+  .step p{font-size:14px; color:var(--color-body);}
+
+  /* testimonials */
+  .testimonials-section{background:var(--color-surface-warm);}
+  .test-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .test-card{background:#fff; border-radius:var(--radius-card); padding:32px;}
+  .stars{color:var(--color-accent-warm); font-size:14px; letter-spacing:2px; margin-bottom:16px;}
+  .test-card p{font-size:15px; color:var(--color-ink); line-height:1.6; margin-bottom:20px;}
+  .test-name{font-size:13px; font-weight:600; color:var(--color-muted);}
+
+  /* trust strip */
+  .trust-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .trust-card{text-align:center; padding:20px;}
+  .trust-card .ic{
+    width:52px; height:52px; border-radius:50%; background:var(--color-primary-soft); color:var(--color-primary);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 18px;
+  }
+  .trust-card h4{font-size:15px; font-weight:600; color:var(--color-ink); margin-bottom:6px;}
+  .trust-card p{font-size:13px; color:var(--color-body);}
+
+  /* footer */
+  footer{background:var(--color-ink); color:rgba(255,255,255,0.6); padding:80px 0 32px;}
+  .footer-top{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:48px; margin-bottom:56px;}
+  .footer-brand .logo{color:#fff;}
+  .footer-brand p{font-size:14px; margin:16px 0 22px; max-width:280px;}
+  .newsletter{display:flex; gap:0; max-width:300px; border:1px solid rgba(255,255,255,0.18); border-radius:var(--radius-button); overflow:hidden;}
+  .newsletter input{
+    flex:1; background:transparent; border:none; padding:12px 14px; font-size:13px; color:#fff; outline:none;
+  }
+  .newsletter input::placeholder{color:rgba(255,255,255,0.4);}
+  .newsletter button{background:var(--color-primary); color:#fff; padding:0 18px; font-size:13px; font-weight:600;}
+  .foot-col h5{font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:18px;}
+  .foot-col ul{display:grid; gap:11px;}
+  .foot-col a{font-size:14px; transition:color .2s;}
+  .foot-col a:hover{color:#fff;}
+  .payment-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
+  .pay-badge{
+    font-size:11px; font-weight:600; color:rgba(255,255,255,0.7); border:1px solid rgba(255,255,255,0.18);
+    padding:6px 10px; border-radius:6px;
+  }
+  .footer-bottom{
+    border-top:1px solid rgba(255,255,255,0.1); padding-top:28px; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:16px; font-size:13px;
+  }
+  .lang-switch{display:flex; gap:14px; font-size:13px;}
+  .lang-switch span{color:#fff; font-weight:600;}
+  .social-row{display:flex; gap:16px;}
+  .social-row svg{width:16px; height:16px; color:rgba(255,255,255,0.55); transition:color .2s;}
+  .social-row a:hover svg{color:#fff;}
+
+  /* whatsapp fab */
+  .fab{
+    position:fixed; bottom:28px; right:28px; width:56px; height:56px; border-radius:50%;
+    background:#1E9E4A; color:#fff; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 30px rgba(30,158,74,0.4); z-index:60; transition:transform .3s var(--ease);
+  }
+  .fab:hover{transform:scale(1.08);}
+  .fab svg{width:26px; height:26px;}
+
+  @media (max-width:900px){
+    nav.main-nav{display:none;}
+    .icon-row{gap:14px;}
+    .hc-track{min-height:720px;}
+    .hc-slide{grid-template-columns:1fr; gap:32px; text-align:center;}
+    .hc-slide .cta-row, .trust-inline{justify-content:center;}
+    .hc-slide p.sub{margin-left:auto; margin-right:auto;}
+    .tiles{grid-template-columns:1fr;}
+    .tile-a{grid-row:auto;}
+    .tile-right{grid-template-columns:1fr 1fr;}
+    .product-grid{grid-template-columns:repeat(2,1fr);}
+    .split{grid-template-columns:1fr; gap:40px;}
+    .split-visual{order:-1;}
+    .steps{grid-template-columns:1fr; gap:36px;}
+    .test-grid{grid-template-columns:1fr;}
+    .trust-grid{grid-template-columns:repeat(2,1fr); gap:32px;}
+    .footer-top{grid-template-columns:1fr 1fr; gap:36px;}
+    section{padding:72px 0;}
+    .wrap{padding:0 20px;}
+  }
+  @media (max-width:560px){
+    .hc-track{min-height:760px;}
+    .tile-right{grid-template-columns:1fr;}
+    .product-grid{grid-template-columns:1fr;}
+    .footer-top{grid-template-columns:1fr;}
+    .cta-row{flex-direction:column; width:100%;}
+    .cta-row .btn{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">Free lens remake if your Rx isn't right — <span>a real optician, online</span></div>
+
+<header id="site-header">
+  <div class="wrap nav-row">
+    <div class="logo"><span class="dot"></span>EYESALOON</div>
+    <nav class="main-nav">
+      <a href="#">Frames</a>
+      <a href="#">Sunglasses</a>
+      <a href="#">Contact lenses</a>
+      <a href="#">Rx guide</a>
+    </nav>
+    <div class="icon-row">
+      <button class="icon-btn" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+      <button class="icon-btn" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></button>
+      <button class="icon-btn" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.4 12.4a2 2 0 002 1.6h8.2a2 2 0 002-1.6L21 8H6"/><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg><span class="cart-count">0</span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero-carousel">
+  <div class="wrap">
+    <div class="hc-track" id="hc-track">
+
+      <div class="hc-slide active">
+        <div>
+          <div class="eyebrow">Prescription frames</div>
+          <h1>Frames that fit.<br>Rx you can trust.</h1>
+          <p class="sub">Own-label frames from Rs. 1,500, checked by an in-house optician before they ship.</p>
+          <div class="cta-row">
+            <a href="#" class="btn btn-primary">Shop frames</a>
+            <a href="#" class="btn btn-ghost">How it works</a>
+          </div>
+          <div class="trust-inline">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Real optician fitted</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>COD nationwide</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>7-day exchange</span>
+          </div>
+        </div>
+        <div class="hc-visual">
+          <svg viewBox="0 0 200 90" fill="none"><circle cx="55" cy="45" r="34" stroke="#111" stroke-width="5"/><circle cx="145" cy="45" r="34" stroke="#111" stroke-width="5"/><path d="M89 42 Q100 32 111 42" stroke="#111" stroke-width="5" fill="none"/></svg>
+          <div class="float-tag rating">★ 4.8 <span style="color:var(--color-muted); font-weight:500;">(340)</span></div>
+          <div class="float-tag price">Rs. 2,200 <span>Bhakkar Round</span></div>
+        </div>
+      </div>
+
+      <div class="hc-slide">
+        <div>
+          <div class="eyebrow">Sunglasses</div>
+          <h1>UV400 protection,<br>everyday style.</h1>
+          <p class="sub">Aviators, cat-eyes and classic shapes built for Punjab's sun — polarized options available.</p>
+          <div class="cta-row">
+            <a href="#" class="btn btn-primary">Shop sunglasses</a>
+            <a href="#" class="btn btn-ghost">View collection</a>
+          </div>
+          <div class="trust-inline">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>UV400 protection</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>COD nationwide</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>7-day exchange</span>
+          </div>
+        </div>
+        <div class="hc-visual">
+          <svg viewBox="0 0 200 90" fill="none"><path d="M20 55 Q40 15 90 40 Q100 30 110 40 Q160 15 180 55" stroke="#B08D64" stroke-width="5" fill="none"/><ellipse cx="55" cy="50" rx="35" ry="24" stroke="#B08D64" stroke-width="5"/><ellipse cx="145" cy="50" rx="35" ry="24" stroke="#B08D64" stroke-width="5"/></svg>
+          <div class="float-tag rating">★ 4.7 <span style="color:var(--color-muted); font-weight:500;">(210)</span></div>
+          <div class="float-tag price">Rs. 3,400 <span>Mianwali Aviator</span></div>
+        </div>
+      </div>
+
+      <div class="hc-slide">
+        <div>
+          <div class="eyebrow">Contact lenses</div>
+          <h1>Daily and monthly,<br>fitted right.</h1>
+          <p class="sub">Soft lenses fitted to your prescription, with reminders when it's time to reorder.</p>
+          <div class="cta-row">
+            <a href="#" class="btn btn-primary">Shop lenses</a>
+            <a href="#" class="btn btn-ghost">Lens guide</a>
+          </div>
+          <div class="trust-inline">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Fitted by opticians</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>COD nationwide</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Reorder reminders</span>
+          </div>
+        </div>
+        <div class="hc-visual">
+          <svg viewBox="0 0 200 90" fill="none"><circle cx="80" cy="45" r="32" stroke="#3550E9" stroke-width="4" fill="none"/><circle cx="120" cy="45" r="32" stroke="#3550E9" stroke-width="4" fill="none" opacity="0.5"/></svg>
+          <div class="float-tag price">From Rs. 1,200 <span>per box</span></div>
+        </div>
+      </div>
+
+      <div class="hc-slide">
+        <div>
+          <div class="eyebrow">Prescription, verified</div>
+          <h1>Your prescription,<br>checked by a real optician.</h1>
+          <p class="sub">Type your Rx, upload a photo, or confirm on WhatsApp — every order reviewed before it ships.</p>
+          <div class="cta-row">
+            <a href="#" class="btn btn-primary">Verify your prescription</a>
+            <a href="#" class="btn btn-ghost">Rx guide</a>
+          </div>
+          <div class="trust-inline">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>In-house review</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>WhatsApp confirmation</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Free remake</span>
+          </div>
+        </div>
+        <div class="hc-visual">
+          <svg viewBox="0 0 200 130" fill="none">
+            <rect x="10" y="18" width="180" height="94" rx="12" stroke="#3550E9" stroke-width="1.5" stroke-dasharray="4 5"/>
+            <circle cx="65" cy="65" r="30" stroke="#111" stroke-width="4"/>
+            <circle cx="135" cy="65" r="30" stroke="#111" stroke-width="4"/>
+            <path d="M95 63 Q100 55 105 63" stroke="#111" stroke-width="4" fill="none"/>
+          </svg>
+          <div class="float-tag badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Free remake if it's wrong</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hc-controls">
+      <button class="hc-arrow" id="hc-prev" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="hc-dots" id="hc-dots">
+        <span class="hc-dot active" data-i="0"></span>
+        <span class="hc-dot" data-i="1"></span>
+        <span class="hc-dot" data-i="2"></span>
+        <span class="hc-dot" data-i="3"></span>
+      </div>
+      <button class="hc-arrow" id="hc-next" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee">
+    <span><b>Real optician fitted</b> · COD nationwide · 7-day exchange · Free Rx remake · WhatsApp confirmation ·</span>
+    <span><b>Real optician fitted</b> · COD nationwide · 7-day exchange · Free Rx remake · WhatsApp confirmation ·</span>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Shop by category</div>
+      <h2>Everything for your eyes, in one place</h2>
+    </div>
+    <div class="tiles reveal">
+      <div class="tile tile-a">
+        <div class="tile-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="7" cy="12" r="4"/><circle cx="17" cy="12" r="4"/><path d="M11 12h2"/></svg></div>
+        <h3>Prescription frames</h3>
+        <p>60+ own-label frames, every face shape, from Rs. 1,500</p>
+        <span class="tile-link">Shop frames →</span>
+      </div>
+      <div class="tile-right">
+        <div class="tile tile-b">
+          <h3>Sunglasses</h3>
+          <p>UV400 protection, everyday style</p>
+          <span class="tile-link">Shop sunglasses →</span>
+        </div>
+        <div class="tile tile-c">
+          <h3>Contact lenses</h3>
+          <p>Daily and monthly, fitted right</p>
+          <span class="tile-link">Shop lenses →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--color-surface-warm);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Bestsellers</div>
+      <h2>Honest quality, no "master copies"</h2>
+      <p>Own-label frames, priced fairly, checked by an optician before they ship.</p>
+    </div>
+    <div class="chip-row reveal">
+      <button class="chip active">All</button>
+      <button class="chip">Round</button>
+      <button class="chip">Square</button>
+      <button class="chip">Aviator</button>
+      <button class="chip">Cat-eye</button>
+    </div>
+    <div class="product-grid reveal">
+      <div class="product-card">
+        <div class="product-media"><svg viewBox="0 0 200 90" fill="none"><circle cx="55" cy="45" r="34" stroke="#111" stroke-width="5"/><circle cx="145" cy="45" r="34" stroke="#111" stroke-width="5"/><path d="M89 42 Q100 32 111 42" stroke="#111" stroke-width="5" fill="none"/></svg></div>
+        <h4>Bhakkar Round</h4>
+        <div class="price-row"><span class="price">Rs. 2,200</span><span class="price-old">Rs. 3,200</span></div>
+        <div class="swatches"><span class="swatch" style="background:#111"></span><span class="swatch" style="background:#8a5a34"></span><span class="swatch" style="background:#2c3e6b"></span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-media"><svg viewBox="0 0 200 90" fill="none"><rect x="24" y="16" width="62" height="56" rx="12" stroke="#111" stroke-width="5"/><rect x="114" y="16" width="62" height="56" rx="12" stroke="#111" stroke-width="5"/><path d="M89 42 Q100 32 111 42" stroke="#111" stroke-width="5" fill="none"/></svg></div>
+        <h4>Layyah Square</h4>
+        <div class="price-row"><span class="price">Rs. 2,600</span></div>
+        <div class="swatches"><span class="swatch" style="background:#111"></span><span class="swatch" style="background:#e8e6df; border-color:#ccc"></span><span class="swatch" style="background:#5b6b3f"></span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-media"><svg viewBox="0 0 200 90" fill="none"><path d="M20 55 Q40 15 90 40 Q100 30 110 40 Q160 15 180 55" stroke="#B08D64" stroke-width="5" fill="none"/><ellipse cx="55" cy="50" rx="35" ry="24" stroke="#B08D64" stroke-width="5"/><ellipse cx="145" cy="50" rx="35" ry="24" stroke="#B08D64" stroke-width="5"/></svg></div>
+        <h4>Mianwali Aviator</h4>
+        <div class="price-row"><span class="price">Rs. 3,400</span><span class="price-old">Rs. 4,500</span></div>
+        <div class="swatches"><span class="swatch" style="background:#c8a24a"></span><span class="swatch" style="background:#c0c0c0"></span><span class="swatch" style="background:#3a3a3a"></span></div>
+      </div>
+      <div class="product-card">
+        <div class="product-media"><svg viewBox="0 0 200 90" fill="none"><path d="M22 55 Q30 18 62 22 Q80 24 88 42 L112 42 Q120 24 138 22 Q170 18 178 55 Q170 75 140 68 Q112 62 100 62 Q88 62 60 68 Q30 75 22 55Z" stroke="#111" stroke-width="5"/></svg></div>
+        <h4>D.G. Khan Cat-Eye</h4>
+        <div class="price-row"><span class="price">Rs. 2,800</span></div>
+        <div class="swatches"><span class="swatch" style="background:#111"></span><span class="swatch" style="background:#d98a9c"></span><span class="swatch" style="background:#8a5a34"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <div class="eyebrow">Prescription, verified</div>
+        <h2>Your prescription. Checked by a real optician.</h2>
+        <p>Type your SPH, CYL, axis and PD — or upload a photo of your old prescription. Every order is reviewed in-house before it ships, and confirmed with you on WhatsApp.</p>
+        <ul class="split-list">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Type your Rx or upload a photo</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> In-house optician review before dispatch</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Free remake if the power is ever wrong</li>
+        </ul>
+      </div>
+      <div class="split-visual reveal">
+        <svg viewBox="0 0 400 260" fill="none">
+          <rect x="70" y="60" width="260" height="140" rx="16" stroke="#3550E9" stroke-width="2" stroke-dasharray="4 5"/>
+          <circle cx="140" cy="130" r="46" stroke="#111" stroke-width="4"/>
+          <circle cx="260" cy="130" r="46" stroke="#111" stroke-width="4"/>
+          <path d="M186 128 Q200 116 214 128" stroke="#111" stroke-width="4" fill="none"/>
+          <line x1="94" y1="130" x2="94" y2="196" stroke="#3550E9" stroke-width="1.5"/>
+          <line x1="186" y1="128" x2="186" y2="196" stroke="#3550E9" stroke-width="1.5"/>
+          <text x="60" y="215" font-size="11" fill="#4A4A4A" font-family="Libre Franklin">Lens width</text>
+          <text x="150" y="230" font-size="11" fill="#4A4A4A" font-family="Libre Franklin">Bridge</text>
+          <text x="300" y="145" font-size="11" fill="#4A4A4A" font-family="Libre Franklin">Temple</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--color-surface-warm);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">How it works</div>
+      <h2>Ordering glasses, done properly</h2>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Choose your frame</h3>
+        <p>Browse by face shape, material or price — every frame ships from Bhakkar.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Send your Rx</h3>
+        <p>Type it in, upload a photo, or confirm it with us on WhatsApp.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>We fit and deliver</h3>
+        <p>An optician checks every pair. Cash on delivery, nationwide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="trust-grid reveal">
+      <div class="trust-card">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/></svg></div>
+        <h4>Real optician fitted</h4>
+        <p>Every Rx checked in-house</p>
+      </div>
+      <div class="trust-card">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l6 6L21 6"/></svg></div>
+        <h4>7-day exchange</h4>
+        <p>Not happy? Send it back</p>
+      </div>
+      <div class="trust-card">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v16h16M4 12l4-4 4 4 6-6"/></svg></div>
+        <h4>Free Rx remake</h4>
+        <p>Wrong power, fixed free</p>
+      </div>
+      <div class="trust-card">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 11h18"/></svg></div>
+        <h4>COD nationwide</h4>
+        <p>Pay when it arrives</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">From customers</div>
+      <h2>What west Punjab is saying</h2>
+    </div>
+    <div class="test-grid reveal">
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p>"Ordered from Bhakkar, delivered to Multan in two days. They called to confirm my Rx before shipping — first online chashma seller that's actually checked my power."</p>
+        <div class="test-name">Ahmed R. — Multan</div>
+      </div>
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p>"Finally an online eyewear shop that talks about prescriptions the way the optician on the corner does."</p>
+        <div class="test-name">Sana K. — Layyah</div>
+      </div>
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p>"The lenses felt off after a week, so they remade them free — no arguments, no extra charge."</p>
+        <div class="test-name">Bilal T. — D.G. Khan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><span class="dot"></span>EYESALOON</div>
+        <p>A real optician, online. Frames, prescription lenses, sunglasses and contact lenses — delivered nationwide from Bhakkar, Punjab.</p>
+        <div class="newsletter">
+          <input type="text" placeholder="WhatsApp number">
+          <button>Notify me</button>
+        </div>
+        <div class="payment-row">
+          <span class="pay-badge">COD</span>
+          <span class="pay-badge">JazzCash</span>
+          <span class="pay-badge">Easypaisa</span>
+          <span class="pay-badge">Cards</span>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="#">Frames</a></li>
+          <li><a href="#">Sunglasses</a></li>
+          <li><a href="#">Contact lenses</a></li>
+          <li><a href="#">Kids</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#">Rx guide</a></li>
+          <li><a href="#">Size guide</a></li>
+          <li><a href="#">Exchange policy</a></li>
+          <li><a href="#">Warranty</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Visit us</h5>
+        <ul>
+          <li><a href="#">Eyesaloon, Bhakkar</a></li>
+          <li><a href="#">Punjab, Pakistan</a></li>
+          <li><a href="#">View on map ↗</a></li>
+          <li><a href="#">+92 3XX XXXXXXX</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Eyesaloon. All rights reserved.</span>
+      <div class="lang-switch"><span>EN</span><a href="#">اردو</a></div>
+      <div class="social-row">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v10.5a3.5 3.5 0 11-3.5-3.5"/><path d="M14 3c0 2.5 2 4.5 4.5 4.5"/></svg></a>
+        <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20l1.3-3.9A8 8 0 1112 20a8 8 0 01-4-1.1z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="#" class="fab" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3A9.9 9.9 0 0012 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1120 12c0 4.4-3.6 8-8 8zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-1.3-.6-2.2-1.2-3-2.5-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4L9.8 8.7c-.1-.3-.3-.3-.5-.3h-.4c-.1 0-.4.1-.6.3-.2.2-.8.8-.8 1.9 0 1.1.8 2.2.9 2.3.1.2 1.6 2.4 3.9 3.4.5.2.9.4 1.3.5.5.2 1 .1 1.4-.1.4-.2 1.4-.6 1.6-1.1.2-.5.2-.9.1-1z"/></svg>
+</a>
+
+<script>
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('shrink', window.scrollY > 20);
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+  });
+
+  const hcSlides = document.querySelectorAll('.hc-slide');
+  const hcDots = document.querySelectorAll('.hc-dot');
+  const hcTrack = document.getElementById('hc-track');
+  let hcCurrent = 0, hcTimer;
+
+  function hcGoTo(i){
+    hcSlides[hcCurrent].classList.remove('active');
+    hcDots[hcCurrent].classList.remove('active');
+    hcCurrent = (i + hcSlides.length) % hcSlides.length;
+    hcSlides[hcCurrent].classList.add('active');
+    hcDots[hcCurrent].classList.add('active');
+  }
+  function hcNext(){ hcGoTo(hcCurrent + 1); }
+  function hcPrev(){ hcGoTo(hcCurrent - 1); }
+  function hcStart(){ hcTimer = setInterval(hcNext, 5000); }
+  function hcStop(){ clearInterval(hcTimer); }
+  function hcReset(){ hcStop(); hcStart(); }
+
+  hcStart();
+  hcTrack.addEventListener('mouseenter', hcStop);
+  hcTrack.addEventListener('mouseleave', hcStart);
+  document.getElementById('hc-next').addEventListener('click', () => { hcNext(); hcReset(); });
+  document.getElementById('hc-prev').addEventListener('click', () => { hcPrev(); hcReset(); });
+  hcDots.forEach(dot => dot.addEventListener('click', () => { hcGoTo(Number(dot.dataset.i)); hcReset(); }));
+
+  let hcTouchX = 0;
+  hcTrack.addEventListener('touchstart', e => { hcTouchX = e.touches[0].clientX; }, { passive: true });
+  hcTrack.addEventListener('touchend', e => {
+    const delta = e.changedTouches[0].clientX - hcTouchX;
+    if (Math.abs(delta) > 40) { delta < 0 ? hcNext() : hcPrev(); hcReset(); }
+  }, { passive: true });
+</script>
+
+</body>
+</html>

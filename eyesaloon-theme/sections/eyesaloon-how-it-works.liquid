@@ -1,17 +1,10 @@
-<section class="eyesaloon-how">
+<section class="eyesaloon-how{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
   <div class="page-width eyesaloon-how__inner">
     <div class="eyesaloon-section-heading">
       <h2>{{ section.settings.heading }}</h2>
       <p>{{ section.settings.text }}</p>
     </div>
-    <div class="eyesaloon-how__grid">
-      <div class="eyesaloon-how__panel">
-        {% render 'eyesaloon-steps' %}
-      </div>
-      <div class="eyesaloon-how__panel">
-        {% render 'eyesaloon-trust-strip', compact: true %}
-      </div>
-    </div>
+    {% render 'eyesaloon-steps' %}
   </div>
 </section>
 

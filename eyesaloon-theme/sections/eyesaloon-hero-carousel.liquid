@@ -1,0 +1,320 @@
+{%- liquid
+  assign slide_count = section.blocks.size
+-%}
+
+<section
+  class="eyesaloon-hero-carousel"
+  data-eyesaloon-hero-carousel
+  data-autoplay="{{ section.settings.autoplay_enabled }}"
+  data-autoplay-interval="{{ section.settings.autoplay_interval_ms }}"
+>
+  <div class="page-width">
+    {%- if slide_count > 0 -%}
+      <div class="eyesaloon-hero-carousel__track" data-hero-track aria-live="off">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign slide_settings = block.settings
+            assign is_first = false
+            if forloop.first
+              assign is_first = true
+            endif
+          -%}
+          <div
+            class="eyesaloon-hero-carousel__slide{% if is_first %} is-active{% endif %}"
+            id="hero-slide-{{ forloop.index0 }}"
+            data-hero-slide
+            {% unless is_first %}aria-hidden="true"{% endunless %}
+            {{ block.shopify_attributes }}
+          >
+            <div class="eyesaloon-hero-carousel__copy">
+              {%- if slide_settings.eyebrow != blank -%}
+                <p class="eyesaloon-eyebrow">{{ slide_settings.eyebrow }}</p>
+              {%- endif -%}
+              {%- if slide_settings.heading_line_1 != blank or slide_settings.heading_line_2 != blank -%}
+                <h1>
+                  {{- slide_settings.heading_line_1 -}}
+                  {%- if slide_settings.heading_line_2 != blank -%}
+                    <br>{{ slide_settings.heading_line_2 }}
+                  {%- endif -%}
+                </h1>
+              {%- endif -%}
+              {%- if slide_settings.subtext != blank -%}
+                <p class="eyesaloon-hero-carousel__sub">{{ slide_settings.subtext }}</p>
+              {%- endif -%}
+              {%- if slide_settings.primary_cta_label != blank or slide_settings.secondary_cta_label != blank -%}
+                <div class="eyesaloon-hero-carousel__cta-row">
+                  {%- if slide_settings.primary_cta_label != blank -%}
+                    <a
+                      href="{{ slide_settings.primary_cta_link | default: routes.collections_url }}"
+                      class="button"
+                      {% unless is_first %}tabindex="-1"{% endunless %}
+                    >
+                      {{ slide_settings.primary_cta_label }}
+                    </a>
+                  {%- endif -%}
+                  {%- if slide_settings.secondary_cta_label != blank -%}
+                    <a
+                      href="{{ slide_settings.secondary_cta_link | default: '#' }}"
+                      class="button button--secondary"
+                      {% unless is_first %}tabindex="-1"{% endunless %}
+                    >
+                      {{ slide_settings.secondary_cta_label }}
+                    </a>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+              {%- if slide_settings.trust_1 != blank or slide_settings.trust_2 != blank or slide_settings.trust_3 != blank -%}
+                <ul class="eyesaloon-hero-carousel__trust" role="list">
+                  {%- if slide_settings.trust_1 != blank -%}
+                    <li>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>
+                      {{ slide_settings.trust_1 }}
+                    </li>
+                  {%- endif -%}
+                  {%- if slide_settings.trust_2 != blank -%}
+                    <li>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>
+                      {{ slide_settings.trust_2 }}
+                    </li>
+                  {%- endif -%}
+                  {%- if slide_settings.trust_3 != blank -%}
+                    <li>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>
+                      {{ slide_settings.trust_3 }}
+                    </li>
+                  {%- endif -%}
+                </ul>
+              {%- endif -%}
+            </div>
+            <div class="eyesaloon-hero-carousel__visual">
+              {%- if slide_settings.image != blank -%}
+                {%- liquid
+                  assign hc_loading = 'lazy'
+                  if is_first
+                    assign hc_loading = 'eager'
+                  endif
+                -%}
+                {{
+                  slide_settings.image
+                  | image_url: width: 1200
+                  | image_tag: loading: hc_loading, widths: '480, 720, 960, 1200', sizes: '(min-width: 900px) 50vw, 100vw'
+                }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+
+              {%- case slide_settings.tag_type -%}
+                {%- when 'price' -%}
+                  {%- if slide_settings.tag_price != blank -%}
+                    <div class="eyesaloon-hero-carousel__tag eyesaloon-hero-carousel__tag--price">
+                      {{ slide_settings.tag_price }}
+                      {%- if slide_settings.tag_product_name != blank -%}
+                        <span>{{ slide_settings.tag_product_name }}</span>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- when 'rating' -%}
+                  {%- if slide_settings.tag_rating != blank -%}
+                    <div class="eyesaloon-hero-carousel__tag eyesaloon-hero-carousel__tag--rating">
+                      <span aria-hidden="true">★</span> {{ slide_settings.tag_rating }}
+                      {%- if slide_settings.tag_review_count != blank -%}
+                        <span>({{ slide_settings.tag_review_count }})</span>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- when 'badge' -%}
+                  {%- if slide_settings.tag_badge_text != blank -%}
+                    <div class="eyesaloon-hero-carousel__tag eyesaloon-hero-carousel__tag--badge">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
+                      {{ slide_settings.tag_badge_text }}
+                    </div>
+                  {%- endif -%}
+              {%- endcase -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if slide_count > 1 -%}
+        <div class="eyesaloon-hero-carousel__controls">
+          <button type="button" class="eyesaloon-hero-carousel__arrow" data-hero-prev aria-label="{{ 'eyesaloon.hero_carousel.previous_slide' | t }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
+          </button>
+          <div class="eyesaloon-hero-carousel__dots" data-hero-dots role="tablist" aria-label="{{ 'eyesaloon.hero_carousel.slide_selector' | t }}">
+            {%- for block in section.blocks -%}
+              <button
+                type="button"
+                class="eyesaloon-hero-carousel__dot{% if forloop.first %} is-active{% endif %}"
+                data-hero-dot
+                data-index="{{ forloop.index0 }}"
+                role="tab"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                aria-controls="hero-slide-{{ forloop.index0 }}"
+                aria-label="{{ 'eyesaloon.hero_carousel.go_to_slide' | t: index: forloop.index }}"
+              ></button>
+            {%- endfor -%}
+          </div>
+          <button type="button" class="eyesaloon-hero-carousel__arrow" data-hero-next aria-label="{{ 'eyesaloon.hero_carousel.next_slide' | t }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+          </button>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if slide_count > 1 -%}
+  <script src="{{ 'eyesaloon-hero-carousel.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Eyesaloon hero carousel",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "autoplay_enabled",
+      "label": "Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_interval_ms",
+      "label": "Autoplay interval (ms)",
+      "min": 3000,
+      "max": 9500,
+      "step": 500,
+      "default": 5000
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow label",
+          "default": "Prescription frames"
+        },
+        {
+          "type": "text",
+          "id": "heading_line_1",
+          "label": "Heading, line 1",
+          "default": "Frames that fit."
+        },
+        {
+          "type": "text",
+          "id": "heading_line_2",
+          "label": "Heading, line 2",
+          "default": "Rx you can trust."
+        },
+        {
+          "type": "textarea",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "Own-label frames from Rs. 1,500, checked by an in-house optician before they ship."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "primary_cta_label",
+          "label": "Primary button label",
+          "default": "Shop frames"
+        },
+        {
+          "type": "url",
+          "id": "primary_cta_link",
+          "label": "Primary button link"
+        },
+        {
+          "type": "text",
+          "id": "secondary_cta_label",
+          "label": "Secondary button label",
+          "default": "How it works"
+        },
+        {
+          "type": "url",
+          "id": "secondary_cta_link",
+          "label": "Secondary button link"
+        },
+        {
+          "type": "text",
+          "id": "trust_1",
+          "label": "Trust line 1",
+          "default": "Real optician fitted"
+        },
+        {
+          "type": "text",
+          "id": "trust_2",
+          "label": "Trust line 2",
+          "default": "COD nationwide"
+        },
+        {
+          "type": "text",
+          "id": "trust_3",
+          "label": "Trust line 3",
+          "default": "7-day exchange"
+        },
+        {
+          "type": "select",
+          "id": "tag_type",
+          "label": "Floating tag",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "price", "label": "Price" },
+            { "value": "rating", "label": "Rating" },
+            { "value": "badge", "label": "Badge" }
+          ],
+          "default": "price"
+        },
+        {
+          "type": "text",
+          "id": "tag_price",
+          "label": "Tag: price",
+          "default": "Rs. 2,200"
+        },
+        {
+          "type": "text",
+          "id": "tag_product_name",
+          "label": "Tag: product name",
+          "default": "Bhakkar Round"
+        },
+        {
+          "type": "text",
+          "id": "tag_rating",
+          "label": "Tag: rating value",
+          "default": "4.8"
+        },
+        {
+          "type": "text",
+          "id": "tag_review_count",
+          "label": "Tag: review count",
+          "default": "340"
+        },
+        {
+          "type": "text",
+          "id": "tag_badge_text",
+          "label": "Tag: badge text",
+          "default": "Free remake if it's wrong"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Eyesaloon hero carousel",
+      "blocks": [
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

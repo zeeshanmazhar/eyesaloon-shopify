@@ -1,24 +1,35 @@
-<section class="page-width eyesaloon-category-tiles">
-  <div class="eyesaloon-section-heading">
-    <h2>{{ section.settings.heading }}</h2>
-  </div>
+{%- liquid
+  assign small_block_count = 0
+  for block in section.blocks
+    if block.settings.size == 'small'
+      assign small_block_count = small_block_count | plus: 1
+    endif
+  endfor
+-%}
+
+<section class="page-width eyesaloon-category-tiles{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  {%- if section.settings.heading != blank -%}
+    <div class="eyesaloon-section-heading">
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+  {%- endif -%}
+
   <div class="eyesaloon-category-tiles__grid">
     {%- for block in section.blocks -%}
-      <a class="eyesaloon-category-tile" href="{{ block.settings.link | default: routes.collections_url }}" {{ block.shopify_attributes }}>
-        <span class="eyesaloon-category-tile__media">
-          {%- if block.settings.image != blank -%}
-            {{
-              block.settings.image
-              | image_url: width: 700
-              | image_tag: loading: 'lazy', widths: '240, 360, 520, 700'
-            }}
-          {%- else -%}
-            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
-        </span>
-        <span class="eyesaloon-category-tile__title">{{ block.settings.title }}</span>
-      </a>
+      {%- if block.settings.size == 'large' -%}
+        {%- render 'eyesaloon-category-tile', block: block, is_large: true -%}
+      {%- endif -%}
     {%- endfor -%}
+
+    {%- if small_block_count > 0 -%}
+      <div class="eyesaloon-category-tiles__stack">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.size == 'small' -%}
+            {%- render 'eyesaloon-category-tile', block: block, is_large: false -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -45,14 +56,52 @@
           "default": "Optical frames"
         },
         {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "60+ own-label frames, every face shape, from Rs. 1,500"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Shop frames"
+        },
+        {
           "type": "url",
           "id": "link",
           "label": "Link"
         },
         {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
+          "type": "select",
+          "id": "size",
+          "label": "Size",
+          "options": [
+            { "value": "large", "label": "Large (tall, spans two rows)" },
+            { "value": "small", "label": "Small (stacked)" }
+          ],
+          "default": "small"
+        },
+        {
+          "type": "select",
+          "id": "background",
+          "label": "Background",
+          "options": [
+            { "value": "primary", "label": "Primary (blue)" },
+            { "value": "warm", "label": "Warm surface" },
+            { "value": "warm_dark", "label": "Warm surface, darker" }
+          ],
+          "default": "warm"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "glasses", "label": "Glasses" }
+          ],
+          "default": "none"
         }
       ]
     }
@@ -61,10 +110,37 @@
     {
       "name": "Eyesaloon category tiles",
       "blocks": [
-        { "type": "tile" },
-        { "type": "tile" },
-        { "type": "tile" },
-        { "type": "tile" }
+        {
+          "type": "tile",
+          "settings": {
+            "title": "Prescription frames",
+            "description": "60+ own-label frames, every face shape, from Rs. 1,500",
+            "link_label": "Shop frames",
+            "size": "large",
+            "background": "primary",
+            "icon": "glasses"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "title": "Sunglasses",
+            "description": "UV400 protection, everyday style",
+            "link_label": "Shop sunglasses",
+            "size": "small",
+            "background": "warm"
+          }
+        },
+        {
+          "type": "tile",
+          "settings": {
+            "title": "Contact lenses",
+            "description": "Daily and monthly, fitted right",
+            "link_label": "Shop lenses",
+            "size": "small",
+            "background": "warm_dark"
+          }
+        }
       ]
     }
   ]

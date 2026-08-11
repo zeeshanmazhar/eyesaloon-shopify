@@ -338,9 +338,18 @@
 
     {% sections 'footer-group' %}
 
-    {%- if settings.whatsapp_number != blank -%}
-      <a class="eyesaloon-whatsapp-fab" href="https://wa.me/{{ settings.whatsapp_number | escape }}" aria-label="{{ 'eyesaloon.whatsapp_label' | t }}">
-        WA
+    {%- liquid
+      assign whatsapp_number = settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' | remove: '(' | remove: ')'
+      assign has_real_whatsapp = false
+      if whatsapp_number != blank and whatsapp_number != '92XXXXXXXXXX'
+        unless whatsapp_number contains 'X'
+          assign has_real_whatsapp = true
+        endunless
+      endif
+    -%}
+    {%- if has_real_whatsapp -%}
+      <a class="eyesaloon-whatsapp-fab" href="https://wa.me/{{ whatsapp_number | escape }}" aria-label="{{ 'eyesaloon.whatsapp_label' | t }}">
+        {{- 'icon-whatsapp.svg' | inline_asset_content -}}
       </a>
     {%- endif -%}
 

@@ -1,6 +1,12 @@
 {
   "eyesaloon": {
     "whatsapp_label": "واٹس ایپ پر آئی سیلون سے رابطہ کریں",
+    "hero_carousel": {
+      "previous_slide": "پچھلی سلائیڈ",
+      "next_slide": "اگلی سلائیڈ",
+      "slide_selector": "دکھانے کے لیے سلائیڈ منتخب کریں",
+      "go_to_slide": "سلائیڈ {{ index }} پر جائیں"
+    },
     "components": {
       "available_colors": "دستیاب رنگ",
       "rating_label": "{{ rating }} میں سے 5 ستارے، {{ count }} ریویوز"
@@ -21,9 +27,23 @@
       "linked_lens_package": "اوپر والے فریم کے ساتھ منسلک"
     },
     "footer": {
+      "brand_text": "Eyesaloon پاکستان بھر میں shops کے ذریعے prescription eyewear، sunglasses، اور contact lens support فراہم کرتا ہے۔",
       "cod": "کیش آن ڈیلیوری",
       "jazzcash": "JazzCash",
-      "easypaisa": "Easypaisa"
+      "easypaisa": "Easypaisa",
+      "cards": "کارڈز",
+      "whatsapp_help": "نسخے میں مدد چاہیے؟"
+    },
+    "footer_links": {
+      "all_frames": "تمام فریمز",
+      "sunglasses": "سن گلاسز",
+      "contact_lenses": "کانٹیکٹ لینز",
+      "prescription_help": "نسخے کی مدد",
+      "rx_guide": "Rx گائیڈ",
+      "size_guide": "سائز گائیڈ",
+      "policies": "پالیسیاں",
+      "about": "ہمارے بارے میں",
+      "contact": "رابطہ"
     },
     "featured": {
       "filter_label": "فیچرڈ پراڈکٹس فلٹر کریں",
@@ -77,8 +97,11 @@
     },
     "steps": {
       "choose_frame": "اپنا فریم منتخب کریں",
-      "add_lenses": "نسخہ لینس شامل کریں",
-      "confirm_whatsapp": "واٹس ایپ پر تصدیق کریں"
+      "choose_frame_text": "فریمز دیکھیں اور اپنی پسند کا انتخاب کریں۔",
+      "send_rx": "اپنا نسخہ بھیجیں",
+      "send_rx_text": "ٹائپ کریں، تصویر اپ لوڈ کریں، یا واٹس ایپ پر تصدیق کریں۔",
+      "fit_and_deliver": "ہم فٹ کر کے پہنچائیں گے",
+      "fit_and_deliver_text": "بھیجنے سے پہلے ایک ماہر امراض چشم اسے چیک کرتا ہے۔"
     },
     "trust": {
       "rx_title": "نسخہ کے لیے تیار",

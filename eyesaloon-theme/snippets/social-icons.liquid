@@ -100,4 +100,23 @@
       </a>
     </li>
   {%- endif -%}
+  {%- liquid
+    assign whatsapp_number = settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' | remove: '(' | remove: ')'
+    assign has_real_whatsapp = false
+    if whatsapp_number != blank and whatsapp_number != '92XXXXXXXXXX'
+      unless whatsapp_number contains 'X'
+        assign has_real_whatsapp = true
+      endunless
+    endif
+  -%}
+  {%- if has_real_whatsapp -%}
+    <li class="list-social__item">
+      <a href="https://wa.me/{{ whatsapp_number | escape }}" class="link list-social__link list-social__link--whatsapp">
+        <span class="svg-wrapper">
+          {{- 'icon-whatsapp.svg' | inline_asset_content -}}
+        </span>
+        <span class="visually-hidden">{{ 'eyesaloon.whatsapp_label' | t }}</span>
+      </a>
+    </li>
+  {%- endif -%}
 </ul>

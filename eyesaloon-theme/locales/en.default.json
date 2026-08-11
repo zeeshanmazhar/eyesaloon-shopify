@@ -1,6 +1,12 @@
 {
   "eyesaloon": {
     "whatsapp_label": "Chat with Eyesaloon on WhatsApp",
+    "hero_carousel": {
+      "previous_slide": "Previous slide",
+      "next_slide": "Next slide",
+      "slide_selector": "Select a slide to show",
+      "go_to_slide": "Go to slide {{ index }}"
+    },
     "components": {
       "available_colors": "Available colors",
       "rating_label": "{{ rating }} out of 5 stars from {{ count }} reviews"
@@ -21,9 +27,23 @@
       "linked_lens_package": "Paired with the frame above"
     },
     "footer": {
+      "brand_text": "Prescription eyewear, sunglasses, and contact lens support through Eyesaloon shops across Pakistan.",
       "cod": "Cash on delivery",
       "jazzcash": "JazzCash",
-      "easypaisa": "Easypaisa"
+      "easypaisa": "Easypaisa",
+      "cards": "Cards",
+      "whatsapp_help": "Need prescription help?"
+    },
+    "footer_links": {
+      "all_frames": "All frames",
+      "sunglasses": "Sunglasses",
+      "contact_lenses": "Contact lenses",
+      "prescription_help": "Prescription help",
+      "rx_guide": "Rx guide",
+      "size_guide": "Size guide",
+      "policies": "Policies",
+      "about": "About",
+      "contact": "Contact"
     },
     "featured": {
       "filter_label": "Filter featured products",
@@ -77,8 +97,11 @@
     },
     "steps": {
       "choose_frame": "Choose your frame",
-      "add_lenses": "Add prescription lenses",
-      "confirm_whatsapp": "Confirm on WhatsApp"
+      "choose_frame_text": "Browse frames and pick the one you like.",
+      "send_rx": "Send your Rx",
+      "send_rx_text": "Type it in, upload a photo, or confirm on WhatsApp.",
+      "fit_and_deliver": "We fit and deliver",
+      "fit_and_deliver_text": "An optician checks it before it ships to your door."
     },
     "trust": {
       "rx_title": "Prescription ready",

@@ -1,0 +1,30 @@
+{% comment %}
+  API: render 'eyesaloon-category-tile', block: block, is_large: true|false
+{% endcomment %}
+<a
+  href="{{ block.settings.link | default: routes.collections_url }}"
+  class="eyesaloon-category-tile eyesaloon-category-tile--{{ block.settings.background }}{% if is_large %} eyesaloon-category-tile--large{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.icon == 'glasses' -%}
+    <span class="eyesaloon-category-tile__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="7" cy="12" r="4" />
+        <circle cx="17" cy="12" r="4" />
+        <path d="M11 12h2" />
+      </svg>
+    </span>
+  {%- endif -%}
+  {%- if block.settings.title != blank -%}
+    <span class="eyesaloon-category-tile__title">{{ block.settings.title }}</span>
+  {%- endif -%}
+  {%- if block.settings.description != blank -%}
+    <span class="eyesaloon-category-tile__description">{{ block.settings.description }}</span>
+  {%- endif -%}
+  {%- if block.settings.link_label != blank -%}
+    <span class="eyesaloon-category-tile__link">
+      {{ block.settings.link_label }}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </span>
+  {%- endif -%}
+</a>
