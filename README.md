@@ -12,6 +12,11 @@ Shopify monorepo for the Eyesaloon storefront and try-on app.
 - M0 setup is complete locally, with GitHub and Admin API token gates tracked in `development-plan.md`.
 - M1 theme foundation is implemented and pushed to the development store preview.
 
+## Working Plan
+
+- `PROJECT_WORKING_PLAN.md` - practical day-to-day plan, current status, remaining phases, commands, QA checklist, and virtual try-on plan.
+- `development-plan.md` - deeper technical milestone specification.
+
 ## Useful Commands
 
 ```sh

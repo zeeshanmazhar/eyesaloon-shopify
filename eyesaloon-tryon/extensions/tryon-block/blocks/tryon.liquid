@@ -5,6 +5,10 @@
   endif
 
   assign model_file = selected_product.metafields.eyesaloon.model_3d.value
+  assign lens_width = selected_product.metafields.eyesaloon.lens_width_mm.value
+  assign bridge = selected_product.metafields.eyesaloon.bridge_mm.value
+  assign temple = selected_product.metafields.eyesaloon.temple_mm.value
+  assign lens_height = selected_product.metafields.eyesaloon.lens_height_mm.value
   assign show_block = false
 
   if selected_product != blank and model_file != blank
@@ -19,7 +23,29 @@
     class="eyesaloon-tryon"
     data-eyesaloon-tryon
     {% if selected_product != blank %}data-product-id="{{ selected_product.id }}"{% endif %}
-    {% if model_file != blank %}data-model-url="{{ model_file | file_url }}"{% endif %}
+    {% if selected_product != blank %}data-product-url="{{ selected_product.url }}"{% endif %}
+    {% if model_file != blank %}data-model-url="{{ model_file.url }}"{% endif %}
+    {% if lens_width != blank %}data-lens-width-mm="{{ lens_width }}"{% endif %}
+    {% if bridge != blank %}data-bridge-mm="{{ bridge }}"{% endif %}
+    {% if temple != blank %}data-temple-mm="{{ temple }}"{% endif %}
+    {% if lens_height != blank %}data-lens-height-mm="{{ lens_height }}"{% endif %}
+    data-status-ready="{{ 'tryon.ready_status' | t | escape }}"
+    data-status-desktop="{{ 'tryon.desktop_status' | t | escape }}"
+    data-status-loading="{{ 'tryon.loading_status' | t | escape }}"
+    data-status-camera-permission="{{ 'tryon.camera_permission_status' | t | escape }}"
+    data-status-active-camera="{{ 'tryon.active_camera_status' | t | escape }}"
+    data-status-no-camera="{{ 'tryon.no_camera_status' | t | escape }}"
+    data-status-unsupported="{{ 'tryon.unsupported_status' | t | escape }}"
+    data-status-no-model="{{ 'tryon.no_model_status' | t | escape }}"
+    data-status-qr-error="{{ 'tryon.qr_error_status' | t | escape }}"
+    data-status-tracking-assets-missing="{{ 'tryon.tracking_assets_missing_status' | t | escape }}"
+    data-status-runtime-error="{{ 'tryon.runtime_error_status' | t | escape }}"
+    data-copy-success="{{ 'tryon.copy_success' | t | escape }}"
+    data-copy-error="{{ 'tryon.copy_error' | t | escape }}"
+    data-qr-src="{{ 'tryon-qr.js' | asset_url }}"
+    data-qr-label="{{ 'tryon.qr_label' | t | escape }}"
+    data-runtime-src="{{ 'tryon-runtime.js' | asset_url }}"
+    data-tracking-manifest-url="/apps/eyesaloon/tryon-assets/manifest.json"
   >
     <div class="eyesaloon-tryon__copy">
       <p class="eyesaloon-tryon__eyebrow">{{ 'tryon.eyebrow' | t }}</p>
@@ -65,11 +91,33 @@
         </div>
 
         <div class="eyesaloon-tryon-modal__stage" data-eyesaloon-tryon-stage>
+          <video
+            class="eyesaloon-tryon-modal__video"
+            data-eyesaloon-tryon-video
+            playsinline
+            muted
+            hidden
+          ></video>
+
+          <canvas
+            class="eyesaloon-tryon-modal__canvas"
+            data-eyesaloon-tryon-canvas
+            aria-hidden="true"
+            hidden
+          ></canvas>
+
           <div class="eyesaloon-tryon-modal__frame" aria-hidden="true">
             <span class="eyesaloon-tryon-modal__lens eyesaloon-tryon-modal__lens--left"></span>
             <span class="eyesaloon-tryon-modal__bridge"></span>
             <span class="eyesaloon-tryon-modal__lens eyesaloon-tryon-modal__lens--right"></span>
           </div>
+
+          <div
+            class="eyesaloon-tryon-modal__qr"
+            data-eyesaloon-tryon-qr
+            aria-label="{{ 'tryon.qr_label' | t | escape }}"
+            hidden
+          ></div>
 
           <p class="eyesaloon-tryon-modal__status" data-eyesaloon-tryon-status>
             {{ 'tryon.ready_status' | t }}
@@ -77,6 +125,12 @@
         </div>
 
         <div class="eyesaloon-tryon-modal__footer">
+          <button class="eyesaloon-tryon-modal__action" type="button" data-eyesaloon-tryon-camera hidden>
+            {{ 'tryon.camera_button' | t }}
+          </button>
+          <button class="eyesaloon-tryon-modal__action" type="button" data-eyesaloon-tryon-copy hidden>
+            {{ 'tryon.copy_link' | t }}
+          </button>
           <span class="eyesaloon-tryon__chip">{{ 'tryon.fit_chip' | t }}</span>
           <span class="eyesaloon-tryon__chip">{{ 'tryon.privacy_chip' | t }}</span>
         </div>

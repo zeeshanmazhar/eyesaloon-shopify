@@ -203,6 +203,26 @@
   justify-items: center;
   overflow: hidden;
   padding: 2rem;
+  position: relative;
+}
+
+.eyesaloon-tryon-modal__video {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  transform: scaleX(-1);
+  width: 100%;
+}
+
+.eyesaloon-tryon-modal__canvas {
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: scaleX(-1);
+  width: 100%;
+  z-index: 1;
 }
 
 .eyesaloon-tryon-modal__frame {
@@ -210,7 +230,9 @@
   display: flex;
   gap: 0.4rem;
   justify-content: center;
+  position: relative;
   width: min(70%, 34rem);
+  z-index: 1;
 }
 
 .eyesaloon-tryon-modal__lens {
@@ -229,18 +251,82 @@
   height: 0.3rem;
 }
 
+.eyesaloon-tryon-modal__qr {
+  align-items: center;
+  aspect-ratio: 1;
+  background: var(--color-surface);
+  border: 0.1rem solid rgba(var(--color-foreground), 0.1);
+  border-radius: var(--radius-card);
+  box-shadow: 0 1.2rem 3rem rgba(var(--color-shadow), 0.1);
+  display: flex;
+  justify-content: center;
+  max-width: 22rem;
+  padding: 1.2rem;
+  position: relative;
+  width: min(60%, 22rem);
+  z-index: 1;
+}
+
+.eyesaloon-tryon-modal__qr[hidden] {
+  display: none;
+}
+
+.eyesaloon-tryon-modal__qr.is-loading::before {
+  color: var(--color-body);
+  content: "...";
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.eyesaloon-tryon-modal__qr svg {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
 .eyesaloon-tryon-modal__status {
   color: var(--color-body);
   font-size: 1.4rem;
   line-height: 1.4;
   margin: 0;
+  max-width: 44rem;
+  position: relative;
   text-align: center;
+  z-index: 1;
 }
 
 .eyesaloon-tryon-modal__footer {
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
+}
+
+.eyesaloon-tryon-modal__action {
+  align-items: center;
+  background: var(--color-primary);
+  border: 0;
+  border-radius: var(--radius-button);
+  color: var(--color-surface);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 1.3rem;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1;
+  min-height: 4rem;
+  padding: 0 1.6rem;
+}
+
+.eyesaloon-tryon-modal__action:hover {
+  background: var(--color-primary-hover);
+}
+
+.eyesaloon-tryon-modal__action:focus-visible {
+  outline: 0.2rem solid var(--color-primary);
+  outline-offset: 0.2rem;
 }
 
 html[dir='rtl'] .eyesaloon-tryon__actions {

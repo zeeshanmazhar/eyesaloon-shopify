@@ -1,12 +1,27 @@
 {
   "tryon": {
+    "active_camera_status": "Camera preview is active. Face tracking and 3D frame rendering will load in the next build stage.",
+    "camera_button": "Start camera",
+    "camera_permission_status": "Start your private camera preview to prepare the on-device fit check.",
     "close": "Close",
+    "copy_error": "Copy failed. Use the current product link with ?tryon=1 to open try-on on mobile.",
+    "copy_link": "Copy mobile link",
+    "copy_success": "Mobile try-on link copied.",
+    "desktop_status": "Scan this code with your phone to open the private camera try-on for this frame.",
     "eyebrow": "Virtual try-on",
     "fit_chip": "Frame scale preview",
+    "loading_status": "Starting your camera preview.",
     "modal_eyebrow": "Private preview",
     "button_label": "Try on",
     "missing_model": "Add a 3D model file to the product metafield eyesaloon.model_3d to enable try-on.",
+    "no_camera_status": "Camera access is unavailable or was blocked. You can still copy the mobile try-on link and retry.",
+    "no_model_status": "Add a 3D model file to enable try-on for this frame.",
     "privacy_chip": "Camera stays on device",
-    "ready_status": "Your try-on preview will load here."
+    "qr_error_status": "QR generation failed. Copy the mobile link instead.",
+    "qr_label": "QR code for mobile try-on",
+    "ready_status": "Your try-on preview will load here.",
+    "runtime_error_status": "The try-on preview could not start. Close and try again.",
+    "tracking_assets_missing_status": "Camera preview is ready. Face tracking assets are not installed yet.",
+    "unsupported_status": "This browser cannot run the try-on preview. Try a current mobile browser with camera, WebGL, and WebAssembly support."
   }
 }
