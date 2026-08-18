@@ -80,6 +80,7 @@
     const cameraStates = ["active-camera", "model-active", "model-error", "tracking-assets-missing"];
 
     if (!button) return;
+    if (modal?.parentElement !== document.body) document.body.append(modal);
 
     const getTryOnUrl = () => {
       const productUrl = block.dataset.productUrl || window.location.pathname;
@@ -261,14 +262,7 @@
     };
 
     button.addEventListener("click", () => {
-      const initialState = chooseInitialState();
-      if (initialState === "desktop") {
-        closeModal();
-        setState("desktop");
-        return;
-      }
-
-      openModal(initialState);
+      openModal();
     });
 
     copyButton?.addEventListener("click", async () => {

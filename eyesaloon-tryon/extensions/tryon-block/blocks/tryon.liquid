@@ -67,7 +67,7 @@
     data-eyesaloon-tryon
     {% if selected_product != blank %}data-product-id="{{ selected_product.id }}"{% endif %}
     {% if selected_product != blank %}data-product-url="{{ selected_product.url }}"{% endif %}
-    data-build-version="tryon-v12"
+    data-build-version="tryon-v14"
     {% if model_url != blank %}data-model-url="{{ model_url }}"{% endif %}
     {% if lens_width != blank %}data-lens-width-mm="{{ lens_width }}"{% endif %}
     {% if bridge != blank %}data-bridge-mm="{{ bridge }}"{% endif %}
@@ -106,18 +106,6 @@
       </button>
 
       <span class="eyesaloon-tryon__chip">{{ 'tryon.privacy_chip' | t }}</span>
-    </div>
-
-    <div class="eyesaloon-tryon__desktop" data-eyesaloon-tryon-desktop hidden>
-      <div
-        class="eyesaloon-tryon-modal__qr"
-        data-eyesaloon-tryon-qr
-        aria-label="{{ 'tryon.qr_label' | t | escape }}"
-        hidden
-      ></div>
-      <button class="eyesaloon-tryon-modal__action" type="button" data-eyesaloon-tryon-copy hidden>
-        {{ 'tryon.copy_link' | t }}
-      </button>
     </div>
 
     {% if request.design_mode and model_url == blank %}
@@ -179,6 +167,18 @@
           <p class="eyesaloon-tryon-modal__status" data-eyesaloon-tryon-status>
             {{ 'tryon.ready_status' | t }}
           </p>
+
+          <div class="eyesaloon-tryon__desktop" data-eyesaloon-tryon-desktop hidden>
+            <div
+              class="eyesaloon-tryon-modal__qr"
+              data-eyesaloon-tryon-qr
+              aria-label="{{ 'tryon.qr_label' | t | escape }}"
+              hidden
+            ></div>
+            <button class="eyesaloon-tryon-modal__action" type="button" data-eyesaloon-tryon-copy hidden>
+              {{ 'tryon.copy_link' | t }}
+            </button>
+          </div>
         </div>
 
         <div class="eyesaloon-tryon-modal__footer">
