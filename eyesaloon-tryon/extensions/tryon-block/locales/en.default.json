@@ -1,6 +1,6 @@
 {
   "tryon": {
-    "active_camera_status": "Face tracking is active. Keep your face centered for the best frame fit.",
+    "active_camera_status": "Face tracking is active. Try-on v9 is checking the 3D model for this frame.",
     "camera_button": "Start camera",
     "camera_permission_status": "Start your private camera preview to prepare the on-device fit check.",
     "close": "Close",
@@ -17,7 +17,7 @@
     "button_label": "Try on",
     "missing_model": "Add a product 3D model, set the metafield eyesaloon.model_3d, or paste a GLB URL in this app block.",
     "no_camera_status": "Camera access is unavailable or was blocked. You can still copy the mobile try-on link and retry.",
-    "no_model_status": "Add a 3D model file to enable try-on for this frame.",
+    "no_model_status": "Try-on v9 did not find a 3D model URL for this frame.",
     "privacy_chip": "Camera stays on device",
     "qr_error_status": "QR generation failed. Copy the mobile link instead.",
     "qr_label": "QR code for mobile try-on",
