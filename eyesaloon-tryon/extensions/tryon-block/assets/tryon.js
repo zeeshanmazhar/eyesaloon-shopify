@@ -237,17 +237,23 @@
       previousFocus = document.activeElement;
 
       if (modal) {
+        if (modal.parentNode !== document.body) {
+          document.body.append(modal);
+        }
+
         modal.hidden = false;
         modal.querySelector("[data-eyesaloon-tryon-close]")?.focus();
       }
 
       setState(chooseInitialState());
+      document.body.classList.add("eyesaloon-tryon-modal-open");
     };
 
     const closeModal = () => {
       stopCamera();
 
       if (modal) modal.hidden = true;
+      document.body.classList.remove("eyesaloon-tryon-modal-open");
 
       if (previousFocus && typeof previousFocus.focus === "function") {
         previousFocus.focus();
@@ -256,16 +262,6 @@
 
     button.addEventListener("click", () => {
       openModal();
-
-      block.dispatchEvent(
-        new CustomEvent("eyesaloon:tryon", {
-          bubbles: true,
-          detail: {
-            modelUrl: block.dataset.modelUrl || "",
-            productId: block.dataset.productId || "",
-          },
-        }),
-      );
     });
 
     copyButton?.addEventListener("click", async () => {

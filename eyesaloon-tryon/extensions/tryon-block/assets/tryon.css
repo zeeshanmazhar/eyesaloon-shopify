@@ -124,6 +124,10 @@
   display: none;
 }
 
+body.eyesaloon-tryon-modal-open {
+  overflow: hidden;
+}
+
 .eyesaloon-tryon-modal {
   align-items: center;
   display: grid;
