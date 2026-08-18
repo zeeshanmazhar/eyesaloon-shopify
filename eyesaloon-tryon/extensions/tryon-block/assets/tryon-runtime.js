@@ -235,7 +235,7 @@
   };
 
   const runtimeApi = {
-    create({ canvas, measurements = {}, modelUrl, rendererCanvas, rendererSrc, trackingManifestUrl, video }) {
+    create({ block, canvas, measurements = {}, modelUrl, rendererCanvas, rendererSrc, trackingManifestUrl, video }) {
       let animationFrame = 0;
       let destroyed = false;
       let faceLandmarker = null;
@@ -351,10 +351,24 @@
           if (faceLandmarker) {
             try {
               await loadModelRenderer();
-            } catch {
+            } catch (error) {
+              console.warn("Eyesaloon try-on 3D model failed to load.", {
+                error,
+                modelUrl,
+                rendererSrc,
+              });
               modelRendererReady = false;
               modelRenderer?.destroy();
               modelRenderer = null;
+              block?.dispatchEvent(
+                new CustomEvent("eyesaloon:tryon-model-error", {
+                  bubbles: true,
+                  detail: {
+                    message: error?.message || "Model renderer failed to load.",
+                    modelUrl,
+                  },
+                }),
+              );
             }
           }
 
@@ -364,6 +378,7 @@
           draw();
 
           return {
+            modelReady: modelRendererReady,
             ready: true,
             trackingAssetsReady: Boolean(faceLandmarker),
           };

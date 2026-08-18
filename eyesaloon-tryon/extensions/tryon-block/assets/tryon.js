@@ -79,6 +79,7 @@
     let cameraStream = null;
     let runtime = null;
     let qrRenderedForUrl = "";
+    const cameraStates = ["active-camera", "model-active", "model-error", "tracking-assets-missing"];
 
     if (!button) return;
 
@@ -115,15 +116,15 @@
       }
 
       if (video) {
-        video.hidden = state !== "active-camera" && state !== "tracking-assets-missing";
+        video.hidden = !cameraStates.includes(state);
       }
 
       if (canvas) {
-        canvas.hidden = state !== "active-camera" && state !== "tracking-assets-missing";
+        canvas.hidden = !cameraStates.includes(state);
       }
 
       if (rendererCanvas) {
-        rendererCanvas.hidden = state !== "active-camera";
+        rendererCanvas.hidden = state !== "model-active";
       }
 
       if (framePreview) {
@@ -307,7 +308,11 @@
           throw new Error("Try-on runtime could not start.");
         }
 
-        setState(runtimeStatus.trackingAssetsReady ? "active-camera" : "tracking-assets-missing");
+        if (!runtimeStatus.trackingAssetsReady) {
+          setState("tracking-assets-missing");
+        } else {
+          setState(runtimeStatus.modelReady ? "model-active" : "model-error");
+        }
       } catch {
         const hadCameraStream = Boolean(cameraStream);
         stopCamera();

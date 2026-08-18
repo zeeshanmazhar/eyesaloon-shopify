@@ -64,7 +64,20 @@ const createFrameRenderer = ({ canvas, modelUrl }) => {
     async load() {
       if (!modelUrl) return false;
 
-      const gltf = await loader.loadAsync(modelUrl);
+      const response = await fetch(modelUrl, {
+        credentials: "omit",
+        mode: "cors",
+      });
+
+      if (!response.ok) {
+        throw new Error(`3D model request failed with ${response.status}.`);
+      }
+
+      const modelBuffer = await response.arrayBuffer();
+      const gltf = await new Promise((resolve, reject) => {
+        loader.parse(modelBuffer, "", resolve, reject);
+      });
+
       if (disposed) return false;
 
       frame = prepareFrame(gltf.scene);
