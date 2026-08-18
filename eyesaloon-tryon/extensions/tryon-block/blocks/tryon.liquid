@@ -45,7 +45,7 @@
     data-qr-src="{{ 'tryon-qr.js' | asset_url }}"
     data-qr-label="{{ 'tryon.qr_label' | t | escape }}"
     data-runtime-src="{{ 'tryon-runtime.js' | asset_url }}"
-    data-tracking-manifest-url="/apps/eyesaloon/tryon-assets/manifest.json"
+    data-tracking-manifest-url="{{ block.settings.tracking_manifest_url | default: 'https://tryon-assets.eyesaloon.com/manifest.json' | escape }}"
   >
     <div class="eyesaloon-tryon__copy">
       <p class="eyesaloon-tryon__eyebrow">{{ 'tryon.eyebrow' | t }}</p>
@@ -172,6 +172,12 @@
       "id": "button_label",
       "label": "Button label",
       "default": "Try on"
+    },
+    {
+      "type": "text",
+      "id": "tracking_manifest_url",
+      "label": "Tracking manifest URL",
+      "default": "https://tryon-assets.eyesaloon.com/manifest.json"
     }
   ]
 }

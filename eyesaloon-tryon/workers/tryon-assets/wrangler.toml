@@ -1,0 +1,19 @@
+name = "eyesaloon-tryon-assets"
+main = "src/index.js"
+compatibility_date = "2026-08-17"
+account_id = "a6eda6c8e906ba4ca0c2473f1a4fd536"
+workers_dev = false
+
+[[routes]]
+pattern = "tryon-assets.eyesaloon.com"
+custom_domain = true
+zone_name = "eyesaloon.com"
+
+[[r2_buckets]]
+binding = "TRYON_ASSETS"
+bucket_name = "eyesaloon-tryon-assets"
+
+[[kv_namespaces]]
+binding = "TRYON_ASSETS_KV"
+id = "8699e146da284f5a87fa231e788bd251"
+remote = true
