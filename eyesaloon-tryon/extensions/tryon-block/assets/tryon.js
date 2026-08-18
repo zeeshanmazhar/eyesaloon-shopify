@@ -243,6 +243,8 @@
 
         modal.classList.add("is-portal");
         modal.hidden = false;
+        const r = modal.getBoundingClientRect();
+        modal.style.transform = `translate(${-r.left}px,${-r.top}px)`;
         modal.querySelector("[data-eyesaloon-tryon-close]")?.focus();
       }
 
