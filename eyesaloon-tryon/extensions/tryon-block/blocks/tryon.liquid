@@ -45,6 +45,7 @@
     data-qr-src="{{ 'tryon-qr.js' | asset_url }}"
     data-qr-label="{{ 'tryon.qr_label' | t | escape }}"
     data-runtime-src="{{ 'tryon-runtime.js' | asset_url }}"
+    data-renderer-src="{{ 'tryon-renderer.js' | asset_url }}"
     data-tracking-manifest-url="{{ block.settings.tracking_manifest_url | default: 'https://tryon-assets.eyesaloon.com/manifest.json' | escape }}"
   >
     <div class="eyesaloon-tryon__copy">
@@ -98,6 +99,13 @@
             muted
             hidden
           ></video>
+
+          <canvas
+            class="eyesaloon-tryon-modal__model"
+            data-eyesaloon-tryon-renderer
+            aria-hidden="true"
+            hidden
+          ></canvas>
 
           <canvas
             class="eyesaloon-tryon-modal__canvas"

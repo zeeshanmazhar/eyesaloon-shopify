@@ -70,6 +70,7 @@
     const status = block.querySelector("[data-eyesaloon-tryon-status]");
     const video = block.querySelector("[data-eyesaloon-tryon-video]");
     const canvas = block.querySelector("[data-eyesaloon-tryon-canvas]");
+    const rendererCanvas = block.querySelector("[data-eyesaloon-tryon-renderer]");
     const framePreview = block.querySelector(".eyesaloon-tryon-modal__frame");
     const qrContainer = block.querySelector("[data-eyesaloon-tryon-qr]");
     const cameraButton = block.querySelector("[data-eyesaloon-tryon-camera]");
@@ -119,6 +120,10 @@
 
       if (canvas) {
         canvas.hidden = state !== "active-camera" && state !== "tracking-assets-missing";
+      }
+
+      if (rendererCanvas) {
+        rendererCanvas.hidden = state !== "active-camera";
       }
 
       if (framePreview) {
@@ -200,6 +205,10 @@
       if (canvas) {
         canvas.hidden = true;
       }
+
+      if (rendererCanvas) {
+        rendererCanvas.hidden = true;
+      }
     };
 
     const startRuntime = async () => {
@@ -214,6 +223,8 @@
           templeMm: block.dataset.templeMm || "",
         },
         modelUrl: block.dataset.modelUrl || "",
+        rendererCanvas,
+        rendererSrc: block.dataset.rendererSrc || "",
         trackingManifestUrl: block.dataset.trackingManifestUrl || "",
         video,
       });

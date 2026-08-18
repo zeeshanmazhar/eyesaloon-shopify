@@ -11,6 +11,7 @@
   };
 
   let faceLandmarkerPromise = null;
+  let frameRendererPromise = null;
 
   const fetchTrackingManifest = async (manifestUrl) => {
     if (!manifestUrl) return { ready: false };
@@ -69,6 +70,29 @@
   };
 
   const getAssetPath = (manifest, key) => manifest?.files?.[key]?.path || "";
+
+  const loadFrameRenderer = (src) => {
+    if (window.EyesaloonTryOnFrameRenderer) return Promise.resolve(window.EyesaloonTryOnFrameRenderer);
+    if (!src) return Promise.reject(new Error("Missing try-on renderer URL."));
+    if (frameRendererPromise) return frameRendererPromise;
+
+    frameRendererPromise = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = src;
+      script.onload = () => {
+        if (window.EyesaloonTryOnFrameRenderer) {
+          resolve(window.EyesaloonTryOnFrameRenderer);
+        } else {
+          reject(new Error("Try-on renderer did not initialize."));
+        }
+      };
+      script.onerror = () => reject(new Error("Try-on renderer failed to load."));
+      document.head.append(script);
+    });
+
+    return frameRendererPromise;
+  };
 
   const loadFaceLandmarker = async (manifest) => {
     if (faceLandmarkerPromise) return faceLandmarkerPromise;
@@ -211,11 +235,13 @@
   };
 
   const runtimeApi = {
-    create({ canvas, measurements = {}, trackingManifestUrl, video }) {
+    create({ canvas, measurements = {}, modelUrl, rendererCanvas, rendererSrc, trackingManifestUrl, video }) {
       let animationFrame = 0;
       let destroyed = false;
       let faceLandmarker = null;
       let lastVideoTime = -1;
+      let modelRenderer = null;
+      let modelRendererReady = false;
       let smoothedFit = null;
       let trackingManifest = null;
       const context = canvas?.getContext("2d", { alpha: true });
@@ -234,7 +260,28 @@
           smoothedFit = null;
         }
 
+        if (rendererCanvas) {
+          if (rendererCanvas.width !== width || rendererCanvas.height !== height) {
+            rendererCanvas.width = width;
+            rendererCanvas.height = height;
+          }
+        }
+
         return true;
+      };
+
+      const loadModelRenderer = async () => {
+        if (!rendererCanvas || !modelUrl) return false;
+
+        const rendererLibrary = await loadFrameRenderer(rendererSrc);
+
+        modelRenderer = rendererLibrary.createFrameRenderer({
+          canvas: rendererCanvas,
+          modelUrl,
+        });
+
+        modelRendererReady = await modelRenderer.load();
+        return modelRendererReady;
       };
 
       const draw = () => {
@@ -270,8 +317,20 @@
         }
 
         if (smoothedFit) {
-          drawTrackedFrame({ context, fit: smoothedFit, width });
+          const renderedModel = modelRendererReady
+            ? modelRenderer.renderFit(smoothedFit, {
+                height,
+                width,
+              })
+            : false;
+
+          if (!renderedModel) {
+            drawTrackedFrame({ context, fit: smoothedFit, width });
+          } else {
+            context.clearRect(0, 0, width, height);
+          }
         } else {
+          modelRenderer?.clear();
           drawFallbackOverlay({ context, height, width });
         }
 
@@ -289,8 +348,19 @@
             faceLandmarker = await loadFaceLandmarker(trackingAssets.manifest);
           }
 
+          if (faceLandmarker) {
+            try {
+              await loadModelRenderer();
+            } catch {
+              modelRendererReady = false;
+              modelRenderer?.destroy();
+              modelRenderer = null;
+            }
+          }
+
           destroyed = false;
           canvas.hidden = false;
+          if (rendererCanvas) rendererCanvas.hidden = !modelRendererReady;
           draw();
 
           return {
@@ -301,11 +371,18 @@
         destroy() {
           destroyed = true;
           window.cancelAnimationFrame(animationFrame);
+          modelRenderer?.destroy();
+          modelRenderer = null;
+          modelRendererReady = false;
           smoothedFit = null;
 
           if (context && canvas) {
             context.clearRect(0, 0, canvas.width, canvas.height);
             canvas.hidden = true;
+          }
+
+          if (rendererCanvas) {
+            rendererCanvas.hidden = true;
           }
         },
         getTrackingManifest() {
