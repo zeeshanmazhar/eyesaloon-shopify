@@ -15,7 +15,7 @@
     "model_active_status": "3D frame is tracking your face. Keep your face centered for the best fit.",
     "model_error_status": "Face tracking is active. The 3D frame model could not load, so showing the fit guide.",
     "button_label": "Try on",
-    "missing_model": "Add a 3D model file to the product metafield eyesaloon.model_3d to enable try-on.",
+    "missing_model": "Add a product 3D model, set the metafield eyesaloon.model_3d, or paste a GLB URL in this app block.",
     "no_camera_status": "Camera access is unavailable or was blocked. You can still copy the mobile try-on link and retry.",
     "no_model_status": "Add a 3D model file to enable try-on for this frame.",
     "privacy_chip": "Camera stays on device",

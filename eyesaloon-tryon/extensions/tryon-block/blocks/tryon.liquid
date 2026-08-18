@@ -5,13 +5,33 @@
   endif
 
   assign model_file = selected_product.metafields.eyesaloon.model_3d.value
+  assign product_model = selected_product.media | where: 'media_type', 'model' | first
+  assign metafield_model_source = blank
+  assign product_model_source = blank
+  assign model_url = ''
   assign lens_width = selected_product.metafields.eyesaloon.lens_width_mm.value
   assign bridge = selected_product.metafields.eyesaloon.bridge_mm.value
   assign temple = selected_product.metafields.eyesaloon.temple_mm.value
   assign lens_height = selected_product.metafields.eyesaloon.lens_height_mm.value
   assign show_block = false
 
-  if selected_product != blank and model_file != blank
+  if model_file != blank and model_file.media_type == 'model'
+    assign metafield_model_source = model_file.sources | where: 'format', 'glb' | first
+    assign model_url = metafield_model_source.url
+  elsif model_file != blank and model_file.url != blank
+    assign model_url = model_file.url
+  endif
+
+  if model_url == blank and product_model != blank
+    assign product_model_source = product_model.sources | where: 'format', 'glb' | first
+    assign model_url = product_model_source.url
+  endif
+
+  if model_url == blank and block.settings.model_url != blank
+    assign model_url = block.settings.model_url
+  endif
+
+  if selected_product != blank and model_url != blank
     assign show_block = true
   elsif request.design_mode
     assign show_block = true
@@ -24,7 +44,7 @@
     data-eyesaloon-tryon
     {% if selected_product != blank %}data-product-id="{{ selected_product.id }}"{% endif %}
     {% if selected_product != blank %}data-product-url="{{ selected_product.url }}"{% endif %}
-    {% if model_file != blank %}data-model-url="{{ model_file.url }}"{% endif %}
+    {% if model_url != blank %}data-model-url="{{ model_url }}"{% endif %}
     {% if lens_width != blank %}data-lens-width-mm="{{ lens_width }}"{% endif %}
     {% if bridge != blank %}data-bridge-mm="{{ bridge }}"{% endif %}
     {% if temple != blank %}data-temple-mm="{{ temple }}"{% endif %}
@@ -64,7 +84,7 @@
       <span class="eyesaloon-tryon__chip">{{ 'tryon.privacy_chip' | t }}</span>
     </div>
 
-    {% if request.design_mode and model_file == blank %}
+    {% if request.design_mode and model_url == blank %}
       <p class="eyesaloon-tryon__hint">
         {{ 'tryon.missing_model' | t }}
       </p>
@@ -164,6 +184,11 @@
       "id": "product",
       "label": "Product",
       "autofill": true
+    },
+    {
+      "type": "text",
+      "id": "model_url",
+      "label": "3D model URL override"
     },
     {
       "type": "text",
