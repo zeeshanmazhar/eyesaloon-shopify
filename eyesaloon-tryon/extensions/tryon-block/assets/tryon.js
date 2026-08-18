@@ -13,9 +13,7 @@
     }
   };
 
-  const isMobileViewport = () =>
-    window.matchMedia("(max-width: 749px)").matches ||
-    window.matchMedia("(pointer: coarse)").matches;
+  const isMobileViewport = () => window.matchMedia("(max-width:749px),(pointer:coarse)").matches;
 
   const loadQrLibrary = (src) => {
     if (window.qrcode) return Promise.resolve(window.qrcode);
@@ -72,10 +70,10 @@
     const canvas = block.querySelector("[data-eyesaloon-tryon-canvas]");
     const rendererCanvas = block.querySelector("[data-eyesaloon-tryon-renderer]");
     const framePreview = block.querySelector(".eyesaloon-tryon-modal__frame");
+    const desktopPanel = block.querySelector("[data-eyesaloon-tryon-desktop]");
     const qrContainer = block.querySelector("[data-eyesaloon-tryon-qr]");
     const cameraButton = block.querySelector("[data-eyesaloon-tryon-camera]");
     const copyButton = block.querySelector("[data-eyesaloon-tryon-copy]");
-    let previousFocus = null;
     let cameraStream = null;
     let runtime = null;
     let qrRenderedForUrl = "";
@@ -108,7 +106,7 @@
       }
 
       if (copyButton) {
-        copyButton.hidden = state !== "desktop" && state !== "unsupported" && state !== "no-camera";
+        copyButton.hidden = state !== "desktop";
       }
 
       if (cameraButton) {
@@ -133,6 +131,10 @@
 
       if (qrContainer) {
         qrContainer.hidden = state !== "desktop";
+      }
+
+      if (desktopPanel) {
+        desktopPanel.hidden = state !== "desktop";
       }
 
       if (state === "desktop") {
@@ -233,9 +235,7 @@
       return runtime.start();
     };
 
-    const openModal = () => {
-      previousFocus = document.activeElement;
-
+    const openModal = (initialState = chooseInitialState()) => {
       if (modal) {
         if (modal.showModal && !modal.open) {
           modal.showModal();
@@ -245,7 +245,7 @@
         modal.querySelector("[data-eyesaloon-tryon-close]")?.focus();
       }
 
-      setState(chooseInitialState());
+      setState(initialState);
       document.body.classList.add("eyesaloon-tryon-modal-open");
     };
 
@@ -258,14 +258,16 @@
         modal.hidden = true;
       }
       document.body.classList.remove("eyesaloon-tryon-modal-open");
-
-      if (previousFocus && typeof previousFocus.focus === "function") {
-        previousFocus.focus();
-      }
     };
 
     button.addEventListener("click", () => {
-      openModal();
+      const initialState = chooseInitialState();
+      if (initialState === "desktop") {
+        setState("desktop");
+        return;
+      }
+
+      openModal(initialState);
     });
 
     copyButton?.addEventListener("click", async () => {

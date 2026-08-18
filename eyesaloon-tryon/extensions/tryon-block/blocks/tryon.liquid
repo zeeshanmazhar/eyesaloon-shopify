@@ -108,6 +108,18 @@
       <span class="eyesaloon-tryon__chip">{{ 'tryon.privacy_chip' | t }}</span>
     </div>
 
+    <div class="eyesaloon-tryon__desktop" data-eyesaloon-tryon-desktop hidden>
+      <div
+        class="eyesaloon-tryon-modal__qr"
+        data-eyesaloon-tryon-qr
+        aria-label="{{ 'tryon.qr_label' | t | escape }}"
+        hidden
+      ></div>
+      <button class="eyesaloon-tryon-modal__action" type="button" data-eyesaloon-tryon-copy hidden>
+        {{ 'tryon.copy_link' | t }}
+      </button>
+    </div>
+
     {% if request.design_mode and model_url == blank %}
       <p class="eyesaloon-tryon__hint">
         {{ 'tryon.missing_model' | t }}
@@ -164,13 +176,6 @@
             <span class="eyesaloon-tryon-modal__lens eyesaloon-tryon-modal__lens--right"></span>
           </div>
 
-          <div
-            class="eyesaloon-tryon-modal__qr"
-            data-eyesaloon-tryon-qr
-            aria-label="{{ 'tryon.qr_label' | t | escape }}"
-            hidden
-          ></div>
-
           <p class="eyesaloon-tryon-modal__status" data-eyesaloon-tryon-status>
             {{ 'tryon.ready_status' | t }}
           </p>
@@ -179,9 +184,6 @@
         <div class="eyesaloon-tryon-modal__footer">
           <button class="eyesaloon-tryon-modal__action" type="button" data-eyesaloon-tryon-camera hidden>
             {{ 'tryon.camera_button' | t }}
-          </button>
-          <button class="eyesaloon-tryon-modal__action" type="button" data-eyesaloon-tryon-copy hidden>
-            {{ 'tryon.copy_link' | t }}
           </button>
           <span class="eyesaloon-tryon__chip">{{ 'tryon.fit_chip' | t }}</span>
           <span class="eyesaloon-tryon__chip">{{ 'tryon.privacy_chip' | t }}</span>

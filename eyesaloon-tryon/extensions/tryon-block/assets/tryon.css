@@ -120,6 +120,20 @@
   z-index: 1;
 }
 
+.eyesaloon-tryon__desktop {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+  grid-column: 1 / -1;
+  justify-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.eyesaloon-tryon__desktop[hidden] {
+  display: none;
+}
+
 .eyesaloon-tryon-modal:not([open]),
 .eyesaloon-tryon-modal[hidden] {
   display: none;
