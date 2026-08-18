@@ -241,6 +241,7 @@
           document.body.append(modal);
         }
 
+        modal.classList.add("is-portal");
         modal.hidden = false;
         modal.querySelector("[data-eyesaloon-tryon-close]")?.focus();
       }
