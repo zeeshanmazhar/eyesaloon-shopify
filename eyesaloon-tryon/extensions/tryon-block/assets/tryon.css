@@ -120,6 +120,7 @@
   z-index: 1;
 }
 
+.eyesaloon-tryon-modal:not([open]),
 .eyesaloon-tryon-modal[hidden] {
   display: none;
 }
@@ -130,21 +131,24 @@ body.eyesaloon-tryon-modal-open {
 
 .eyesaloon-tryon-modal {
   align-items: center;
+  background: transparent;
+  border: 0;
   box-sizing: border-box;
   display: grid;
+  height: 100dvh;
   justify-items: center;
+  margin: 0;
+  max-height: none;
+  max-width: none;
   padding: 2rem;
   position: fixed;
-  z-index: 80;
+  inset: 0;
+  width: 100vw;
+  z-index: 2147483000;
 }
 
-.eyesaloon-tryon-modal.is-portal {
-  block-size: 100dvh;
-  inline-size: 100vw;
-  inset: 0;
-  margin: 0;
-  max-inline-size: none;
-  z-index: 2147483000;
+.eyesaloon-tryon-modal::backdrop {
+  background: rgba(var(--color-foreground), 0.42);
 }
 
 .eyesaloon-tryon-modal__backdrop {

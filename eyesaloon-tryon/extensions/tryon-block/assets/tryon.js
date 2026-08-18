@@ -237,14 +237,11 @@
       previousFocus = document.activeElement;
 
       if (modal) {
-        if (modal.parentNode !== document.body) {
-          document.body.append(modal);
+        if (modal.showModal && !modal.open) {
+          modal.showModal();
+        } else {
+          modal.hidden = false;
         }
-
-        modal.classList.add("is-portal");
-        modal.hidden = false;
-        const r = modal.getBoundingClientRect();
-        modal.style.transform = `translate(${-r.left}px,${-r.top}px)`;
         modal.querySelector("[data-eyesaloon-tryon-close]")?.focus();
       }
 
@@ -255,7 +252,11 @@
     const closeModal = () => {
       stopCamera();
 
-      if (modal) modal.hidden = true;
+      if (modal?.open) {
+        modal.close();
+      } else if (modal) {
+        modal.hidden = true;
+      }
       document.body.classList.remove("eyesaloon-tryon-modal-open");
 
       if (previousFocus && typeof previousFocus.focus === "function") {
