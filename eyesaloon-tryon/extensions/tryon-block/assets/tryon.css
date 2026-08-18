@@ -142,6 +142,15 @@
   z-index: 5;
 }
 
+.shopify-section:has(.eyesaloon-tryon) {
+  position: relative;
+  z-index: 20;
+}
+
+body:has(.eyesaloon-tryon[data-tryon-state='desktop']) .product__column-sticky {
+  z-index: 0;
+}
+
 .eyesaloon-tryon[data-tryon-state='desktop'] .eyesaloon-tryon__desktop {
   grid-column: auto;
   max-width: 18rem;
