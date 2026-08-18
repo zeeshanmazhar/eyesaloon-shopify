@@ -3,6 +3,9 @@
   if selected_product == blank and product != blank
     assign selected_product = product
   endif
+  if selected_product == blank and closest.product != blank
+    assign selected_product = closest.product
+  endif
 
   assign model_file = selected_product.metafields.eyesaloon.model_3d.value
 
