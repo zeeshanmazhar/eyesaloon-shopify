@@ -5,6 +5,26 @@
   endif
 
   assign model_file = selected_product.metafields.eyesaloon.model_3d.value
+
+  if model_file == blank
+    assign model_file = selected_product.metafields.eyesaloon.try_on_3d_model.value
+  endif
+
+  if model_file == blank
+    assign model_file = selected_product.metafields.eyesaloon.tryon_3d_model.value
+  endif
+
+  if model_file == blank
+    assign model_file = selected_product.metafields.custom.try_on_3d_model.value
+  endif
+
+  if model_file == blank
+    assign model_file = selected_product.metafields.custom.tryon_3d_model.value
+  endif
+
+  if model_file == blank
+    assign model_file = selected_product.metafields.custom.model_3d.value
+  endif
   assign product_model = selected_product.media | where: 'media_type', 'model' | first
   assign metafield_model_source = blank
   assign product_model_source = blank
