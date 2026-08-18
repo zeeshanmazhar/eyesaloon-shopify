@@ -263,6 +263,7 @@
     button.addEventListener("click", () => {
       const initialState = chooseInitialState();
       if (initialState === "desktop") {
+        closeModal();
         setState("desktop");
         return;
       }

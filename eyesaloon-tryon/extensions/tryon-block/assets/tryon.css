@@ -122,16 +122,42 @@
 
 .eyesaloon-tryon__desktop {
   align-items: center;
-  display: grid;
-  gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
   grid-column: 1 / -1;
-  justify-items: center;
+  justify-content: flex-end;
   position: relative;
   z-index: 1;
 }
 
 .eyesaloon-tryon__desktop[hidden] {
   display: none;
+}
+
+.eyesaloon-tryon[data-tryon-state='desktop'] {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.eyesaloon-tryon[data-tryon-state='desktop'] .eyesaloon-tryon__desktop {
+  grid-column: auto;
+  max-width: 18rem;
+}
+
+.eyesaloon-tryon[data-tryon-state='desktop'] .eyesaloon-tryon-modal__qr {
+  border-radius: var(--radius-button);
+  box-shadow: none;
+  flex: 0 0 8.8rem;
+  max-width: 8.8rem;
+  padding: 0.5rem;
+  width: 8.8rem;
+}
+
+.eyesaloon-tryon[data-tryon-state='desktop'] .eyesaloon-tryon-modal__action {
+  font-size: 1.2rem;
+  min-height: 3.4rem;
+  padding: 0 1.2rem;
+  width: 100%;
 }
 
 .eyesaloon-tryon-modal:not([open]),
@@ -391,6 +417,16 @@ html[dir='rtl'] .eyesaloon-tryon__actions {
 
   .eyesaloon-tryon__button {
     width: 100%;
+  }
+
+  .eyesaloon-tryon[data-tryon-state='desktop'] {
+    grid-template-columns: 1fr;
+  }
+
+  .eyesaloon-tryon[data-tryon-state='desktop'] .eyesaloon-tryon__desktop {
+    grid-column: 1 / -1;
+    justify-content: center;
+    max-width: none;
   }
 
   .eyesaloon-tryon__chip {
