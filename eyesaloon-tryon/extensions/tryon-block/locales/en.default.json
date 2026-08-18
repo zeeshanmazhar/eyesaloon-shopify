@@ -1,6 +1,6 @@
 {
   "tryon": {
-    "active_camera_status": "Camera preview is active. Face tracking and 3D frame rendering will load in the next build stage.",
+    "active_camera_status": "Face tracking is active. Keep your face centered for the best frame fit.",
     "camera_button": "Start camera",
     "camera_permission_status": "Start your private camera preview to prepare the on-device fit check.",
     "close": "Close",

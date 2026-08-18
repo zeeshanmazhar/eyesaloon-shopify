@@ -25,6 +25,10 @@ const requiredAssets = {
     maxBytes: 11_750_000,
     contentType: "application/wasm",
   },
+  "models/face_landmarker.task": {
+    maxBytes: 4_000_000,
+    contentType: "application/octet-stream",
+  },
 };
 
 let hasError = false;

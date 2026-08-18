@@ -5,7 +5,8 @@ Tiny Cloudflare Worker for the virtual try-on runtime assets.
 It serves:
 
 - `manifest.json`
-- MediaPipe Tasks Vision JS/WASM files from R2
+- MediaPipe Tasks Vision JS/WASM files from R2/KV
+- MediaPipe Face Landmarker model from R2
 
 The bucket can be empty during lightweight testing. In that state, the manifest returns `assets-not-installed`.
 
@@ -43,6 +44,7 @@ env PATH=/Users/zeeshanmazhar/.nvm/versions/node/v20.18.1/bin:/usr/bin:/bin:/usr
 env PATH=/Users/zeeshanmazhar/.nvm/versions/node/v20.18.1/bin:/usr/bin:/bin:/usr/sbin:/sbin npx wrangler r2 object put eyesaloon-tryon-assets/wasm/vision_wasm_internal.wasm --file public/tryon-assets/wasm/vision_wasm_internal.wasm
 env PATH=/Users/zeeshanmazhar/.nvm/versions/node/v20.18.1/bin:/usr/bin:/bin:/usr/sbin:/sbin npx wrangler r2 object put eyesaloon-tryon-assets/wasm/vision_wasm_nosimd_internal.js --file public/tryon-assets/wasm/vision_wasm_nosimd_internal.js
 env PATH=/Users/zeeshanmazhar/.nvm/versions/node/v20.18.1/bin:/usr/bin:/bin:/usr/sbin:/sbin npx wrangler r2 object put eyesaloon-tryon-assets/wasm/vision_wasm_nosimd_internal.wasm --file public/tryon-assets/wasm/vision_wasm_nosimd_internal.wasm
+env PATH=/Users/zeeshanmazhar/.nvm/versions/node/v20.18.1/bin:/usr/bin:/bin:/usr/sbin:/sbin npx wrangler r2 object put eyesaloon-tryon-assets/models/face_landmarker.task --file public/tryon-assets/models/face_landmarker.task --content-type application/octet-stream --remote --force
 ```
 
 If R2 upload is blocked for the large `.wasm` files, upload only those files to KV using the same keys:

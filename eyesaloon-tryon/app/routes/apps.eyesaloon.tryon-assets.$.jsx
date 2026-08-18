@@ -11,6 +11,7 @@ const allowedAssets = {
   "wasm/vision_wasm_internal.wasm": "application/wasm",
   "wasm/vision_wasm_nosimd_internal.js": "text/javascript; charset=utf-8",
   "wasm/vision_wasm_nosimd_internal.wasm": "application/wasm",
+  "models/face_landmarker.task": "application/octet-stream",
 };
 
 const manifestFiles = {
@@ -19,6 +20,7 @@ const manifestFiles = {
   wasmBinary: "wasm/vision_wasm_internal.wasm",
   wasmNosimdLoader: "wasm/vision_wasm_nosimd_internal.js",
   wasmNosimdBinary: "wasm/vision_wasm_nosimd_internal.wasm",
+  faceLandmarkerModel: "models/face_landmarker.task",
 };
 
 function json(data, init = {}) {
