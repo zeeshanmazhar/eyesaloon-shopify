@@ -74,6 +74,8 @@
     const qrContainer = block.querySelector("[data-eyesaloon-tryon-qr]");
     const cameraButton = block.querySelector("[data-eyesaloon-tryon-camera]");
     const copyButton = block.querySelector("[data-eyesaloon-tryon-copy]");
+    const backdrop = modal?.querySelector(".eyesaloon-tryon-modal__backdrop");
+    const panel = modal?.querySelector(".eyesaloon-tryon-modal__panel");
     let cameraStream = null;
     let runtime = null;
     let qrRenderedForUrl="";
@@ -240,6 +242,9 @@
 
     const openModal = (initialState = chooseInitialState()) => {
       if (modal) {
+        modal.style.cssText="align-items:center!important;background:transparent!important;box-sizing:border-box!important;display:grid!important;height:100dvh!important;inset:0!important;justify-items:center!important;margin:0!important;max-height:none!important;max-width:none!important;padding:2rem!important;position:fixed!important;transform:none!important;width:100vw!important;z-index:2147483647!important";
+        if(backdrop)backdrop.style.cssText="background:rgba(0,0,0,.42)!important;border:0!important;cursor:pointer!important;height:100dvh!important;inset:0!important;padding:0!important;position:fixed!important;width:100vw!important;z-index:0!important";
+        if(panel)panel.style.zIndex="1";
         modal.hidden = false;
         modal.querySelector("[data-eyesaloon-tryon-close]")?.focus();
       }
