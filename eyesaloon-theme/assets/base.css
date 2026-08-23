@@ -161,6 +161,53 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   flex-grow: 1;
 }
 
+body.eyesaloon-tryon-modal-open {
+  overflow: hidden !important;
+}
+
+body.eyesaloon-tryon-modal-open .product__column-sticky,
+body.eyesaloon-tryon-modal-open .product__media-wrapper {
+  z-index: 0 !important;
+}
+
+body.eyesaloon-tryon-modal-open > .eyesaloon-tryon-modal {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  display: grid !important;
+  height: 100dvh !important;
+  inset: 0 !important;
+  justify-items: center !important;
+  margin: 0 !important;
+  max-height: none !important;
+  max-width: none !important;
+  padding: 2rem !important;
+  position: fixed !important;
+  transform: none !important;
+  width: 100vw !important;
+  z-index: 2147483647 !important;
+}
+
+body.eyesaloon-tryon-modal-open > .eyesaloon-tryon-modal[hidden] {
+  display: none !important;
+}
+
+body.eyesaloon-tryon-modal-open > .eyesaloon-tryon-modal .eyesaloon-tryon-modal__backdrop {
+  background: rgba(0, 0, 0, 0.42) !important;
+  border: 0 !important;
+  height: 100dvh !important;
+  inset: 0 !important;
+  padding: 0 !important;
+  position: fixed !important;
+  width: 100vw !important;
+  z-index: 0 !important;
+}
+
+body.eyesaloon-tryon-modal-open > .eyesaloon-tryon-modal .eyesaloon-tryon-modal__panel {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
 .section + .section {
   margin-top: var(--spacing-sections-mobile);
 }
