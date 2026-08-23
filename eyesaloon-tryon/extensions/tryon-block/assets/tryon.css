@@ -137,7 +137,7 @@
   display: none;
 }
 
-.eyesaloon-tryon[data-tryon-state='desktop'] .eyesaloon-tryon__desktop {
+.eyesaloon-tryon-modal[data-tryon-state='desktop'] .eyesaloon-tryon__desktop {
   display: grid;
   justify-content: center;
   justify-items: center;
@@ -154,16 +154,15 @@
   z-index: 2147482998;
 }
 
-.eyesaloon-tryon[data-tryon-state='desktop'] .eyesaloon-tryon-modal__stage {
+.eyesaloon-tryon-modal[data-tryon-state='desktop'] .eyesaloon-tryon-modal__stage {
   aspect-ratio: auto;
   min-height: 34rem;
 }
 
-.eyesaloon-tryon[data-tryon-state='desktop'] .eyesaloon-tryon-modal__action {
+.eyesaloon-tryon-modal[data-tryon-state='desktop'] .eyesaloon-tryon-modal__action {
   margin-top: 0.8rem;
 }
 
-.eyesaloon-tryon-modal:not([open]),
 .eyesaloon-tryon-modal[hidden] {
   display: none;
 }
@@ -190,20 +189,16 @@ body.eyesaloon-tryon-modal-open {
   z-index: 2147483000;
 }
 
-.eyesaloon-tryon-modal[open],
-.eyesaloon-tryon-modal:not([hidden]) {
-  height: 100dvh !important;
-  inset: 0 !important;
-  margin: 0 !important;
-  max-height: none !important;
-  max-width: none !important;
-  position: fixed !important;
-  transform: none !important;
-  width: 100vw !important;
-}
-
-.eyesaloon-tryon-modal::backdrop {
+.eyesaloon-tryon-modal__backdrop {
   background: rgba(var(--color-foreground), 0.42);
+  border: 0;
+  cursor: pointer;
+  height: 100dvh;
+  inset: 0;
+  padding: 0;
+  position: fixed;
+  width: 100vw;
+  z-index: 0;
 }
 
 .eyesaloon-tryon-modal__panel {
@@ -426,7 +421,7 @@ html[dir='rtl'] .eyesaloon-tryon__actions {
     width: 100%;
   }
 
-  .eyesaloon-tryon[data-tryon-state='desktop'] .eyesaloon-tryon__desktop {
+  .eyesaloon-tryon-modal[data-tryon-state='desktop'] .eyesaloon-tryon__desktop {
     max-width: none;
   }
 

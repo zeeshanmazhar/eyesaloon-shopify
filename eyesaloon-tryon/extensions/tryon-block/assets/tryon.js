@@ -101,6 +101,7 @@
 
     const setState = (state) => {
       block.dataset.tryonState = state;
+      if (modal) modal.dataset.tryonState = state;
 
       if (status) {
         status.textContent = getStatusText(state);
@@ -238,11 +239,7 @@
 
     const openModal = (initialState = chooseInitialState()) => {
       if (modal) {
-        if (modal.showModal && !modal.open) {
-          modal.showModal();
-        } else {
-          modal.hidden = false;
-        }
+        modal.hidden = false;
         modal.querySelector("[data-eyesaloon-tryon-close]")?.focus();
       }
 
@@ -253,9 +250,7 @@
     const closeModal = () => {
       stopCamera();
 
-      if (modal?.open) {
-        modal.close();
-      } else if (modal) {
+      if (modal) {
         modal.hidden = true;
       }
       document.body.classList.remove("eyesaloon-tryon-modal-open");
