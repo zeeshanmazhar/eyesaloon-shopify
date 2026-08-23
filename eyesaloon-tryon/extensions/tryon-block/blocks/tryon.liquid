@@ -36,6 +36,10 @@
   assign bridge = selected_product.metafields.eyesaloon.bridge_mm.value
   assign temple = selected_product.metafields.eyesaloon.temple_mm.value
   assign lens_height = selected_product.metafields.eyesaloon.lens_height_mm.value
+  assign frame_width = selected_product.metafields.eyesaloon.frame_width_mm.value
+  assign fit_scale = selected_product.metafields.eyesaloon.tryon_fit_scale.value | default: block.settings.fit_scale
+  assign fit_x_offset = selected_product.metafields.eyesaloon.tryon_x_offset_pct.value | default: block.settings.fit_x_offset_pct
+  assign fit_y_offset = selected_product.metafields.eyesaloon.tryon_y_offset_pct.value | default: block.settings.fit_y_offset_pct
   assign show_block = false
 
   if model_file != blank and model_file.media_type == 'model'
@@ -67,12 +71,16 @@
     data-eyesaloon-tryon
     {% if selected_product != blank %}data-product-id="{{ selected_product.id }}"{% endif %}
     {% if selected_product != blank %}data-product-url="{{ selected_product.url }}"{% endif %}
-    data-build-version="tryon-v18"
+    data-build-version="tryon-v31"
     {% if model_url != blank %}data-model-url="{{ model_url }}"{% endif %}
     {% if lens_width != blank %}data-lens-width-mm="{{ lens_width }}"{% endif %}
     {% if bridge != blank %}data-bridge-mm="{{ bridge }}"{% endif %}
     {% if temple != blank %}data-temple-mm="{{ temple }}"{% endif %}
     {% if lens_height != blank %}data-lens-height-mm="{{ lens_height }}"{% endif %}
+    {% if frame_width != blank %}data-frame-width-mm="{{ frame_width }}"{% endif %}
+    {% if fit_scale != blank %}data-fit-scale="{{ fit_scale }}"{% endif %}
+    {% if fit_x_offset != blank %}data-fit-x-offset-pct="{{ fit_x_offset }}"{% endif %}
+    {% if fit_y_offset != blank %}data-fit-y-offset-pct="{{ fit_y_offset }}"{% endif %}
     data-status-ready="{{ 'tryon.ready_status' | t | escape }}"
     data-status-desktop="{{ 'tryon.desktop_status' | t | escape }}"
     data-status-loading="{{ 'tryon.loading_status' | t | escape }}"
@@ -164,16 +172,6 @@
             hidden
           ></canvas>
 
-          <div class="eyesaloon-tryon-modal__frame" aria-hidden="true">
-            <span class="eyesaloon-tryon-modal__lens eyesaloon-tryon-modal__lens--left"></span>
-            <span class="eyesaloon-tryon-modal__bridge"></span>
-            <span class="eyesaloon-tryon-modal__lens eyesaloon-tryon-modal__lens--right"></span>
-          </div>
-
-          <p class="eyesaloon-tryon-modal__status" data-eyesaloon-tryon-status>
-            {{ 'tryon.ready_status' | t }}
-          </p>
-
           <div class="eyesaloon-tryon__desktop" data-eyesaloon-tryon-desktop hidden>
             <div
               class="eyesaloon-tryon-modal__qr"
@@ -186,6 +184,10 @@
             </button>
           </div>
         </div>
+
+        <p class="eyesaloon-tryon-modal__status" data-eyesaloon-tryon-status>
+          {{ 'tryon.ready_status' | t }}
+        </p>
 
         <div class="eyesaloon-tryon-modal__footer">
           <button class="eyesaloon-tryon-modal__action" type="button" data-eyesaloon-tryon-camera hidden>
@@ -243,6 +245,24 @@
       "id": "tracking_manifest_url",
       "label": "Tracking manifest URL",
       "default": "https://tryon-assets.eyesaloon.com/manifest.json"
+    },
+    {
+      "type": "text",
+      "id": "fit_scale",
+      "label": "Fallback fit scale",
+      "default": "1"
+    },
+    {
+      "type": "text",
+      "id": "fit_x_offset_pct",
+      "label": "Fallback horizontal offset percent",
+      "default": "0"
+    },
+    {
+      "type": "text",
+      "id": "fit_y_offset_pct",
+      "label": "Fallback vertical offset percent",
+      "default": "0"
     }
   ]
 }

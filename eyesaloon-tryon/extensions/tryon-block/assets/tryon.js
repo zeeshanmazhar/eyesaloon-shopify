@@ -61,6 +61,21 @@
     return runtimeLibraryPromise;
   };
 
+  const withTimeout = (promise, milliseconds, message) =>
+    Promise.race([
+      promise,
+      new Promise((_, reject) => {
+        window.setTimeout(() => reject(new Error(message)), milliseconds);
+      }),
+    ]);
+
+  const versionedAssetUrl = (src, version) => {
+    if (!src || !version) return src;
+    const url = new URL(src, window.location.href);
+    url.searchParams.set("eyesaloon_tryon_v", version);
+    return url.toString();
+  };
+
   blocks.forEach((block) => {
     const button = block.querySelector(".eyesaloon-tryon__button");
     const modal = block.querySelector("[data-eyesaloon-tryon-modal]");
@@ -69,7 +84,6 @@
     const video = block.querySelector("[data-eyesaloon-tryon-video]");
     const canvas = block.querySelector("[data-eyesaloon-tryon-canvas]");
     const rendererCanvas = block.querySelector("[data-eyesaloon-tryon-renderer]");
-    const framePreview = block.querySelector(".eyesaloon-tryon-modal__frame");
     const desktopPanel = block.querySelector("[data-eyesaloon-tryon-desktop]");
     const qrContainer = block.querySelector("[data-eyesaloon-tryon-qr]");
     const cameraButton = block.querySelector("[data-eyesaloon-tryon-camera]");
@@ -130,10 +144,6 @@
         rendererCanvas.hidden = state !== "model-active";
       }
 
-      if (framePreview) {
-        framePreview.hidden = state === "desktop";
-      }
-
       if (qrContainer) {
         qrContainer.hidden = state !== "desktop";
       }
@@ -157,7 +167,7 @@
       qrContainer.classList.add("is-loading");
 
       try {
-        const createQrCode = await loadQrLibrary(block.dataset.qrSrc);
+        const createQrCode = await loadQrLibrary(versionedAssetUrl(block.dataset.qrSrc, block.dataset.buildVersion));
         const qr = createQrCode(0, "M");
         qr.addData(tryOnUrl);
         qr.make();
@@ -220,19 +230,23 @@
     };
 
     const startRuntime = async () => {
-      const runtimeLibrary = await loadRuntimeLibrary(block.dataset.runtimeSrc);
+      const runtimeLibrary = await loadRuntimeLibrary(versionedAssetUrl(block.dataset.runtimeSrc, block.dataset.buildVersion));
       runtime = runtimeLibrary.create({
         block,
         canvas,
         measurements: {
           bridgeMm: block.dataset.bridgeMm || "",
+          fitScale: block.dataset.fitScale || "",
+          frameWidthMm: block.dataset.frameWidthMm || "",
           lensHeightMm: block.dataset.lensHeightMm || "",
           lensWidthMm: block.dataset.lensWidthMm || "",
           templeMm: block.dataset.templeMm || "",
+          xOffsetPct: block.dataset.fitXOffsetPct || "",
+          yOffsetPct: block.dataset.fitYOffsetPct || "",
         },
         modelUrl: block.dataset.modelUrl || "",
         rendererCanvas,
-        rendererSrc: block.dataset.rendererSrc || "",
+        rendererSrc: versionedAssetUrl(block.dataset.rendererSrc, block.dataset.buildVersion) || "",
         trackingManifestUrl: block.dataset.trackingManifestUrl || "",
         video,
       });
@@ -258,7 +272,9 @@
 
       if (modal) {
         modal.hidden = true;
+        modal.style.setProperty("display", "none", "important");
       }
+      setState("ready");
       document.body.classList.remove("eyesaloon-tryon-modal-open");
     };
 
@@ -297,10 +313,11 @@
 
         if (video) {
           video.srcObject = cameraStream;
-          await video.play();
+          setState("active-camera");
+          await withTimeout(video.play(), 5000, "Camera preview timed out.");
         }
 
-        const runtimeStatus = await startRuntime();
+        const runtimeStatus = await withTimeout(startRuntime(), 12000, "Try-on runtime timed out.");
 
         if (!runtimeStatus?.ready) {
           throw new Error("Try-on runtime could not start.");

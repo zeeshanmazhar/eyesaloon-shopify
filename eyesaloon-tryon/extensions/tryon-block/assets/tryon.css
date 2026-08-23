@@ -265,13 +265,56 @@ body.eyesaloon-tryon-modal-open {
   position: relative;
 }
 
+.eyesaloon-tryon-modal__stage::before,
+.eyesaloon-tryon-modal__stage::after {
+  content: "";
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 160ms ease;
+}
+
+.eyesaloon-tryon-modal__stage::before {
+  background:
+    radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 58%),
+    linear-gradient(180deg, rgba(255, 246, 230, 0.14), rgba(255, 255, 255, 0) 68%);
+  filter: blur(1.2rem);
+  mix-blend-mode: screen;
+  transform: scale(1.06);
+  z-index: 1;
+}
+
+.eyesaloon-tryon-modal__stage::after {
+  background:
+    radial-gradient(circle at 50% 48%, rgba(255, 235, 205, 0) 0 58%, rgba(0, 0, 0, 0.07) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.045), rgba(255, 255, 255, 0) 24% 76%, rgba(0, 0, 0, 0.045));
+  filter: blur(1rem);
+  mix-blend-mode: soft-light;
+  transform: scale(1.04);
+  z-index: 1;
+}
+
+.eyesaloon-tryon-modal[data-tryon-state="active-camera"] .eyesaloon-tryon-modal__stage::before,
+.eyesaloon-tryon-modal[data-tryon-state="model-active"] .eyesaloon-tryon-modal__stage::before,
+.eyesaloon-tryon-modal[data-tryon-state="model-error"] .eyesaloon-tryon-modal__stage::before,
+.eyesaloon-tryon-modal[data-tryon-state="tracking-assets-missing"] .eyesaloon-tryon-modal__stage::before,
+.eyesaloon-tryon-modal[data-tryon-state="active-camera"] .eyesaloon-tryon-modal__stage::after,
+.eyesaloon-tryon-modal[data-tryon-state="model-active"] .eyesaloon-tryon-modal__stage::after,
+.eyesaloon-tryon-modal[data-tryon-state="model-error"] .eyesaloon-tryon-modal__stage::after,
+.eyesaloon-tryon-modal[data-tryon-state="tracking-assets-missing"] .eyesaloon-tryon-modal__stage::after {
+  opacity: 1;
+}
+
 .eyesaloon-tryon-modal__video {
+  filter: brightness(1.12) contrast(0.96) saturate(1.08) sepia(0.035);
   height: 100%;
   inset: 0;
   object-fit: cover;
   position: absolute;
   transform: scaleX(-1);
   width: 100%;
+  z-index: 0;
 }
 
 .eyesaloon-tryon-modal__canvas {
@@ -279,9 +322,8 @@ body.eyesaloon-tryon-modal-open {
   inset: 0;
   pointer-events: none;
   position: absolute;
-  transform: scaleX(-1);
   width: 100%;
-  z-index: 1;
+  z-index: 2;
 }
 
 .eyesaloon-tryon-modal__model {
@@ -291,33 +333,7 @@ body.eyesaloon-tryon-modal-open {
   position: absolute;
   transform: scaleX(-1);
   width: 100%;
-  z-index: 2;
-}
-
-.eyesaloon-tryon-modal__frame {
-  align-items: center;
-  display: flex;
-  gap: 0.4rem;
-  justify-content: center;
-  position: relative;
-  width: min(70%, 34rem);
-  z-index: 1;
-}
-
-.eyesaloon-tryon-modal__lens {
-  aspect-ratio: 1.7 / 1;
-  border: 0.3rem solid var(--color-primary);
-  border-radius: 45% 45% 48% 48%;
-  display: block;
-  flex: 1 1 0;
-}
-
-.eyesaloon-tryon-modal__bridge {
-  background: var(--color-primary);
-  border-radius: var(--radius-chip);
-  display: block;
-  flex: 0 0 2rem;
-  height: 0.3rem;
+  z-index: 3;
 }
 
 .eyesaloon-tryon-modal__qr {

@@ -107,10 +107,33 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "17870600712343974c": {
+      "type": "apps",
+      "blocks": {
+        "eyesaloon_tryon_tryon_WNmDVy": {
+          "type": "shopify://apps/eyesaloon-tryon/blocks/tryon/01a013a5-e552-7a9f-81c9-80ebbeea1725",
+          "settings": {
+            "product": "{{product}}",
+            "model_url": "",
+            "heading": "See the fit before you order",
+            "supporting_text": "Preview frame scale and lens width with a private on-device try-on.",
+            "button_label": "Try on",
+            "tracking_manifest_url": "https://tryon-assets.eyesaloon.com/manifest.json"
+          }
+        }
+      },
+      "block_order": [
+        "eyesaloon_tryon_tryon_WNmDVy"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "main",
+    "17870600712343974c",
     "disclosures",
     "related-products"
   ]

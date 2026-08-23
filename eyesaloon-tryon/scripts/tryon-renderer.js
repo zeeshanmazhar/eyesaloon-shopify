@@ -96,6 +96,21 @@ const createFrameRenderer = ({ canvas, modelUrl }) => {
       renderer.render(scene, camera);
       return true;
     },
+    renderPreview(viewport) {
+      if (!frame || disposed) return false;
+
+      resize(viewport.width, viewport.height);
+
+      const targetWidth = viewport.width * 0.62;
+      const targetHeight = viewport.height * 0.26;
+      const scale = Math.min(targetWidth / frameWidth, targetHeight / frameHeight);
+
+      group.position.set(0, viewport.height * 0.08, 0);
+      group.rotation.set(0, 0, 0);
+      group.scale.setScalar(scale);
+      renderer.render(scene, camera);
+      return true;
+    },
     clear() {
       renderer.clear();
     },
