@@ -85,8 +85,9 @@
     const getTryOnUrl = () => {
       const productUrl = block.dataset.productUrl || window.location.pathname;
       const url = new URL(productUrl, window.location.origin);
+      const p=new URLSearchParams(location.search).get("preview_theme_id");
+      if(p)url.searchParams.set("preview_theme_id",p);
       url.searchParams.set(AUTO_OPEN_PARAM, "1");
-      url.searchParams.set("source", "qr");
       return url.toString();
     };
 
