@@ -67,7 +67,7 @@
     data-eyesaloon-tryon
     {% if selected_product != blank %}data-product-id="{{ selected_product.id }}"{% endif %}
     {% if selected_product != blank %}data-product-url="{{ selected_product.url }}"{% endif %}
-    data-build-version="tryon-v14"
+    data-build-version="tryon-v15"
     {% if model_url != blank %}data-model-url="{{ model_url }}"{% endif %}
     {% if lens_width != blank %}data-lens-width-mm="{{ lens_width }}"{% endif %}
     {% if bridge != blank %}data-bridge-mm="{{ bridge }}"{% endif %}
@@ -115,10 +115,6 @@
     {% endif %}
 
     <dialog class="eyesaloon-tryon-modal" data-eyesaloon-tryon-modal>
-      <button class="eyesaloon-tryon-modal__backdrop" type="button" data-eyesaloon-tryon-close>
-        <span class="visually-hidden">{{ 'tryon.close' | t }}</span>
-      </button>
-
       <div
         class="eyesaloon-tryon-modal__panel"
         aria-label="{{ block.settings.heading | escape }}"

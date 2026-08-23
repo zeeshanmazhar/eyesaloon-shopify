@@ -76,7 +76,7 @@
     const copyButton = block.querySelector("[data-eyesaloon-tryon-copy]");
     let cameraStream = null;
     let runtime = null;
-    let qrRenderedForUrl = "";
+    let qrRenderedForUrl="";
     const cameraStates = ["active-camera", "model-active", "model-error", "tracking-assets-missing"];
 
     if (!button) return;
@@ -319,6 +319,10 @@
 
     closeButtons.forEach((closeButton) => {
       closeButton.addEventListener("click", closeModal);
+    });
+
+    modal?.addEventListener("click", (event) => {
+      if(event.target===modal)closeModal();
     });
 
     document.addEventListener("keydown", (event) => {

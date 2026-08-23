@@ -206,18 +206,6 @@ body.eyesaloon-tryon-modal-open {
   background: rgba(var(--color-foreground), 0.42);
 }
 
-.eyesaloon-tryon-modal__backdrop {
-  background: rgba(var(--color-foreground), 0.42);
-  border: 0;
-  cursor: pointer;
-  height: 100dvh;
-  inset: 0;
-  padding: 0;
-  position: fixed;
-  width: 100vw;
-  z-index: 0;
-}
-
 .eyesaloon-tryon-modal__panel {
   background: var(--color-surface);
   border-radius: var(--radius-card);
