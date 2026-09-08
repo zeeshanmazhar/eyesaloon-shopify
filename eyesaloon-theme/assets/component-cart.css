@@ -151,7 +151,8 @@ cart-items {
   }
 }
 
-.cart__ctas button {
+.cart__ctas button,
+.cart__ctas a {
   width: 100%;
 }
 

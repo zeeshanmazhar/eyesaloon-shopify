@@ -1,2 +1,2 @@
-handle,title_en,title_ur,product_type,vendor,price,compare_at,sku,option_color,lens_width_mm,bridge_mm,temple_mm,lens_height_mm,frame_shape,material,face_shapes,gender,rx_compatible,fit_note,image_filenames
-classic-rectangle-black,Classic Rectangle Black,,Frames,Eyesaloon,2500,3000,ES-FR-0001,Black,52,18,145,40,rectangle,TR90,"oval,round",unisex,true,,classic-rectangle-black-1.jpg|classic-rectangle-black-2.jpg
+handle,title_en,title_ur,product_type,vendor,price,compare_at,sku,option_color,lens_width_mm,bridge_mm,temple_mm,lens_height_mm,frame_width_mm,frame_shape,material,face_shapes,gender,rx_compatible,fit_note,image_filenames
+classic-rectangle-black,Classic Rectangle Black,,Frames,Eyesaloon,2500,3000,ES-FR-0001,Black,52,18,145,40,138,rectangle,TR90,"oval,round",unisex,true,,classic-rectangle-black-1.jpg|classic-rectangle-black-2.jpg

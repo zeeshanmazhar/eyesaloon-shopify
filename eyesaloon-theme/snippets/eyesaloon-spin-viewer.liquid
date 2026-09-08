@@ -4,7 +4,7 @@
 {% endcomment %}
 {%- assign spin_frames = product.metafields.eyesaloon.spin_frames.value -%}
 
-{%- if spin_frames != blank -%}
+{%- if spin_frames != blank and spin_frames.count > 1 -%}
   <script src="{{ 'eyesaloon-spin-viewer.js' | asset_url }}" defer="defer"></script>
   <eyesaloon-spin-viewer class="eyesaloon-spin" aria-label="{{ 'eyesaloon.spin.label' | t }}">
     <div class="eyesaloon-spin__track" data-spin-track>

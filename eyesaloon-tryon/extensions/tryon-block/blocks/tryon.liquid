@@ -7,31 +7,41 @@
     assign selected_product = closest.product
   endif
 
-  assign model_file = selected_product.metafields.eyesaloon.model_3d.value
+  assign enable_3d_model = block.settings.enable_3d_model
+  assign model_file = blank
 
-  if model_file == blank
+  if enable_3d_model
+    assign model_file = selected_product.metafields.eyesaloon.model_3d.value
+  endif
+
+  if enable_3d_model and model_file == blank
     assign model_file = selected_product.metafields.eyesaloon.try_on_3d_model.value
   endif
 
-  if model_file == blank
+  if enable_3d_model and model_file == blank
     assign model_file = selected_product.metafields.eyesaloon.tryon_3d_model.value
   endif
 
-  if model_file == blank
+  if enable_3d_model and model_file == blank
     assign model_file = selected_product.metafields.custom.try_on_3d_model.value
   endif
 
-  if model_file == blank
+  if enable_3d_model and model_file == blank
     assign model_file = selected_product.metafields.custom.tryon_3d_model.value
   endif
 
-  if model_file == blank
+  if enable_3d_model and model_file == blank
     assign model_file = selected_product.metafields.custom.model_3d.value
   endif
-  assign product_model = selected_product.media | where: 'media_type', 'model' | first
+  assign product_model = blank
+  if enable_3d_model
+    assign product_model = selected_product.media | where: 'media_type', 'model' | first
+  endif
   assign metafield_model_source = blank
   assign product_model_source = blank
   assign model_url = ''
+  assign tryon_image_file = selected_product.metafields.eyesaloon.tryon_image_2d.value
+  assign tryon_image_url = ''
   assign lens_width = selected_product.metafields.eyesaloon.lens_width_mm.value
   assign bridge = selected_product.metafields.eyesaloon.bridge_mm.value
   assign temple = selected_product.metafields.eyesaloon.temple_mm.value
@@ -40,7 +50,25 @@
   assign fit_scale = selected_product.metafields.eyesaloon.tryon_fit_scale.value | default: block.settings.fit_scale
   assign fit_x_offset = selected_product.metafields.eyesaloon.tryon_x_offset_pct.value | default: block.settings.fit_x_offset_pct
   assign fit_y_offset = selected_product.metafields.eyesaloon.tryon_y_offset_pct.value | default: block.settings.fit_y_offset_pct
+  assign has_measurements = false
+  assign tryon_mode = ''
   assign show_block = false
+
+  if tryon_image_file == blank
+    assign tryon_image_file = selected_product.metafields.eyesaloon.try_on_2d_image.value
+  endif
+
+  if tryon_image_file == blank
+    assign tryon_image_file = selected_product.metafields.eyesaloon.frame_tryon_image.value
+  endif
+
+  if tryon_image_file == blank
+    assign tryon_image_file = selected_product.metafields.custom.tryon_image_2d.value
+  endif
+
+  if tryon_image_file == blank
+    assign tryon_image_file = selected_product.metafields.custom.try_on_2d_image.value
+  endif
 
   if model_file != blank and model_file.media_type == 'model'
     assign metafield_model_source = model_file.sources | where: 'format', 'glb' | first
@@ -54,11 +82,37 @@
     assign model_url = product_model_source.url
   endif
 
-  if model_url == blank and block.settings.model_url != blank
+  if enable_3d_model and model_url == blank and block.settings.model_url != blank
     assign model_url = block.settings.model_url
   endif
 
-  if selected_product != blank and model_url != blank
+  if tryon_image_file != blank and tryon_image_file.media_type == 'image'
+    assign tryon_image_url = tryon_image_file | image_url: width: 1400
+  elsif tryon_image_file != blank and tryon_image_file.image != blank
+    assign tryon_image_url = tryon_image_file.image | image_url: width: 1400
+  elsif tryon_image_file != blank and tryon_image_file.url != blank
+    assign tryon_image_url = tryon_image_file.url
+  endif
+
+  if tryon_image_url == blank and block.settings.frame_image_url != blank
+    assign tryon_image_url = block.settings.frame_image_url
+  endif
+
+  if frame_width != blank
+    assign has_measurements = true
+  elsif lens_width != blank and bridge != blank
+    assign has_measurements = true
+  endif
+
+  if tryon_image_url != blank
+    assign tryon_mode = '2d'
+  elsif model_url != blank
+    assign tryon_mode = '3d'
+  elsif has_measurements
+    assign tryon_mode = 'fit'
+  endif
+
+  if selected_product != blank and tryon_mode != blank
     assign show_block = true
   elsif request.design_mode
     assign show_block = true
@@ -71,8 +125,10 @@
     data-eyesaloon-tryon
     {% if selected_product != blank %}data-product-id="{{ selected_product.id }}"{% endif %}
     {% if selected_product != blank %}data-product-url="{{ selected_product.url }}"{% endif %}
-    data-build-version="tryon-v31"
-    {% if model_url != blank %}data-model-url="{{ model_url }}"{% endif %}
+    data-build-version="tryon-v36"
+    data-tryon-mode="{{ tryon_mode | default: 'unavailable' }}"
+    {% if model_url != blank and tryon_mode == '3d' %}data-model-url="{{ model_url }}"{% endif %}
+    {% if tryon_image_url != blank %}data-frame-image-url="{{ tryon_image_url }}"{% endif %}
     {% if lens_width != blank %}data-lens-width-mm="{{ lens_width }}"{% endif %}
     {% if bridge != blank %}data-bridge-mm="{{ bridge }}"{% endif %}
     {% if temple != blank %}data-temple-mm="{{ temple }}"{% endif %}
@@ -88,14 +144,19 @@
     data-status-active-camera="{{ 'tryon.active_camera_status' | t | escape }}"
     data-status-model-active="{{ 'tryon.model_active_status' | t | escape }}"
     data-status-model-error="{{ 'tryon.model_error_status' | t | escape }}"
+    data-status-fit-active="{{ 'tryon.fit_active_status' | t | escape }}"
     data-status-no-camera="{{ 'tryon.no_camera_status' | t | escape }}"
     data-status-unsupported="{{ 'tryon.unsupported_status' | t | escape }}"
     data-status-no-model="{{ 'tryon.no_model_status' | t | escape }}"
+    data-status-profile-ready="{{ 'tryon.profile_ready_status' | t | escape }}"
     data-status-qr-error="{{ 'tryon.qr_error_status' | t | escape }}"
+    data-status-selfie-preview="{{ 'tryon.selfie_preview_status' | t | escape }}"
     data-status-tracking-assets-missing="{{ 'tryon.tracking_assets_missing_status' | t | escape }}"
     data-status-runtime-error="{{ 'tryon.runtime_error_status' | t | escape }}"
     data-copy-success="{{ 'tryon.copy_success' | t | escape }}"
     data-copy-error="{{ 'tryon.copy_error' | t | escape }}"
+    data-profile-storage-key="eyesaloon_tryon_profile_v1"
+    data-pd-storage-key="eyesaloon_tryon_pd_mm"
     data-qr-src="{{ 'tryon-qr.js' | asset_url }}"
     data-qr-label="{{ 'tryon.qr_label' | t | escape }}"
     data-runtime-src="{{ 'tryon-runtime.js' | asset_url }}"
@@ -113,12 +174,12 @@
         <span>{{ block.settings.button_label }}</span>
       </button>
 
-      <span class="eyesaloon-tryon__chip">{{ 'tryon.privacy_chip' | t }}</span>
-    </div>
+    <span class="eyesaloon-tryon__chip">{{ 'tryon.privacy_chip' | t }}</span>
+  </div>
 
-    {% if request.design_mode and model_url == blank %}
+    {% if request.design_mode and tryon_mode == blank %}
       <p class="eyesaloon-tryon__hint">
-        {{ 'tryon.missing_model' | t }}
+        {{ 'tryon.missing_assets' | t }}
       </p>
     {% endif %}
 
@@ -183,11 +244,36 @@
               {{ 'tryon.copy_link' | t }}
             </button>
           </div>
+
+          <img
+            class="eyesaloon-tryon-modal__selfie-preview"
+            data-eyesaloon-tryon-selfie-preview
+            alt="{{ 'tryon.selfie_preview_alt' | t | escape }}"
+            hidden
+          >
         </div>
 
         <p class="eyesaloon-tryon-modal__status" data-eyesaloon-tryon-status>
           {{ 'tryon.ready_status' | t }}
         </p>
+
+        <div class="eyesaloon-tryon-modal__pd" data-eyesaloon-tryon-pd-control>
+          <label class="eyesaloon-tryon-modal__pd-label" for="EyesaloonTryonPd-{{ block.id }}">
+            {{ 'tryon.pd_label' | t }}
+          </label>
+          <input
+            id="EyesaloonTryonPd-{{ block.id }}"
+            class="eyesaloon-tryon-modal__pd-input"
+            data-eyesaloon-tryon-pd
+            inputmode="decimal"
+            max="80"
+            min="45"
+            placeholder="{{ 'tryon.pd_placeholder' | t | escape }}"
+            step="0.5"
+            type="number"
+          >
+          <span class="eyesaloon-tryon-modal__pd-help">{{ 'tryon.pd_help' | t }}</span>
+        </div>
 
         <div class="eyesaloon-tryon-modal__footer">
           <button class="eyesaloon-tryon-modal__action" type="button" data-eyesaloon-tryon-camera hidden>
@@ -195,6 +281,14 @@
           </button>
           <span class="eyesaloon-tryon__chip">{{ 'tryon.fit_chip' | t }}</span>
           <span class="eyesaloon-tryon__chip">{{ 'tryon.privacy_chip' | t }}</span>
+          <label class="eyesaloon-tryon-modal__selfie" data-eyesaloon-tryon-selfie hidden>
+            <span>{{ 'tryon.selfie_upload' | t }}</span>
+            <input
+              accept="image/*"
+              capture="user"
+              type="file"
+            >
+          </label>
         </div>
       </div>
     </div>
@@ -218,9 +312,20 @@
       "autofill": true
     },
     {
+      "type": "checkbox",
+      "id": "enable_3d_model",
+      "label": "Enable 3D model mode",
+      "default": false
+    },
+    {
       "type": "text",
       "id": "model_url",
       "label": "3D model URL override"
+    },
+    {
+      "type": "text",
+      "id": "frame_image_url",
+      "label": "2D transparent frame image URL override"
     },
     {
       "type": "text",

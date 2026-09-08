@@ -29,7 +29,7 @@
         assign contact_form_class = 'isolate scroll-trigger animate--slide-in'
       endif
     -%}
-    {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
+    {%- form 'contact', id: 'ContactForm', class: contact_form_class, data-shopify-captcha: 'true' -%}
       {%- if form.posted_successfully? -%}
         <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
           {{- 'icon-success.svg' | inline_asset_content -}}
@@ -60,9 +60,14 @@
             id="ContactForm-name"
             name="contact[{{ 'templates.contact.form.name' | t }}]"
             value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            aria-required="true"
+            required
             placeholder="{{ 'templates.contact.form.name' | t }}"
           >
-          <label class="field__label" for="ContactForm-name">{{ 'templates.contact.form.name' | t }}</label>
+          <label class="field__label" for="ContactForm-name">
+            {{- 'templates.contact.form.name' | t }}
+            <span aria-hidden="true">*</span></label
+          >
         </div>
         <div class="field field--with-error">
           <input
@@ -75,6 +80,7 @@
             autocapitalize="off"
             value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
             aria-required="true"
+            required
             {% if form.errors contains 'email' %}
               aria-invalid="true"
               aria-describedby="ContactForm-email-error"
@@ -106,11 +112,15 @@
           class="field__input"
           autocomplete="tel"
           name="contact[{{ 'templates.contact.form.phone' | t }}]"
-          pattern="[0-9\-]*"
           value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+          aria-required="true"
+          required
           placeholder="{{ 'templates.contact.form.phone' | t }}"
         >
-        <label class="field__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
+        <label class="field__label" for="ContactForm-phone">
+          {{- 'templates.contact.form.phone' | t }}
+          <span aria-hidden="true">*</span></label
+        >
       </div>
       <div class="field">
         <textarea
@@ -118,13 +128,19 @@
           id="ContactForm-body"
           class="text-area field__input"
           name="contact[{{ 'templates.contact.form.comment' | t }}]"
+          aria-required="true"
+          required
           placeholder="{{ 'templates.contact.form.comment' | t }}"
         >
           {{- form.body -}}
         </textarea>
         <label class="form__label field__label" for="ContactForm-body">
           {{- 'templates.contact.form.comment' | t -}}
+          <span aria-hidden="true">*</span>
         </label>
+      </div>
+      <div class="contact__captcha-disclaimer rte">
+        {{ 'shopify.online_store.spam_detection.disclaimer_html' | t }}
       </div>
       <div class="contact__button">
         <button type="submit" class="button">

@@ -24,6 +24,8 @@ const createFrameRenderer = ({ canvas, modelUrl }) => {
   renderer.setClearColor(0x000000, 0);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
   const resize = (width, height) => {
     if (!width || !height) return;
 
@@ -90,8 +92,11 @@ const createFrameRenderer = ({ canvas, modelUrl }) => {
       resize(viewport.width, viewport.height);
 
       const scale = Math.min(fit.width / frameWidth, (fit.height * 1.26) / frameHeight);
+      const yaw = clamp(fit.yaw || 0, -0.34, 0.34);
+      const pitch = clamp(fit.pitch || 0, -0.28, 0.28);
+
       group.position.set(fit.centerX - viewport.width / 2, viewport.height / 2 - fit.centerY, 0);
-      group.rotation.set(0, 0, -fit.roll);
+      group.rotation.set(pitch * 0.35, yaw * 0.45, -fit.roll);
       group.scale.setScalar(scale);
       renderer.render(scene, camera);
       return true;

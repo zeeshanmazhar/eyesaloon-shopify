@@ -1,6 +1,6 @@
 {
   "tryon": {
-    "active_camera_status": "Face tracking is active. Try-on v9 is checking the 3D model for this frame.",
+    "active_camera_status": "Face tracking is active. Preparing this frame's fit mode.",
     "camera_button": "Start camera",
     "camera_permission_status": "Start your private camera preview to prepare the on-device fit check.",
     "close": "Close",
@@ -14,15 +14,24 @@
     "modal_eyebrow": "Private preview",
     "model_active_status": "3D frame is tracking your face. Keep your face centered for the best fit.",
     "model_error_status": "Face tracking is active. The 3D frame model could not load, so showing the fit guide.",
+    "fit_active_status": "Face measurements are active. Keep your face centered for the best fit check.",
     "button_label": "Try on",
+    "missing_assets": "Add a 3D model, a transparent 2D try-on image, or frame measurements to enable try-on.",
     "missing_model": "Add a product 3D model, set the metafield eyesaloon.model_3d, or paste a GLB URL in this app block.",
     "no_camera_status": "Camera access is unavailable or was blocked. You can still copy the mobile try-on link and retry.",
-    "no_model_status": "Try-on v9 did not find a 3D model URL for this frame.",
+    "no_model_status": "Try-on needs a 3D model, transparent 2D frame image, or frame measurements for this product.",
+    "pd_help": "Optional. Use the total PD from your prescription for calibrated scale.",
+    "pd_label": "PD / IPD",
+    "pd_placeholder": "62 mm",
+    "profile_ready_status": "Fit profile saved on this phone. You can use it on other frames.",
     "privacy_chip": "Camera stays on device",
     "qr_error_status": "QR generation failed. Copy the mobile link instead.",
     "qr_label": "QR code for mobile try-on",
     "ready_status": "Your try-on preview will load here.",
     "runtime_error_status": "The try-on preview could not start. Close and try again.",
+    "selfie_preview_alt": "Uploaded selfie for try-on fallback",
+    "selfie_preview_status": "Selfie preview loaded. Live face tracking needs camera access.",
+    "selfie_upload": "Upload selfie",
     "tracking_assets_missing_status": "Camera preview is ready. Face tracking assets are not installed yet.",
     "unsupported_status": "This browser cannot run the try-on preview. Try a current mobile browser with camera, WebGL, and WebAssembly support."
   }

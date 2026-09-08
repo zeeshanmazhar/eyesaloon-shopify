@@ -1,7 +1,13 @@
 {%- liquid
   assign business_name = settings.seo_business_name | default: shop.name
   assign business_type = settings.seo_business_type | default: 'Optician'
-  assign business_description = settings.seo_business_description | default: shop.description | default: 'eyesaloon.seo.business_description' | t
+  assign business_description = settings.seo_business_description
+  if business_description == blank
+    assign business_description = shop.description
+  endif
+  if business_description == blank
+    assign business_description = 'eyesaloon.seo.business_description' | t
+  endif
   assign business_url = request.origin
   assign business_image = settings.seo_social_share_image | default: settings.logo
   assign business_asset_image_url = 'eyesaloon-social-share.svg' | asset_url | prepend: 'https:'

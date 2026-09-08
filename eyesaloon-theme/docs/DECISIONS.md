@@ -1,5 +1,13 @@
 # Decisions
 
+## 2026-09-03 - Try-on uses guided scan before live overlay, not static composite
+
+- Options considered: render glasses immediately on every detected frame, measure once and later create a static composite, or run a guided scan first and then continue live overlay rendering.
+- Choice: keep the guided oval scan as the calibration gate, then continue live per-frame try-on rendering over the camera. The scan creates a local measurement baseline; it does not replace live tracking. When a 2D PNG exists, the runtime draws it as a live canvas overlay. When a GLB exists and Three.js loads, the runtime renders it live over the camera. When no visual asset exists, the runtime falls back to measurement-only fit guidance.
+- Why: noisy first camera frames made immediate rendering feel unreliable, while a static composite would not satisfy the product promise of live try-on. Guided scan plus live overlay gives a better shopper experience while keeping all camera processing on-device and preserving the lightweight Shopify page-load model.
+- Current gap: the GLB renderer is live but still below the original D5 target. It does not yet fully use iris scale, nose-bridge anchoring, yaw/pitch/depth from the face transformation matrix, or a head occluder. The 2D PNG mode is front-facing only until perspective warp is added.
+- Follow-ups: promote iris landmarks from stretch goal to required D5 parity, add scan variance/MAD checks and a continuous stability window, complete real-device QA, add Urdu try-on locale coverage, finish the no-camera/selfie and no-WebGL/WASM fallback ladder, add try-on funnel telemetry, and define GLB/PNG asset QA requirements before catalog rollout.
+
 ## 2026-08-07 - Virtual try-on uses open-source stack with QR mobile handoff
 
 - Options considered: pay for a Shopify virtual try-on plugin, build a custom app with open-source browser libraries, or postpone try-on until after launch.

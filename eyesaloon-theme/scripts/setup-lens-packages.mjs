@@ -1,9 +1,12 @@
 import { readFile } from 'node:fs/promises';
 
 const API_VERSION = '2025-07';
+const SHOPIFY_CLI = process.env.SHOPIFY_CLI || 'shopify';
+const LENS_PACKAGE_METAOBJECT_TYPE = process.env.LENS_PACKAGE_METAOBJECT_TYPE || 'eyesaloon_lens_package';
 const CSV_PATH = process.env.LENS_PACKAGES_CSV || 'data/lens-packages.csv';
 const HIDDEN_PRODUCT_HANDLE = process.env.LENS_PACKAGE_PRODUCT_HANDLE || 'eyesaloon-lens-packages';
 const dryRun = process.argv.includes('--dry-run');
+const skipMetaobjects = process.argv.includes('--skip-metaobjects') || process.env.LENS_PACKAGES_SKIP_METAOBJECTS === 'true';
 
 async function loadEnv() {
   try {
@@ -24,9 +27,10 @@ await loadEnv();
 const store = process.env.SHOPIFY_STORE;
 const token = process.env.SHOPIFY_ADMIN_TOKEN;
 const graphqlProxyUrl = process.env.SHOPIFY_GRAPHQL_PROXY_URL;
+const cliStore = process.env.SHOPIFY_CLI_STORE || (store && !token ? store : '');
 
-if ((!store || !token) && !graphqlProxyUrl && !dryRun) {
-  console.error('Missing SHOPIFY_STORE/SHOPIFY_ADMIN_TOKEN or SHOPIFY_GRAPHQL_PROXY_URL.');
+if ((!store || !token) && !graphqlProxyUrl && !cliStore && !dryRun) {
+  console.error('Missing SHOPIFY_STORE/SHOPIFY_ADMIN_TOKEN, SHOPIFY_GRAPHQL_PROXY_URL, or SHOPIFY_CLI_STORE.');
   process.exit(1);
 }
 
@@ -79,6 +83,18 @@ async function graphql(query, variables = {}) {
   if (dryRun) {
     console.log(JSON.stringify({ query, variables }, null, 2));
     return {};
+  }
+
+  if (cliStore) {
+    const { execFileSync } = await import('node:child_process');
+    const output = execFileSync(
+      SHOPIFY_CLI,
+      ['store', 'execute', '--store', cliStore, '--query', query, '--variables', JSON.stringify(variables), '--json', '--allow-mutations'],
+      { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 },
+    );
+    const jsonStart = output.indexOf('{');
+    if (jsonStart === -1) throw new Error(output);
+    return JSON.parse(output.slice(jsonStart));
   }
 
   const response = await fetch(graphqlProxyUrl || `https://${store}/admin/api/${API_VERSION}/graphql.json`, {
@@ -185,18 +201,18 @@ async function upsertLensPackageMetaobject(row, variantId) {
     .map(([key, value]) => ({ key, value: String(value) }));
 
   if (dryRun) {
-    console.log(`would upsert lens_package ${row.handle}`);
+    console.log(`would upsert ${LENS_PACKAGE_METAOBJECT_TYPE} ${row.handle}`);
     console.log(JSON.stringify(fields, null, 2));
     return;
   }
 
   const data = await graphql(mutation, {
-    handle: { type: 'lens_package', handle: row.handle },
+    handle: { type: LENS_PACKAGE_METAOBJECT_TYPE, handle: row.handle },
     metaobject: { fields },
   });
   const errors = data.metaobjectUpsert.userErrors;
   if (errors.length) throw new Error(`${row.handle}: ${errors.map((error) => error.message).join(', ')}`);
-  console.log(`upserted lens_package ${row.handle}`);
+  console.log(`upserted ${LENS_PACKAGE_METAOBJECT_TYPE} ${row.handle}`);
 }
 
 const rows = parseCsv(await readFile(CSV_PATH, 'utf8'));
@@ -216,6 +232,7 @@ const variantsByPackage = new Map(
 for (const row of rows) {
   const variantId = variantsByPackage.get(row.title_en);
   if (!variantId) throw new Error(`No variant found for lens package ${row.title_en}`);
+  if (skipMetaobjects) continue;
   await upsertLensPackageMetaobject(row, variantId);
 }
 

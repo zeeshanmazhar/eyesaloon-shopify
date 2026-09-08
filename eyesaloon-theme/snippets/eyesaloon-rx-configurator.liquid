@@ -3,138 +3,229 @@
   Emits line item properties inside the product form. Frame-only works without JS.
 {% endcomment %}
 {%- liquid
+  assign product_type = product.type | downcase
+  assign product_tags = product.tags | join: ' ' | downcase
   assign rx_compatible = product.metafields.eyesaloon.rx_compatible.value
-  if product.metafields.eyesaloon.rx_compatible == blank
-    assign rx_compatible = true
+  assign show_lens_configurator = false
+  assign whatsapp_number = settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' | remove: '(' | remove: ')'
+  assign has_real_whatsapp = false
+
+  if whatsapp_number != blank and whatsapp_number != '92XXXXXXXXXX'
+    unless whatsapp_number contains 'X'
+      assign has_real_whatsapp = true
+    endunless
+  endif
+
+  if rx_compatible == true
+    assign show_lens_configurator = true
+  elsif product.metafields.eyesaloon.rx_compatible == blank
+    if product_type contains 'frame' or product_type contains 'sunglass' or product_type contains 'eyeglass' or product_type contains 'glasses' or product_type contains 'eyewear' or product_type contains 'optical'
+      assign show_lens_configurator = true
+    elsif product_tags contains 'rx-compatible' or product_tags contains 'prescription' or product_tags contains 'frame' or product_tags contains 'sunglass'
+      assign show_lens_configurator = true
+    endif
   endif
 -%}
 
-<div class="eyesaloon-rx" data-eyesaloon-rx>
+{%- if show_lens_configurator -%}
+{%- assign lens_package_product = all_products['eyesaloon-lens-packages'] -%}
+<div
+  class="eyesaloon-rx"
+  data-eyesaloon-rx
+  data-validation-required="{{ 'eyesaloon.rx.validation_required' | t | escape }}"
+  data-validation-upload="{{ 'eyesaloon.rx.validation_upload' | t | escape }}"
+  data-summary-frame="{{ 'eyesaloon.rx.summary_frame' | t | escape }}"
+  data-summary-prescription="{{ 'eyesaloon.rx.summary_prescription' | t | escape }}"
+  data-summary-upload="{{ 'eyesaloon.rx.summary_upload' | t | escape }}"
+  data-summary-whatsapp="{{ 'eyesaloon.rx.summary_whatsapp' | t | escape }}"
+>
   <script src="{{ 'eyesaloon-rx.js' | asset_url }}" defer="defer"></script>
-  <fieldset class="eyesaloon-rx__fieldset">
+  <fieldset class="eyesaloon-rx__switch">
     <legend class="eyesaloon-rx__legend">{{ 'eyesaloon.rx.choose_lenses' | t }}</legend>
-    <label class="eyesaloon-rx__card">
+    <label class="eyesaloon-rx__switch-option">
       <input type="radio" name="properties[Order Type]" value="{{ 'eyesaloon.rx.frame_only' | t }}" data-eyesaloon-order-type="frame_only" checked>
       <span>{{ 'eyesaloon.rx.frame_only' | t }}</span>
     </label>
-    {%- if rx_compatible -%}
-      <label class="eyesaloon-rx__card">
-        <input type="radio" name="properties[Order Type]" value="{{ 'eyesaloon.rx.with_prescription' | t }}" data-eyesaloon-order-type="prescription">
-        <span>{{ 'eyesaloon.rx.with_prescription' | t }}</span>
-      </label>
-      <label class="eyesaloon-rx__card">
-        <input type="radio" name="properties[Order Type]" value="{{ 'eyesaloon.rx.with_sunglass_tint' | t }}" data-eyesaloon-order-type="tint">
-        <span>{{ 'eyesaloon.rx.with_sunglass_tint' | t }}</span>
-      </label>
-    {%- endif -%}
+    <label class="eyesaloon-rx__switch-option">
+      <input type="radio" name="properties[Order Type]" value="{{ 'eyesaloon.rx.with_prescription' | t }}" data-eyesaloon-order-type="prescription">
+      <span>{{ 'eyesaloon.rx.with_prescription' | t }}</span>
+    </label>
   </fieldset>
+  <button class="eyesaloon-rx__edit" type="button" data-eyesaloon-rx-open hidden>
+    {{ 'eyesaloon.rx.edit_rx' | t }}
+  </button>
+  <p class="eyesaloon-rx__note" data-eyesaloon-rx-summary>{{ 'eyesaloon.rx.summary_frame' | t }}</p>
 
-  {%- if rx_compatible -%}
-    <div class="eyesaloon-rx__panel" data-eyesaloon-rx-panel hidden>
-      <fieldset class="eyesaloon-rx__fieldset">
-        <legend class="eyesaloon-rx__legend">{{ 'eyesaloon.rx.lens_use' | t }}</legend>
-        <label class="eyesaloon-rx__card">
-          <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.distance' | t }}" checked>
-          <span>{{ 'eyesaloon.rx.distance' | t }}</span>
-        </label>
-        <label class="eyesaloon-rx__card">
-          <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.reading' | t }}">
-          <span>{{ 'eyesaloon.rx.reading' | t }}</span>
-        </label>
-        <label class="eyesaloon-rx__card">
-          <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.progressive' | t }}">
-          <span>{{ 'eyesaloon.rx.progressive' | t }}</span>
-        </label>
-        <label class="eyesaloon-rx__card">
-          <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.non_rx' | t }}">
-          <span>{{ 'eyesaloon.rx.non_rx' | t }}</span>
-        </label>
-      </fieldset>
+  <div class="eyesaloon-rx__modal" data-eyesaloon-rx-modal hidden>
+    <button class="eyesaloon-rx__scrim" type="button" data-eyesaloon-rx-close aria-label="{{ 'accessibility.close' | t }}"></button>
+    <div class="eyesaloon-rx__dialog" role="dialog" aria-modal="true" aria-labelledby="EyesaloonRxDialogTitle-{{ product.id }}" tabindex="-1">
+      <header class="eyesaloon-rx__dialog-header">
+        <div>
+          <h2 id="EyesaloonRxDialogTitle-{{ product.id }}">{{ 'eyesaloon.rx.modal_title' | t }}</h2>
+          <p>{{ 'eyesaloon.rx.modal_intro' | t }}</p>
+        </div>
+        <button class="eyesaloon-rx__close" type="button" data-eyesaloon-rx-close aria-label="{{ 'accessibility.close' | t }}">
+          {{ 'icon-close.svg' | inline_asset_content }}
+        </button>
+      </header>
 
-      <div class="eyesaloon-rx__tabs" role="tablist" aria-label="{{ 'eyesaloon.rx.rx_method' | t }}">
-        <label class="eyesaloon-rx__tab">
-          <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.type_values' | t }}" data-eyesaloon-rx-method="typed">
-          <span>{{ 'eyesaloon.rx.type_values' | t }}</span>
-        </label>
-        <label class="eyesaloon-rx__tab">
-          <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.upload_photo' | t }}" data-eyesaloon-rx-method="upload">
-          <span>{{ 'eyesaloon.rx.upload_photo' | t }}</span>
-        </label>
-        <label class="eyesaloon-rx__tab">
-          <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.whatsapp_later' | t }}" data-eyesaloon-rx-method="whatsapp" checked>
-          <span>{{ 'eyesaloon.rx.whatsapp_later' | t }}</span>
-        </label>
-      </div>
+      <div class="eyesaloon-rx__panel" data-eyesaloon-rx-panel hidden>
+        <fieldset class="eyesaloon-rx__fieldset">
+          <legend class="eyesaloon-rx__legend">{{ 'eyesaloon.rx.lens_use' | t }}</legend>
+          <label class="eyesaloon-rx__card">
+            <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.distance' | t }}" checked>
+            <span>{{ 'eyesaloon.rx.distance' | t }}</span>
+          </label>
+          <label class="eyesaloon-rx__card">
+            <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.reading' | t }}">
+            <span>{{ 'eyesaloon.rx.reading' | t }}</span>
+          </label>
+          <label class="eyesaloon-rx__card">
+            <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.progressive' | t }}">
+            <span>{{ 'eyesaloon.rx.progressive' | t }}</span>
+          </label>
+          <label class="eyesaloon-rx__card">
+            <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.with_sunglass_tint' | t }}">
+            <span>{{ 'eyesaloon.rx.with_sunglass_tint' | t }}</span>
+          </label>
+          <label class="eyesaloon-rx__card">
+            <input type="radio" name="properties[Lens Use]" value="{{ 'eyesaloon.rx.non_rx' | t }}">
+            <span>{{ 'eyesaloon.rx.non_rx' | t }}</span>
+          </label>
+        </fieldset>
 
-      <div class="eyesaloon-rx__grid" data-eyesaloon-rx-fields="typed" hidden>
-        <label>
-          <span>{{ 'eyesaloon.rx.sph_r' | t }}</span>
-          <input class="field__input" type="number" name="properties[Rx SPH R]" min="-20" max="20" step="0.25">
-        </label>
-        <label>
-          <span>{{ 'eyesaloon.rx.cyl_r' | t }}</span>
-          <input class="field__input" type="number" name="properties[Rx CYL R]" min="-8" max="8" step="0.25">
-        </label>
-        <label>
-          <span>{{ 'eyesaloon.rx.axis_r' | t }}</span>
-          <input class="field__input" type="number" name="properties[Rx AXIS R]" min="0" max="180" step="1">
-        </label>
-        <label>
-          <span>{{ 'eyesaloon.rx.sph_l' | t }}</span>
-          <input class="field__input" type="number" name="properties[Rx SPH L]" min="-20" max="20" step="0.25">
-        </label>
-        <label>
-          <span>{{ 'eyesaloon.rx.cyl_l' | t }}</span>
-          <input class="field__input" type="number" name="properties[Rx CYL L]" min="-8" max="8" step="0.25">
-        </label>
-        <label>
-          <span>{{ 'eyesaloon.rx.axis_l' | t }}</span>
-          <input class="field__input" type="number" name="properties[Rx AXIS L]" min="0" max="180" step="1">
-        </label>
-        <label>
-          <span>{{ 'eyesaloon.rx.add' | t }}</span>
-          <input class="field__input" type="number" name="properties[Rx ADD]" min="0" max="4" step="0.25">
-        </label>
-        <label>
-          <span>{{ 'eyesaloon.rx.pd' | t }}</span>
-          <input class="field__input" type="number" name="properties[PD]" min="45" max="80" step="0.5">
-        </label>
-      </div>
+        <fieldset class="eyesaloon-rx__fieldset">
+          <legend class="eyesaloon-rx__legend">{{ 'eyesaloon.rx.rx_method' | t }}</legend>
+          <div class="eyesaloon-rx__tabs" role="tablist" aria-label="{{ 'eyesaloon.rx.rx_method' | t }}">
+            <label class="eyesaloon-rx__tab">
+              <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.type_values' | t }}" data-eyesaloon-rx-method="typed">
+              <span>{{ 'eyesaloon.rx.type_values' | t }}</span>
+            </label>
+            <label class="eyesaloon-rx__tab">
+              <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.upload_photo' | t }}" data-eyesaloon-rx-method="upload">
+              <span>{{ 'eyesaloon.rx.upload_photo' | t }}</span>
+            </label>
+            <label class="eyesaloon-rx__tab">
+              <input type="radio" name="properties[Rx Method]" value="{{ 'eyesaloon.rx.whatsapp_later' | t }}" data-eyesaloon-rx-method="whatsapp" checked>
+              <span>{{ 'eyesaloon.rx.whatsapp_later' | t }}</span>
+            </label>
+          </div>
+        </fieldset>
 
-      <label class="eyesaloon-rx__upload" data-eyesaloon-rx-fields="upload" hidden>
-        <span>{{ 'eyesaloon.rx.photo_url' | t }}</span>
-        <input class="field__input" type="url" name="properties[Rx Photo URL]" placeholder="{{ 'eyesaloon.rx.photo_placeholder' | t }}">
-      </label>
+        <div class="eyesaloon-rx__grid" data-eyesaloon-rx-fields="typed" hidden>
+          <fieldset class="eyesaloon-rx__lens">
+            <legend>{{ 'eyesaloon.rx.right_lens' | t }}</legend>
+            <label>
+              <span>{{ 'eyesaloon.rx.sph_r' | t }}</span>
+              <input class="field__input" type="number" name="properties[Rx SPH R]" min="-20" max="20" step="0.25" data-rx-required>
+            </label>
+            <label>
+              <span>{{ 'eyesaloon.rx.cyl_r' | t }}</span>
+              <input class="field__input" type="number" name="properties[Rx CYL R]" min="-8" max="8" step="0.25">
+            </label>
+            <label>
+              <span>{{ 'eyesaloon.rx.axis_r' | t }}</span>
+              <input class="field__input" type="number" name="properties[Rx AXIS R]" min="0" max="180" step="1">
+            </label>
+          </fieldset>
 
-      <label class="eyesaloon-rx__checkbox">
-        <input type="checkbox" name="properties[WhatsApp Rx Confirmation]" value="{{ 'eyesaloon.rx.yes' | t }}" checked>
-        <span>{{ 'eyesaloon.rx.whatsapp_confirm' | t }}</span>
-      </label>
+          <fieldset class="eyesaloon-rx__lens">
+            <legend>{{ 'eyesaloon.rx.left_lens' | t }}</legend>
+            <label>
+              <span>{{ 'eyesaloon.rx.sph_l' | t }}</span>
+              <input class="field__input" type="number" name="properties[Rx SPH L]" min="-20" max="20" step="0.25" data-rx-required>
+            </label>
+            <label>
+              <span>{{ 'eyesaloon.rx.cyl_l' | t }}</span>
+              <input class="field__input" type="number" name="properties[Rx CYL L]" min="-8" max="8" step="0.25">
+            </label>
+            <label>
+              <span>{{ 'eyesaloon.rx.axis_l' | t }}</span>
+              <input class="field__input" type="number" name="properties[Rx AXIS L]" min="0" max="180" step="1">
+            </label>
+          </fieldset>
 
-      <label class="eyesaloon-rx__package">
-        <span>{{ 'eyesaloon.rx.lens_package' | t }}</span>
-        <select class="select__select" name="properties[Lens Package]" data-eyesaloon-lens-package>
-          <option value="{{ 'eyesaloon.rx.package_none' | t }}">{{ 'eyesaloon.rx.package_none' | t }}</option>
-          {%- for lens_package in shop.metaobjects.lens_package.values -%}
-            {%- if lens_package.active.value != false -%}
-              <option
-                value="{{ lens_package.title_en.value | escape }}"
-                data-hidden-variant-id="{{ lens_package.hidden_variant_id.value }}"
-                data-price-addon="{{ lens_package.price_addon.value }}"
-              >
-                {{ lens_package.title_en.value }}
-                {%- if lens_package.price_addon.value != blank -%}
-                  · +{{ lens_package.price_addon.value | times: 100 | money_without_trailing_zeros }}
-                {%- endif -%}
+          <div class="eyesaloon-rx__extras">
+            <label>
+              <span>{{ 'eyesaloon.rx.add' | t }}</span>
+              <input class="field__input" type="number" name="properties[Rx ADD]" min="0" max="4" step="0.25">
+            </label>
+            <label>
+              <span>{{ 'eyesaloon.rx.pd' | t }}</span>
+              <input class="field__input" type="number" name="properties[PD]" min="45" max="80" step="0.5">
+            </label>
+          </div>
+        </div>
+
+        <div class="eyesaloon-rx__upload" data-eyesaloon-rx-fields="upload" hidden>
+          <label>
+            <span>{{ 'eyesaloon.rx.photo_file' | t }}</span>
+            <input class="eyesaloon-rx__file" type="file" name="properties[Rx File]" accept="image/*,.pdf" data-rx-upload-file>
+          </label>
+          <p class="eyesaloon-rx__note" data-rx-upload-status>{{ 'eyesaloon.rx.photo_file_note' | t }}</p>
+        </div>
+
+        <div class="eyesaloon-rx__whatsapp" data-eyesaloon-rx-fields="whatsapp">
+          <p class="eyesaloon-rx__whatsapp-title">{{ 'eyesaloon.rx.whatsapp_title' | t }}</p>
+          {%- if has_real_whatsapp -%}
+            <a class="eyesaloon-rx__whatsapp-link" href="https://wa.me/{{ whatsapp_number | escape }}" target="_blank" rel="noopener">
+              <span>+{{ whatsapp_number }}</span>
+              <span>{{ 'eyesaloon.rx.whatsapp_send' | t }}</span>
+            </a>
+            <p class="eyesaloon-rx__note">{{ 'eyesaloon.rx.whatsapp_note' | t }}</p>
+          {%- else -%}
+            <p class="eyesaloon-rx__whatsapp-number">{{ 'eyesaloon.rx.whatsapp_missing' | t }}</p>
+          {%- endif -%}
+        </div>
+
+        <label class="eyesaloon-rx__checkbox">
+          <input type="checkbox" name="properties[WhatsApp Rx Confirmation]" value="{{ 'eyesaloon.rx.yes' | t }}" checked>
+          <span>{{ 'eyesaloon.rx.whatsapp_confirm' | t }}</span>
+        </label>
+
+        <label class="eyesaloon-rx__package">
+          <span>{{ 'eyesaloon.rx.lens_package' | t }}</span>
+          <select class="select__select" name="properties[Lens Package]" data-eyesaloon-lens-package>
+            <option value="{{ 'eyesaloon.rx.package_none' | t }}">{{ 'eyesaloon.rx.package_none' | t }}</option>
+            {%- if lens_package_product != blank -%}
+              {%- for lens_variant in lens_package_product.variants -%}
+                <option
+                  value="{{ lens_variant.title | escape }}"
+                  data-hidden-variant-id="{{ lens_variant.id }}"
+                  data-price-addon="{{ lens_variant.price | divided_by: 100 }}"
+                >
+                  {{ lens_variant.title }}
+                  {%- if lens_variant.price > 0 -%}
+                    · +{{ lens_variant.price | money_without_trailing_zeros }}
+                  {%- endif -%}
+                </option>
+              {%- endfor -%}
+            {%- elsif shop.permanent_domain == 'evevbw-yy.myshopify.com' -%}
+              <option value="Single Vision Standard" data-hidden-variant-id="53821834690923" data-price-addon="1500">
+                Single Vision Standard · +{{ 150000 | money_without_trailing_zeros }}
+              </option>
+              <option value="Blue Cut Standard" data-hidden-variant-id="53821834723691" data-price-addon="2500">
+                Blue Cut Standard · +{{ 250000 | money_without_trailing_zeros }}
+              </option>
+              <option value="Photochromic Standard" data-hidden-variant-id="53821834756459" data-price-addon="3500">
+                Photochromic Standard · +{{ 350000 | money_without_trailing_zeros }}
+              </option>
+              <option value="Sunglass Tint Standard" data-hidden-variant-id="53821834789227" data-price-addon="1200">
+                Sunglass Tint Standard · +{{ 120000 | money_without_trailing_zeros }}
               </option>
             {%- endif -%}
-          {%- endfor -%}
-        </select>
-      </label>
+          </select>
+        </label>
 
-      <p class="eyesaloon-rx__note">{{ 'eyesaloon.rx.package_note' | t }}</p>
+        <p class="eyesaloon-rx__note">{{ 'eyesaloon.rx.package_note' | t }}</p>
+      </div>
+
+      <div class="eyesaloon-rx__dialog-actions">
+        <button class="button button--primary" type="button" data-eyesaloon-rx-save>
+          {{ 'eyesaloon.rx.save_rx' | t }}
+        </button>
+      </div>
     </div>
-  {%- else -%}
-    <p class="eyesaloon-rx__note">{{ 'eyesaloon.rx.not_compatible' | t }}</p>
-  {%- endif -%}
+  </div>
 </div>
+{%- endif -%}

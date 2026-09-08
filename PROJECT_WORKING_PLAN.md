@@ -19,12 +19,12 @@ shopify/
 └── development-plan.md
 ```
 
-Current development store:
+Current paid store:
 
 ```text
-Store: eyesaloon-wtps59lz.myshopify.com
-Preview theme: develop-preview (#189729079578)
-Preview URL: https://eyesaloon-wtps59lz.myshopify.com?preview_theme_id=189729079578
+Store: evevbw-yy.myshopify.com
+Primary domain: https://eyesaloon.com
+Live theme: develop-preview (#190619025771)
 Store password: topres
 ```
 
@@ -88,25 +88,27 @@ zeeshanmazhar/eyesaloon-shopify.git
   - lens package setup script
   - product importer
   - CSV/image workflow
-- Footer work has been committed:
-  - commit `f87a8e3 Polish homepage and footer experience`
+- Paid store migration is complete:
+  - theme `develop-preview` is live on `evevbw-yy.myshopify.com`
+  - primary domain is `https://eyesaloon.com`
+  - password `topres` unlocks the storefront
+  - paid store menus/pages/test products are populated
 
 ### Needs Confirmation
 
 - Footer visual polish must be checked manually in browser after latest preview push.
-- GitHub remote may still need the latest local commit pushed.
-- Preview URL may require Shopify session or a refreshed theme ID if the old link stops working.
+- GitHub remote may still need the latest local commit pushed after each work batch.
 
 ---
 
 ## 3. Immediate Next Actions
 
-### Priority 1: Confirm Preview Access
+### Priority 1: Confirm Live Store Access
 
 1. Open:
 
    ```text
-   https://eyesaloon-wtps59lz.myshopify.com?preview_theme_id=189729079578
+   https://eyesaloon.com
    ```
 
 2. Enter password:
@@ -115,14 +117,14 @@ zeeshanmazhar/eyesaloon-shopify.git
    topres
    ```
 
-3. If the link fails, run:
+3. If the theme looks wrong, run:
 
    ```sh
    cd eyesaloon-theme
-   PATH=/Users/zeeshanmazhar/.nvm/versions/node/v22.12.0/bin:$PATH shopify theme list --store eyesaloon-wtps59lz.myshopify.com
+   PATH=/Users/zeeshanmazhar/.nvm/versions/node/v22.12.0/bin:$PATH shopify theme list --store evevbw-yy.myshopify.com
    ```
 
-4. Confirm the current preview theme ID and update this document if it changed.
+4. Confirm `develop-preview` is live as theme `#190619025771`.
 
 ### Priority 2: Push Latest Commit To GitHub
 
@@ -168,13 +170,13 @@ PATH=/Users/zeeshanmazhar/.nvm/versions/node/v22.12.0/bin:$PATH shopify theme ch
 PATH=/Users/zeeshanmazhar/.nvm/versions/node/v22.12.0/bin:$PATH node scripts/audit-colors.mjs
 ```
 
-Push preview theme:
+Push live paid-store theme:
 
 ```sh
 cd eyesaloon-theme
 PATH=/Users/zeeshanmazhar/.nvm/versions/node/v22.12.0/bin:$PATH shopify theme push \
-  --store eyesaloon-wtps59lz.myshopify.com \
-  --theme 189729079578 \
+  --store evevbw-yy.myshopify.com \
+  --theme 190619025771 \
   --allow-live \
   --path .
 ```
@@ -184,7 +186,7 @@ Run local theme dev:
 ```sh
 cd eyesaloon-theme
 PATH=/Users/zeeshanmazhar/.nvm/versions/node/v22.12.0/bin:$PATH shopify theme dev \
-  --store eyesaloon-wtps59lz.myshopify.com
+  --store evevbw-yy.myshopify.com
 ```
 
 ### App / Try-On
@@ -201,8 +203,8 @@ Run app dev:
 ```sh
 cd eyesaloon-tryon
 PATH=/Users/zeeshanmazhar/.nvm/versions/node/v22.12.0/bin:$PATH shopify app dev \
-  --store eyesaloon-wtps59lz.myshopify.com \
-  --theme 189729079578 \
+  --store evevbw-yy.myshopify.com \
+  --theme 190619025771 \
   --store-password topres \
   --use-localhost
 ```
@@ -506,8 +508,11 @@ Stack:
 Customer flow:
 
 1. Customer opens product page.
-2. Product has `eyesaloon.model_3d` metafield.
-3. Try On button appears.
+2. Product has a try-on asset or frame measurements:
+   - `eyesaloon.model_3d`
+   - `eyesaloon.tryon_image_2d`
+   - or frame/lens measurements
+3. Try On button appears when at least one fitting path is available.
 4. On desktop:
    - modal shows QR code
    - QR opens same product on phone with `?tryon=1&source=qr`
@@ -516,7 +521,10 @@ Customer flow:
    - `?tryon=1` auto-opens try-on modal
    - customer grants camera permission
 6. Browser detects face landmarks.
-7. Three.js renders GLB glasses model on face.
+7. Try-on chooses the best available fitting mode:
+   - 3D GLB model
+   - transparent 2D frame image
+   - measurement-only fit analysis
 8. Customer can close/retry.
 
 Build checklist:
@@ -532,6 +540,8 @@ Stage H0 - Current foundation:
   - `bridge_mm`
   - `temple_mm`
   - `lens_height_mm`
+  - `frame_width_mm`
+  - `tryon_image_2d`
 - [x] Basic `blocks/tryon.liquid` app block shell exists.
 - [x] Basic modal open/close JS exists.
 - [x] Basic app block CSS exists.
@@ -544,7 +554,7 @@ Stage H1 - Lightweight storefront shell:
   - `bridge_mm`
   - `temple_mm`
   - `lens_height_mm`
-- [x] Render Try On button only when a model exists; show editor-only warning when missing.
+- [x] Render Try On button when a 3D model, 2D transparent image, or frame measurements exist; show editor-only warning when all are missing.
 - [x] Build full modal state shell:
   - ready
   - desktop QR
@@ -596,23 +606,35 @@ Stage H3 - Runtime bundle and asset strategy:
 
 Stage H4 - Camera and face tracking:
 
-- [ ] Request camera permission only after customer clicks Try On or lands with `?tryon=1`.
-- [ ] Render mirrored camera preview.
-- [ ] Initialize MediaPipe FaceLandmarker in VIDEO mode.
+- [x] Request camera permission only after customer clicks Try On or lands with `?tryon=1`.
+- [x] Render mirrored camera preview.
+- [x] Initialize MediaPipe FaceLandmarker in VIDEO mode.
 - [ ] Prefer worker-based detection if main-thread detection misses performance budget.
-- [ ] Handle no face, multiple faces, permission denied, insecure context, and unsupported browser states.
-- [ ] Confirm all camera processing stays on device.
+- [x] Handle no face, multiple faces, permission denied, insecure context, and unsupported browser states.
+- [x] Confirm all camera processing stays on device.
 
 Stage H5 - GLB rendering and alignment:
 
-- [ ] Load product GLB from `eyesaloon.model_3d`.
-- [ ] Render with Three.js over the camera feed.
+- [x] Load product GLB from `eyesaloon.model_3d`.
+- [x] Render with Three.js over the camera feed.
 - [ ] Anchor frame to nose bridge / eye landmarks.
-- [ ] Use face transform matrix where available for rotation.
-- [ ] Scale using iris distance and frame measurements.
-- [ ] Add smoothing to reduce jitter.
+- [x] Use face transform matrix where available for rotation.
+- [x] Scale using iris distance and frame measurements.
+- [x] Add smoothing to reduce jitter.
 - [ ] Add basic invisible head occluder for temple depth.
-- [ ] Clean up renderer, textures, and camera stream on close.
+- [x] Clean up renderer, textures, and camera stream on close.
+
+Stage H5a - Fallback fitting modes:
+
+- [x] Choose fitting mode in priority order: 3D model, 2D transparent image, measurement-only fit analysis, unavailable.
+- [x] Add `eyesaloon.tryon_image_2d` as the lightweight transparent image metafield.
+- [x] Keep 2D and measurement-only modes inside the lazy camera runtime.
+- [x] Allow measurement-only mode to run without a 3D or 2D asset when frame dimensions exist.
+- [ ] Test one product in each mode:
+  - 3D model
+  - 2D transparent image
+  - measurements only
+  - unavailable/design-mode warning
 
 Stage H6 - 3D asset pipeline:
 
@@ -639,11 +661,11 @@ Stage H7 - QA and launch gate:
 - [ ] Verify 24 FPS+ on low-end Android target.
 - [ ] Verify first-tap-to-camera target under 4s on 4G.
 - [ ] Verify feature hides or falls back cleanly without GLB/WebGL/camera support.
-- [ ] Add analytics hooks for open, QR copy, camera granted, camera denied, and active tracking.
+- [x] Add analytics hooks for open, QR copy, camera granted, camera denied, and active tracking.
 
 Later:
 
-- [ ] Add selfie fallback mode.
+- [x] Add selfie fallback mode.
 - [ ] Add face-shape classification and recommendations.
 - [ ] Use PD estimate to prefill configurator.
 
@@ -750,7 +772,7 @@ Launch:
 
 Do this next:
 
-1. Confirm the preview link/theme ID.
-2. Push commit `f87a8e3` to GitHub if not already pushed.
-3. Finish footer visual approval.
-4. Move to real product catalog import.
+1. Commit and push the current paid-store migration/theme batch.
+2. Zee finalizes the real product CSV and product images.
+3. Replace test products with the real catalog.
+4. Configure payments, shipping, and WhatsApp once account details are ready.

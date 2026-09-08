@@ -2,6 +2,7 @@ import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 
 const API_VERSION = '2025-07';
+const SHOPIFY_CLI = process.env.SHOPIFY_CLI || 'shopify';
 const CSV_PATH = process.env.PRODUCTS_CSV || 'data/products.csv';
 const IMAGE_DIR = process.env.PRODUCT_IMAGES_DIR || 'data/product-images';
 const dryRun = process.argv.includes('--dry-run');
@@ -26,9 +27,10 @@ await loadEnv();
 const store = process.env.SHOPIFY_STORE;
 const token = process.env.SHOPIFY_ADMIN_TOKEN;
 const graphqlProxyUrl = process.env.SHOPIFY_GRAPHQL_PROXY_URL;
+const cliStore = process.env.SHOPIFY_CLI_STORE || (store && !token ? store : '');
 
-if ((!store || !token) && !graphqlProxyUrl && !dryRun) {
-  console.error('Missing SHOPIFY_STORE/SHOPIFY_ADMIN_TOKEN or SHOPIFY_GRAPHQL_PROXY_URL. Copy .env.example to .env and set the values first.');
+if ((!store || !token) && !graphqlProxyUrl && !cliStore && !dryRun) {
+  console.error('Missing SHOPIFY_STORE/SHOPIFY_ADMIN_TOKEN, SHOPIFY_GRAPHQL_PROXY_URL, or SHOPIFY_CLI_STORE. Copy .env.example to .env and set the values first.');
   process.exit(1);
 }
 
@@ -83,6 +85,18 @@ function parseCsv(source) {
 async function graphql(query, variables = {}) {
   if (dryRun) {
     return {};
+  }
+
+  if (cliStore) {
+    const { execFileSync } = await import('node:child_process');
+    const output = execFileSync(
+      SHOPIFY_CLI,
+      ['store', 'execute', '--store', cliStore, '--query', query, '--variables', JSON.stringify(variables), '--json', '--allow-mutations'],
+      { encoding: 'utf8', maxBuffer: 1024 * 1024 * 10 },
+    );
+    const jsonStart = output.indexOf('{');
+    if (jsonStart === -1) throw new Error(output);
+    return JSON.parse(output.slice(jsonStart));
   }
 
   const response = await fetch(graphqlProxyUrl || `https://${store}/admin/api/${API_VERSION}/graphql.json`, {
@@ -150,6 +164,7 @@ function metafieldsFor(row) {
     ['bridge_mm', 'number_integer', row.bridge_mm],
     ['temple_mm', 'number_integer', row.temple_mm],
     ['lens_height_mm', 'number_integer', row.lens_height_mm],
+    ['frame_width_mm', 'number_integer', row.frame_width_mm],
     ['frame_shape', 'single_line_text_field', row.frame_shape],
     ['material', 'single_line_text_field', row.material],
     ['gender', 'single_line_text_field', row.gender],
@@ -326,6 +341,7 @@ async function main() {
     const existing = dryRun ? null : await findProductByHandle(row.handle);
     if (existing) {
       console.log(`exists ${row.handle} (${existing.id}); skipping`);
+      if (publish && !dryRun) await publishProduct(existing.id);
       continue;
     }
 
